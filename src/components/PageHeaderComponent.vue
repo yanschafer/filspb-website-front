@@ -1,0 +1,115 @@
+<script lang="ts">
+import { Select } from 'primevue';
+export default {
+  name: "PageHeaderComponent",
+  components: {Select},
+  data() {
+        return {
+            selectedLocation: null,
+            locations: [
+                { name: 'Адмиралтейство'},
+                { name: 'АртРазБег'},
+                { name: 'Гатчинский ДК'},
+                { name: 'Дворец искусств Ленинградской области'},
+            ]
+        };
+    },
+  props: {
+    title: {
+      type: String,
+      required: true,
+      default: "Афиша", 
+    },
+    imgSrc: {
+      type: String,
+      required: true,
+      default: "../assets/CircleImages/3.png", 
+    },
+  },
+};
+</script>
+
+<template>
+  <div class="page-header-wrapper">
+    <div class="page-header-col">
+      <div class="heading-row">
+        <div class="page-header-col">
+          <a class="logo-link">
+            <b>Государственная филармония</b><br />
+            <nobr><b>Санкт-Петербурга</b></nobr> <br />для детей и молодежи
+          </a>
+          <h1 class="heading">{{ title }}</h1>
+        </div>
+        <img class="heading-img" :src="imgSrc" alt="Header Image" />
+      </div>
+    </div>
+    <div class="page-header-col">
+      <div class="nubmer-wrapper">
+        <span class="number-heading">
+          Касса
+          <a href="tel:8812295-09-07" class="number-link">8 812 295-09-07</a>
+        </span>
+      </div>
+    </div>
+    <div class="page-header-col">
+        <Select v-model="selectedLocation" :options="locations" filter optionLabel="name" placeholder="все площадки" class="w-full md:w-56">
+        </Select>
+    </div>
+    <div class="page-header-col"></div>
+  </div>
+</template>
+
+<style scoped>
+.logo-link {
+  font-size: 1.3rem;
+}
+.page-header-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  margin-bottom: 2rem;
+}
+.page-header-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+.heading-row {
+  display: flex;
+  align-items: end;
+}
+.heading {
+  font-size: 6rem;
+}
+.heading-img {
+  width: 10vw;
+}
+.number-heading {
+  font-size: 2rem;
+}
+.number-link {
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s ease-in-out;
+}
+.number-link:hover {
+  color: #f3ca00;
+}
+:deep(.p-select) {
+    border-bottom: 2px solid black;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-radius: 0;
+}
+:deep(.p-select-label.p-placeholder) {
+    color: black;
+    font-weight: 600;
+}
+:deep(.p-select-dropdown) {
+    color: black;
+}
+
+</style>

@@ -1,0 +1,15 @@
+@import './base.css';
+
+#app {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  margin: 0 auto;
+  font-weight: normal;
+}
+button {
+  font-family: "Playfair Display", serif;
+}
+b {
+  font-weight: 700;
+}
+

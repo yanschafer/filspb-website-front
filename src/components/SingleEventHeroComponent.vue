@@ -1,0 +1,133 @@
+<script lang="ts">
+export default {
+  name: "SingleEventHero",
+  props: {
+    event: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
+
+<template>
+  <div class="event-hero-wrapper">
+    <div class="event-hero-img-col">
+      <img class="event-hero-img" :src="event.imgSrc" />
+    </div>
+    <div class="event-hero-content">
+      <div class="event-hero-header">
+        <div class="event-hero-date-col">
+          <h3 class="time">{{ event.time }}</h3>
+          <h4 class="date">{{ event.date }}</h4>
+        </div>
+        <div class="event-hero-time-col">
+          <h2 class="time-long">{{ event.duration }}</h2>
+        </div>
+      </div>
+      <div class="event-hero-heading">
+        <h1 class="heading">{{ event.title }}</h1>
+      </div>
+      <div class="event-hero-chips">
+        <div class="chip" v-for="(chip, index) in event.chips" :key="index">
+          {{ chip }}
+        </div>
+      </div>
+      <div class="event-hero-place">
+        <span class="place">{{ event.place }}</span>
+      </div>
+      <div class="event-hero-adress">
+        <span class="adress">{{ event.address }}</span>
+      </div>
+      <div class="button">
+        купить билет
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.event-hero-wrapper {
+    background-color: #f3ca00;
+    display: flex;
+    height: 40rem;
+    border-radius: 3rem;
+    overflow: hidden;
+}
+.event-hero-img-col {
+    width: 590px;
+    min-width: 590px;
+}
+.event-hero-img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.event-hero-content {
+    display: flex;
+    flex-direction: column;
+    padding: 5rem 7rem;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+}
+.event-hero-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+.time {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+.date {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.time-long {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.heading {
+    font-size: 3rem;
+    line-height: 3rem;
+    font-weight: 700;
+}
+.event-hero-chips {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.chip {
+    height: 2rem;
+    border: 1px solid #000;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    padding: 0 1.1rem;
+    border-radius: 1.8rem;
+    font-family: 'Times', 'Georgia';
+    font-weight: 400;
+    display: inline-block;
+    vertical-align: middle;
+}
+.event-hero-place {
+    font-size: 1.3rem;
+}
+.event-hero-adress {
+    font-size: 1.3rem;
+}
+.button {
+    font-size: 1.3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.5rem;
+    background-color: black;
+    color: white;
+    font-weight: 200;
+    max-width: fit-content;
+    border-radius: 40rem;
+}
+</style>

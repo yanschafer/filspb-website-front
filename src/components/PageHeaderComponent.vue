@@ -1,10 +1,11 @@
 <script lang="ts">
-import { Select } from 'primevue';
+import { Select, DatePicker } from 'primevue';
 export default {
   name: "PageHeaderComponent",
-  components: {Select},
+  components: {Select, DatePicker},
   data() {
         return {
+          dates: null,
             selectedLocation: null,
             locations: [
                 { name: 'Адмиралтейство'},
@@ -25,6 +26,11 @@ export default {
       required: true,
       default: "../assets/CircleImages/3.png", 
     },
+    utils: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   },
 };
 </script>
@@ -51,11 +57,13 @@ export default {
         </span>
       </div>
     </div>
-    <div class="page-header-col">
+    <div v-if="utils" class="page-header-col">
         <Select v-model="selectedLocation" :options="locations" filter optionLabel="name" placeholder="все площадки" class="w-full md:w-56">
         </Select>
     </div>
-    <div class="page-header-col"></div>
+    <div v-if="utils" class="page-header-col">
+      <DatePicker v-model="dates" selectionMode="range" placeholder="дата" :manualInput="false" class="w-full md:w-56" />
+    </div>
   </div>
 </template>
 
@@ -111,5 +119,26 @@ export default {
 :deep(.p-select-dropdown) {
     color: black;
 }
-
+:deep(.p-datepicker-input) {
+  border-bottom: 2px solid black;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-radius: 0;
+    color: black!important;
+}
+:deep(.p-datepicker-input.p-placeholder) {
+  color: black;
+  font-weight: 600;
+}
+:deep(.p-datepicker-input.p-placeholder) {
+  color: black !important;
+  font-weight: 600 !important;
+}
+</style>
+<style>
+.p-datepicker-input.p-placeholder {
+  color: black !important;
+  font-weight: 600 !important;
+}
 </style>

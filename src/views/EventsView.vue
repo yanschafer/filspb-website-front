@@ -2,13 +2,12 @@
 import FooterComponent from "@/components/FooterComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
-import DateRangeFilter from "@/components/EventsView/DateRangeFilter.vue";
 import ChipsFilter from "@/components/EventsView/ChipsFilter.vue";
 import EventGrid from "@/components/EventsView/EventGrid.vue";
 
 export default {
   name: "EventsView",
-  components: { HeaderComponent, FooterComponent, PageHeaderComponent, DateRangeFilter, ChipsFilter, EventGrid },
+  components: { HeaderComponent, FooterComponent, PageHeaderComponent, ChipsFilter, EventGrid },
   data() {
     return {
       chipsData: ['0+', '6+', '12+', '16+', 'Пушкинская карта', 'Школьная классика', 'Новогоднее'],
@@ -143,8 +142,8 @@ export default {
 <template>
   <!-- ааауаыыыы -->
   <HeaderComponent />
-  <PageHeaderComponent class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/src/assets/CircleImages/3.png" />
-  <DateRangeFilter class="animate__animated animate__fadeIn" />
+  <PageHeaderComponent utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/src/assets/CircleImages/3.png" />
+
   <ChipsFilter :chips="chipsData" class="animate__animated animate__fadeIn" />
   <EventGrid :events="events" class="animate__animated animate__fadeIn" />
   <FooterComponent />

@@ -149,6 +149,9 @@ export default {
   display: flex;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  height: 12rem; 
+  overflow: hidden; 
+  border-radius: 1rem;
 }
 
 .card-img {

@@ -2,16 +2,13 @@
 import FooterComponent from "@/components/FooterComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
-import ChipsFilter from "@/components/EventsView/ChipsFilter.vue";
-import EventGrid from "@/components/EventsView/EventGrid.vue";
-
+import NewsGrid from "@/components/NewsView/NewsGrid.vue";
 export default {
-  name: "EventsView",
-  components: { HeaderComponent, FooterComponent, PageHeaderComponent, ChipsFilter, EventGrid },
+  name: "NewsView",
+  components: { HeaderComponent, FooterComponent, PageHeaderComponent, NewsGrid },
   data() {
     return {
-      chipsData: ['0+', '6+', '12+', '16+', 'Пушкинская карта', 'Школьная классика', 'Новогоднее'],
-      events: [
+      news: [
         {
           title: "Капитанская дочка",
           location: "ДК Выборгский, ул. Комиссара Смирного, д. 15",
@@ -93,59 +90,14 @@ export default {
       ],
     };
   },
-  methods: {
-    parseDate(dateString: string) {
-  const months = {
-    январь: 0,
-    февраль: 1,
-    март: 2,
-    апрель: 3,
-    май: 4,
-    июнь: 5,
-    июль: 6,
-    август: 7,
-    сентябрь: 8,
-    октябрь: 9,
-    ноябрь: 10,
-    декабрь: 11,
-  };
-
-  
-  const regex = /(\d+)\s([а-яА-Я]+)/; 
-  const match = dateString.match(regex);
-
-  if (match && match.length === 3) {
-    const day = parseInt(match[1], 10);
-    const month = months[match[2].toLowerCase()];
-    const currentYear = new Date().getFullYear(); 
-
-    if (month !== undefined) {
-      return new Date(currentYear, month, day);
-    } else {
-      console.error(`Неизвестный месяц: ${match[2]}`);
-    }
-  } else {
-    console.error(`Не удалось распарсить дату: ${dateString}`);
-  }
-
-  return new Date(); 
-},
-    
-    isOutdated(event) {
-      const eventDate = this.parseDate(event.date); 
-      return eventDate < new Date(); 
-    },
-  },
 };
 </script>
 
 <template>
   <!-- ааауаыыыы -->
   <HeaderComponent />
-  <PageHeaderComponent utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/src/assets/CircleImages/3.png" />
-
-  <ChipsFilter :chips="chipsData" class="animate__animated animate__fadeIn" />
-  <EventGrid :events="events" class="animate__animated animate__fadeIn" />
+  <PageHeaderComponent class="animate__animated animate__fadeIn" title="Новости" imgSrc="/src/assets/CircleImages/13.png" />
+  <NewsGrid :news="news" class="animate__animated animate__fadeIn" />
   <FooterComponent />
 </template>
 

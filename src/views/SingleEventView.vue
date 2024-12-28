@@ -1,4 +1,70 @@
+<template>
+  <HeaderComponent />
+  <PageHeaderComponent
+    class="animate__animated animate__fadeIn"
+    title="Афиша"
+    imgSrc="/src/assets/CircleImages/3.png"
+  />
+  <div class="content-section">
+    <SingleEventHeroComponent :event="eventData" />
+  </div>
+  <Divider />
+  <div class="content-section">
+    <div class="text-wrapper">
+      <!-- Список авторов -->
+      <div class="authors-col-wrapper">
+        <transition-group class="authors-col" name="fade" tag="div">
+          <div
+            v-for="(author, index) in displayedAuthors"
+            :key="index"
+            class="author"
+          >
+            <div class="job">{{ author.job }}</div>
+            <div class="name">{{ author.name }}</div>
+          </div>
+        </transition-group>
+        <!-- Кнопка "Показать все/Скрыть" -->
+        <div v-if="authors.length > 5" class="show-more-btn" @click="toggleAuthors">
+          {{ showAllAuthors ? "Скрыть" : "Показать все" }}
+        </div>
+      </div>
+      <div class="text-col">
+        <p class="text">
+          Мюзикл в двух действиях с симфоническим оркестром. Либретто Жанны
+          Жердер при участии Александра Журбина по одноименному произведению
+          Эрнста Теодора Амадея Гофмана.<br /><br />
+          Рождественская повесть-сказка, в которой реальность легко перетекает в
+          фантазию обрела новое музыкальное воплощение, благодаря композитору
+          Александру Журбину. Несмотря на глубокое философское содержание,
+          спектакль понятен и интересен как маленьким зрителям, так и взрослым.
+          <br /><br />
+          Этот волшебный спектакль о любви, юности, победе добрых сил переносит
+          зрителя в волшебную атмосферу рождества.
+        </p>
+      </div>
+    </div>
+  </div>
+  <Divider />
+  <div class="content-section">
+    <div class="back-btn">
+      << Назад к афише
+    </div>
+    <h3 class="heading">Как вам спектакль? <br />Оставьте отзыв</h3>
+    <div class="form">
+      <input placeholder="Ваше имя" type="text" class="text-input" />
+      <textarea
+        placeholder="Ваши впечатления"
+        type="textarea"
+        class="text-area"
+      />
+      <div class="send-button">отправить</div>
+    </div>
+  </div>
+  <FooterComponent />
+</template>
+  
 <script lang="ts">
+import EventModel from "@/api/modules/event/event.model";
 import FooterComponent from "@/components/FooterComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
@@ -17,30 +83,36 @@ export default {
   data() {
     return {
       eventData: {
-        time: "19:00",
-        date: "28 декабря",
-        duration: "1 час 10 мин",
-        title: "Щелкунчик и мышиный король",
-        chips: ["6+", "Пушкинская карта", "Новогоднее"],
-        place: "КДЦ Московский",
-        address: "Московский проспект, д. 152",
-        imgSrc: "/src/assets/Events/placeholder.jpeg",
+        // time: "19:00",
+        // date: "28 декабря",
+        // duration: "1 час 10 мин",
+        // title: "Щелкунчик и мышиный король",
+        // chips: ["6+", "Пушкинская карта", "Новогоднее"],
+        // place: "КДЦ Московский",
+        // address: "Московский проспект, д. 152",
+        // imgSrc: "/src/assets/Events/placeholder.jpeg",
       },
       authors: [
-        { job: "Композитор", name: "Александр Журбин" },
-        { job: "Либреттист", name: "Жанна Жердер" },
-        { job: "Режиссер", name: "Иван Иванов" },
-        { job: "Художник", name: "Петр Петров" },
-        { job: "Дирижер", name: "Сергей Сергеев" },
-        { job: "Сценограф", name: "Елена Смирнова" },
-        { job: "Хореограф", name: "Анна Иванова" },
+        // { job: "Композитор", name: "Александр Журбин" },
+        // { job: "Либреттист", name: "Жанна Жердер" },
+        // { job: "Режиссер", name: "Иван Иванов" },
+        // { job: "Художник", name: "Петр Петров" },
+        // { job: "Дирижер", name: "Сергей Сергеев" },
+        // { job: "Сценограф", name: "Елена Смирнова" },
+        // { job: "Хореограф", name: "Анна Иванова" },
       ],
       showAllAuthors: false, 
     };
   },
+  async created() {
+    const eventModel = new EventModel()
+    //@ts-ignore
+    this.eventData = (await eventModel.getOne(parseInt(this.$route.params.id))).getData()
+  },
   computed: {
     displayedAuthors() {
-      return this.showAllAuthors ? this.authors : this.authors.slice(0, 5);
+      //@ts-ignore
+      return this.showAllAuthors ? this.eventData.authors : this.eventData.authors.slice(0, 5);
     },
   },
   methods: {
@@ -51,71 +123,6 @@ export default {
 };
 </script>
 
-<template>
-    <HeaderComponent />
-    <PageHeaderComponent
-      class="animate__animated animate__fadeIn"
-      title="Афиша"
-      imgSrc="/src/assets/CircleImages/3.png"
-    />
-    <div class="content-section">
-      <SingleEventHeroComponent :event="eventData" />
-    </div>
-    <Divider />
-    <div class="content-section">
-      <div class="text-wrapper">
-        <!-- Список авторов -->
-        <div class="authors-col-wrapper">
-          <transition-group class="authors-col" name="fade" tag="div">
-            <div
-              v-for="(author, index) in displayedAuthors"
-              :key="index"
-              class="author"
-            >
-              <div class="job">{{ author.job }}</div>
-              <div class="name">{{ author.name }}</div>
-            </div>
-          </transition-group>
-          <!-- Кнопка "Показать все/Скрыть" -->
-          <div v-if="authors.length > 5" class="show-more-btn" @click="toggleAuthors">
-            {{ showAllAuthors ? "Скрыть" : "Показать все" }}
-          </div>
-        </div>
-        <div class="text-col">
-          <p class="text">
-            Мюзикл в двух действиях с симфоническим оркестром. Либретто Жанны
-            Жердер при участии Александра Журбина по одноименному произведению
-            Эрнста Теодора Амадея Гофмана.<br /><br />
-            Рождественская повесть-сказка, в которой реальность легко перетекает в
-            фантазию обрела новое музыкальное воплощение, благодаря композитору
-            Александру Журбину. Несмотря на глубокое философское содержание,
-            спектакль понятен и интересен как маленьким зрителям, так и взрослым.
-            <br /><br />
-            Этот волшебный спектакль о любви, юности, победе добрых сил переносит
-            зрителя в волшебную атмосферу рождества.
-          </p>
-        </div>
-      </div>
-    </div>
-    <Divider />
-    <div class="content-section">
-      <div class="back-btn">
-        << Назад к афише
-      </div>
-      <h3 class="heading">Как вам спектакль? <br />Оставьте отзыв</h3>
-      <div class="form">
-        <input placeholder="Ваше имя" type="text" class="text-input" />
-        <textarea
-          placeholder="Ваши впечатления"
-          type="textarea"
-          class="text-area"
-        />
-        <div class="send-button">отправить</div>
-      </div>
-    </div>
-    <FooterComponent />
-  </template>
-  
 <style scoped>
 .content-section {
   padding-left: 5rem;

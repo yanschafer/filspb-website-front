@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: "FooterComponent",
-};
-</script>
-
 <template>
   <section class="footer-section">
     <div class="footer-header">
@@ -16,13 +10,13 @@ export default {
           <div class="contrast-mode-text">ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ</div>
         </div>
         <div class="links-group">
-            <div class="link-wrapper">
+            <!-- <div class="link-wrapper">
                 <img class="icon yandex" src="../assets/Icons/yandex-brands-solid.svg" />
-            </div>
-            <div class="link-wrapper">
+            </div> -->
+            <div @click="goTg" class="link-wrapper">
                 <img class="icon" src="../assets/Icons/telegram.svg" />
             </div>
-            <div class="link-wrapper">
+            <div @click="goVK" class="link-wrapper">
                 <img class="icon" src="../assets/Icons/vk.svg" />
             </div>
         </div>
@@ -39,12 +33,12 @@ export default {
         </span>
       </div>
       <div class="links-col">
-        <span class="city">Санкт-Петербург</span>
+        <span class="city">{{systemData.city}}</span>
         <a class="location-link">
-            Б. Сампсониевский пр., д.79
+            {{systemDate.addressShort}}
         </a>
-        <a class="phone-link">
-            8 812 295-09-07
+        <a class="phone-link" :href="`telme:${systemData.name}`">
+            {{systemData.name}}
         </a>
         <div class="nav-links-group">
             <a class="nav-link" href="#">ДОКУМЕНТЫ</a>
@@ -56,6 +50,31 @@ export default {
     </div>
   </section>
 </template>
+
+<script lang="ts">
+//@ts-nocheck
+import SystemModel from '@/api/modules/system/system.model';
+
+export default {
+  name: "FooterComponent",
+  data: () => ({
+    systemData: null
+  }),
+  async created() {
+    const systemModel = new SystemModel()
+    this.systemData = (await systemModel.getSystemData()).getData()
+  },
+  methods: {
+    goTg() {
+        window.location = this.systemData.telegram
+    },
+    goVK() {
+        window.location = this.systemData.vk
+    }
+  }
+};
+</script>
+
 
 <style scoped>
 .nav-link {

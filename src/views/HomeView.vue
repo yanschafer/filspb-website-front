@@ -1,86 +1,3 @@
-<script lang="ts">
-import { useRouter } from "vue-router";
-import EventCard from "@/components/EventsView/EventCard.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
-import HeroComponent from "@/components/HomeView/HeroComponent.vue";
-import NewsCard from "@/components/NewsView/NewsCard.vue";
-export default {
-  name: "EventsSection",
-  components: {
-    EventCard,
-    HeroComponent,
-    HeaderComponent,
-    NewsCard,
-    FooterComponent,
-  },
-  data() {
-    return {
-      events: [
-        {
-          title: "Капитанская дочка",
-          location: "ДК Выборгский, ул. Комиссара Смирного, д. 15",
-          authors: [
-            {
-              position: "Автор инсценировки и режиссер-постановщик",
-              name: "Евгений Зимин",
-            },
-            { position: "Художник-постановщик", name: "Вера Курицина" },
-          ],
-          tags: ["Пушкинская карта", "Школьная карта", "12+"],
-          price: "800 ₽",
-          date: "19 декабря",
-          time: "12:00",
-          duration: "2 часа 20 мин",
-          imageUrl: "/src/assets/Events/placeholder.jpeg",
-          description:
-            "Спектакль по мотивам знаменитого произведения А.С. Пушкина из школьной программы, в котором повествуется о воспоминаниях уже взрослого Гринева о двух светлых годах юности.",
-        },
-        {
-          title: "Н. Римский-Корсаков. К 180-летию со дня рождения.",
-          location: "Дворец Искусств Ленинградской области, пл. Стачек д. 4",
-          tags: ["6+", "Пушкинская карта"],
-          price: "800 ₽",
-          date: "19 декабря",
-          time: "19:27",
-          duration: "1 час 30 мин",
-          imageUrl: "/src/assets/Events/placeholder2.jpeg",
-          description: "К юбилею Н.А. Римского-Корсакова",
-        },
-        {
-          title: "Сокровища Флинта",
-          location: "КДЦ Московский, Московский проспект д. 152",
-          tags: ["6+", "Пушкинская карта"],
-          price: "800 ₽",
-          date: "25 декабря",
-          time: "19:00",
-          duration: "1 час 40 мин",
-          imageUrl: "/src/assets/Events/placeholder3.jpeg",
-          description:
-            'Филармония для детей и молодежи приглашает на премьеру мюзикла по мотивам романа Роберта Стивенсона "Остров сокровищ"',
-        },
-        {
-          title: "Рождественский концерт",
-          location: "Дворец Искусств Ленинградской области, пл. Стачек д. 4",
-          tags: ["6+", "Пушкинская карта"],
-          price: "800 ₽",
-          date: "27 декабря",
-          time: "19:27",
-          imageUrl: "/src/assets/Events/placeholder4.jpeg",
-          description:
-            "Рождественские песнопения, популярные арии и ансамбли русских и зарубежных композиторов.",
-        },
-      ],
-    };
-  },
-  methods: {
-    goToEvents() {
-      this.$router.push("/events");
-    },
-  }
-};
-</script>
-
 <template>
   <HeaderComponent class="animate__animated animate__fadeIn" />
   <HeroComponent class="animate__animated animate__fadeIn" />
@@ -132,6 +49,102 @@ export default {
   </section>
   <FooterComponent />
 </template>
+
+<script lang="ts">
+import { useRouter } from "vue-router";
+import EventCard from "@/components/EventsView/EventCard.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import HeroComponent from "@/components/HomeView/HeroComponent.vue";
+import NewsCard from "@/components/NewsView/NewsCard.vue";
+import useEventsStore from "@/stores/events";
+export default {
+  name: "EventsSection",
+  components: {
+    EventCard,
+    HeroComponent,
+    HeaderComponent,
+    NewsCard,
+    FooterComponent,
+  },
+  data() {
+    return {
+      events: [
+        // {
+        //   title: "Капитанская дочка",
+        //   location: "ДК Выборгский, ул. Комиссара Смирного, д. 15",
+        //   authors: [
+        //     {
+        //       position: "Автор инсценировки и режиссер-постановщик",
+        //       name: "Евгений Зимин",
+        //     },
+        //     { position: "Художник-постановщик", name: "Вера Курицина" },
+        //   ],
+        //   tags: ["Пушкинская карта", "Школьная карта", "12+"],
+        //   price: "800 ₽",
+        //   date: "19 декабря",
+        //   time: "12:00",
+        //   duration: "2 часа 20 мин",
+        //   imageUrl: "/src/assets/Events/placeholder.jpeg",
+        //   description:
+        //     "Спектакль по мотивам знаменитого произведения А.С. Пушкина из школьной программы, в котором повествуется о воспоминаниях уже взрослого Гринева о двух светлых годах юности.",
+        // },
+        // {
+        //   title: "Н. Римский-Корсаков. К 180-летию со дня рождения.",
+        //   location: "Дворец Искусств Ленинградской области, пл. Стачек д. 4",
+        //   tags: ["6+", "Пушкинская карта"],
+        //   price: "800 ₽",
+        //   date: "19 декабря",
+        //   time: "19:27",
+        //   duration: "1 час 30 мин",
+        //   imageUrl: "/src/assets/Events/placeholder2.jpeg",
+        //   description: "К юбилею Н.А. Римского-Корсакова",
+        // },
+        // {
+        //   title: "Сокровища Флинта",
+        //   location: "КДЦ Московский, Московский проспект д. 152",
+        //   tags: ["6+", "Пушкинская карта"],
+        //   price: "800 ₽",
+        //   date: "25 декабря",
+        //   time: "19:00",
+        //   duration: "1 час 40 мин",
+        //   imageUrl: "/src/assets/Events/placeholder3.jpeg",
+        //   description:
+        //     'Филармония для детей и молодежи приглашает на премьеру мюзикла по мотивам романа Роберта Стивенсона "Остров сокровищ"',
+        // },
+        // {
+        //   title: "Рождественский концерт",
+        //   location: "Дворец Искусств Ленинградской области, пл. Стачек д. 4",
+        //   tags: ["6+", "Пушкинская карта"],
+        //   price: "800 ₽",
+        //   date: "27 декабря",
+        //   time: "19:27",
+        //   imageUrl: "/src/assets/Events/placeholder4.jpeg",
+        //   description:
+        //     "Рождественские песнопения, популярные арии и ансамбли русских и зарубежных композиторов.",
+        // },
+      ],
+    };
+  },
+  setup() {
+    const eventStore =  useEventsStore()
+    eventStore.loadLastFour()
+    return {
+      eventStore
+    }
+  },
+  computed: {
+    events() {
+      return this.eventStore.getEvents
+    }
+  },
+  methods: {
+    goToEvents() {
+      this.$router.push("/events");
+    },
+  }
+};
+</script>
 
 <style>
 .all-news-link {

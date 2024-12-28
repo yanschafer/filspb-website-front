@@ -1,56 +1,3 @@
-<script lang="ts">
-import FooterComponent from "@/components/FooterComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
-import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
-import SingleEventHeroComponent from "@/components/SingleEventHeroComponent.vue";
-import Divider from "primevue/divider";
-
-export default {
-  name: "SingleArticle",
-  components: {
-    HeaderComponent,
-    FooterComponent,
-    PageHeaderComponent,
-    SingleEventHeroComponent,
-    Divider,
-  },
-  data() {
-    return {
-      eventData: {
-        time: "19:00",
-        date: "28 декабря",
-        duration: "1 час 10 мин",
-        title: "Щелкунчик и мышиный король",
-        chips: ["6+", "Пушкинская карта", "Новогоднее"],
-        place: "КДЦ Московский",
-        address: "Московский проспект, д. 152",
-        imgSrc: "/src/assets/Events/placeholder.jpeg",
-      },
-      authors: [
-        { job: "Композитор", name: "Александр Журбин" },
-        { job: "Либреттист", name: "Жанна Жердер" },
-        { job: "Режиссер", name: "Иван Иванов" },
-        { job: "Художник", name: "Петр Петров" },
-        { job: "Дирижер", name: "Сергей Сергеев" },
-        { job: "Сценограф", name: "Елена Смирнова" },
-        { job: "Хореограф", name: "Анна Иванова" },
-      ],
-      showAllAuthors: false,
-    };
-  },
-  computed: {
-    displayedAuthors() {
-      return this.showAllAuthors ? this.authors : this.authors.slice(0, 5);
-    },
-  },
-  methods: {
-    toggleAuthors() {
-      this.showAllAuthors = !this.showAllAuthors;
-    },
-  },
-};
-</script>
-
 <template>
   <HeaderComponent />
   <PageHeaderComponent
@@ -106,6 +53,59 @@ export default {
 
   <FooterComponent />
 </template>
+
+<script lang="ts">
+import FooterComponent from "@/components/FooterComponent.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
+import SingleEventHeroComponent from "@/components/SingleEventHeroComponent.vue";
+import Divider from "primevue/divider";
+
+export default {
+  name: "SingleArticle",
+  components: {
+    HeaderComponent,
+    FooterComponent,
+    PageHeaderComponent,
+    SingleEventHeroComponent,
+    Divider,
+  },
+  data() {
+    return {
+      eventData: {
+        time: "19:00",
+        date: "28 декабря",
+        duration: "1 час 10 мин",
+        title: "Щелкунчик и мышиный король",
+        chips: ["6+", "Пушкинская карта", "Новогоднее"],
+        place: "КДЦ Московский",
+        address: "Московский проспект, д. 152",
+        imgSrc: "/src/assets/Events/placeholder.jpeg",
+      },
+      authors: [
+        { job: "Композитор", name: "Александр Журбин" },
+        { job: "Либреттист", name: "Жанна Жердер" },
+        { job: "Режиссер", name: "Иван Иванов" },
+        { job: "Художник", name: "Петр Петров" },
+        { job: "Дирижер", name: "Сергей Сергеев" },
+        { job: "Сценограф", name: "Елена Смирнова" },
+        { job: "Хореограф", name: "Анна Иванова" },
+      ],
+      showAllAuthors: false,
+    };
+  },
+  computed: {
+    displayedAuthors() {
+      return this.showAllAuthors ? this.authors : this.authors.slice(0, 5);
+    },
+  },
+  methods: {
+    toggleAuthors() {
+      this.showAllAuthors = !this.showAllAuthors;
+    },
+  },
+};
+</script>
 
 <style scoped>
 .content-section {

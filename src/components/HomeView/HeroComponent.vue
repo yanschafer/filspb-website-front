@@ -1,3 +1,28 @@
+<template>
+  <section class="section">
+    <div class="search-box">
+        <div class="search-icon-wrapper">
+          <img
+            class="search-icon"
+            src="../../assets/Icons/magnifying-glass-solid.svg"
+          />
+        </div>
+        <input class="search-input" type="text" />
+      </div>
+    <div class="container">
+      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-xl" :src="randomImages[0]" />
+      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-s" :src="randomImages[1]" />
+      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-l" :src="randomImages[2]" />
+      <div class="hero">
+        <div class="hero-title">
+          <b>Государственная филармония</b> <nobr><b>Санкт-Петербурга</b></nobr
+          ><br /><nobr>для детей и молодежи</nobr>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
 <script lang="ts">
 export default {
   name: "HeroComponent",
@@ -41,31 +66,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <section class="section">
-    <div class="search-box">
-        <div class="search-icon-wrapper">
-          <img
-            class="search-icon"
-            src="../../assets/Icons/magnifying-glass-solid.svg"
-          />
-        </div>
-        <input class="search-input" type="text" />
-      </div>
-    <div class="container">
-      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-xl" :src="randomImages[0]" />
-      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-s" :src="randomImages[1]" />
-      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-l" :src="randomImages[2]" />
-      <div class="hero">
-        <div class="hero-title">
-          <b>Государственная филармония</b> <nobr><b>Санкт-Петербурга</b></nobr
-          ><br /><nobr>для детей и молодежи</nobr>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
 
 <style scoped>
 .hero-title {

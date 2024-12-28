@@ -1,40 +1,3 @@
-<script lang="ts">
-import { Select, DatePicker } from 'primevue';
-export default {
-  name: "PageHeaderComponent",
-  components: {Select, DatePicker},
-  data() {
-        return {
-          dates: null,
-            selectedLocation: null,
-            locations: [
-                { name: 'Адмиралтейство'},
-                { name: 'АртРазБег'},
-                { name: 'Гатчинский ДК'},
-                { name: 'Дворец искусств Ленинградской области'},
-            ]
-        };
-    },
-  props: {
-    title: {
-      type: String,
-      required: true,
-      default: "Афиша", 
-    },
-    imgSrc: {
-      type: String,
-      required: true,
-      default: "../assets/CircleImages/3.png", 
-    },
-    utils: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  },
-};
-</script>
-
 <template>
   <div class="page-header-wrapper">
     <div class="page-header-col">
@@ -53,19 +16,74 @@ export default {
       <div class="nubmer-wrapper">
         <span class="number-heading">
           Касса
-          <a href="tel:8812295-09-07" class="number-link">8 812 295-09-07</a>
+          <a :href="`telme:${systemData.name}`" class="number-link">{{systemData.name}}</a>
         </span>
       </div>
     </div>
     <div v-if="utils" class="page-header-col">
-        <Select v-model="selectedLocation" :options="locations" filter optionLabel="name" placeholder="все площадки" class="w-full md:w-56">
-        </Select>
+        <Select v-model="selectedLocation" @update:modelValue="platformSelection" :options="locations" filter optionLabel="name" placeholder="все площадки" class="w-full md:w-56" />
     </div>
     <div v-if="utils" class="page-header-col">
-      <DatePicker v-model="dates" selectionMode="range" placeholder="дата" :manualInput="false" class="w-full md:w-56" />
+      <DatePicker v-model="dates" @update:modelValue="datesSelection" selectionMode="range" placeholder="дата" :manualInput="false" class="w-full md:w-56" />
     </div>
   </div>
 </template>
+
+
+<script lang="ts">
+import PlatformModel from '@/api/modules/platform/platform.model';
+import SystemDto from '@/api/modules/system/system.dto';
+import SystemModel from '@/api/modules/system/system.model';
+import { Select, DatePicker } from 'primevue';
+export default {
+  name: "PageHeaderComponent",
+  components: {Select, DatePicker},
+  props: {
+    title: {
+      type: String,
+      required: true,
+      default: "Афиша", 
+    },
+    imgSrc: {
+      type: String,
+      required: true,
+      default: "../assets/CircleImages/3.png", 
+    },
+    utils: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  data: () => ({
+    dates: null,
+    selectedLocation: null,
+    locations: [
+        { name: 'Адмиралтейство'},
+        { name: 'АртРазБег'},
+        { name: 'Гатчинский ДК'},
+        { name: 'Дворец искусств Ленинградской области'},
+    ],
+    systemData: null
+  }),
+  async created() {
+    const systemModel = new SystemModel()
+    const platformModel = new PlatformModel()
+    //@ts-ignore
+    this.systemData = (await systemModel.getSystemData()).getData()
+    this.locations = (await platformModel.getAll()).getData()
+  },
+  methods: {
+    platformSelection() {
+      
+    },
+    datesSelection() {
+
+    }
+  }
+};
+</script>
+
 
 <style scoped>
 .logo-link {

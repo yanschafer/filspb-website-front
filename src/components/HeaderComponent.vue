@@ -1,13 +1,7 @@
-<script lang="ts">
-export default {
-  name: "HeaderComponent",
-}
-</script>
-
 <template>
 <div class="navbar">
     <div class="number">
-        <a class="link-number" href="telme:8 812 295-09-07">8 812 295-09-07</a>
+        <a class="link-number" :href="`telme:${systemData.name}`">{{systemData.name}}</a>
     </div>
     <div class="nav-group">
         <div class="nav-link">
@@ -33,14 +27,39 @@ export default {
             <img class="social-icon" src="../assets/Icons/eye-solid.svg" >
         </div>
         <div class="icon-wrapper">
-            <img class="social-icon" src="../assets/Icons/telegram.svg" >
+            <img @click="goTg" class="social-icon" src="../assets/Icons/telegram.svg" >
         </div>
         <div class="icon-wrapper">
-            <img class="social-icon" src="../assets/Icons/vk.svg" >
+            <img @click="goVK" class="social-icon" src="../assets/Icons/vk.svg" >
         </div>
     </div>
 </div>
 </template>
+
+<script lang="ts">
+//@ts-nocheck
+
+import SystemModel from '@/api/modules/system/system.model';
+
+export default {
+  name: "HeaderComponent",
+  data: () => ({
+    systemData: null
+  }),
+  async created() {
+    const systemModel = new SystemModel()
+    this.systemData = (await systemModel.getSystemData()).getData()
+  },
+  methods: {
+    goTg() {
+        window.location = this.systemData.telegram
+    },
+    goVK() {
+        window.location = this.systemData.vk
+    }
+  }
+}
+</script>
 
 <style scoped>
 .navbar {

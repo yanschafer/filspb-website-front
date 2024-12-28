@@ -1,17 +1,5 @@
-<script lang="ts">
-export default {
-  name: "NewsCard",
-  props: {
-    cardData: {
-      type: Object,
-      required: true,
-    },
-  },
-};
-</script>
-
 <template>
-  <div class="card-wrapper">
+  <div class="card-wrapper" @click="goTo(cardData.id)">
     <div class="img-wrapper">
       <img class="card-img" :src="cardData.imageUrl" />
     </div>
@@ -24,6 +12,27 @@ export default {
     <p class="description">{{ cardData.description }}</p>
   </div>
 </template>
+
+<script lang="ts">
+import NewsModel from '@/api/modules/news/news.model';
+
+export default {
+  name: "NewsCard",
+  props: ["id"],
+  data: () => ({
+    cardData: {}
+  }),
+  async created() {
+    const newsModel = new NewsModel()
+    this.cardData = (await newsModel.getOne(this.id)).getData()
+  },
+  methods: {
+    goTo(nId: number) {
+      this.$router.push({path: `/article/${nId}`})
+    }
+  }
+};
+</script>
 
 <style scoped>
 .card-wrapper {

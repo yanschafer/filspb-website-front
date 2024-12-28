@@ -1,3 +1,16 @@
+<template>
+  <div class="event-grid">
+    <div class="month-section">
+      <div class="event-cards">
+        <NewsCard
+          v-for="(news, index) in news"
+          :key="index"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
 <script lang="ts">
 import NewsCard from './NewsCard.vue';
 
@@ -14,20 +27,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="event-grid">
-    <div class="month-section">
-      <div class="event-cards">
-        <NewsCard
-          v-for="(news, index) in news"
-          :key="index"
-          :cardData="news"
-        />
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 /* Грииды гриды гридочки */

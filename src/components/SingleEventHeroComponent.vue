@@ -1,15 +1,3 @@
-<script lang="ts">
-export default {
-  name: "SingleEventHero",
-  props: {
-    event: {
-      type: Object,
-      required: true,
-    },
-  },
-};
-</script>
-
 <template>
   <div class="event-hero-wrapper">
     <div class="event-hero-img-col">
@@ -45,6 +33,18 @@ export default {
     </div>
   </div>
 </template>
+
+<script lang="ts">
+export default {
+  name: "SingleEventHero",
+  props: {
+    event: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
 
 <style scoped>
 .event-hero-wrapper {

@@ -43,12 +43,12 @@ const router = createRouter({
       component: NewsView,
     },
     {
-      path: '/single-event',
+      path: '/event/:id',
       name: 'single-event',
       component: SingleEventView,
     },
     {
-      path: '/single-article',
+      path: '/article/:id',
       name: 'single-article',
       component: SingleArticleView,
     },

@@ -32,6 +32,7 @@
         this.$router.push({path: `/event/${eventId}`})
       },
       getImage(url: string) {
+        if (!url) return ""
         if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
         else return url
       }

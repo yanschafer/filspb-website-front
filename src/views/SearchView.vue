@@ -29,6 +29,7 @@ export default {
     },
     methods: {
         getImage(url: string) {
+            if (!url) return null
             if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
             else return url
         },

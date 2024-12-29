@@ -1,44 +1,132 @@
 <template>
   <section class="section">
     <div class="search-box">
-        <div class="search-icon-wrapper">
-          <img
-            class="search-icon"
-            src="../../assets/Icons/magnifying-glass-solid.svg"
-          />
-        </div>
-        <input @keyup.enter="onSearch" v-model="searchValue" class="search-input" type="text" />
+      <div class="search-icon-wrapper">
+        <img
+          class="search-icon"
+          src="../../assets/Icons/magnifying-glass-solid.svg"
+        />
       </div>
-    <div class="container">
-      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-xl" :src="randomImages[0]" />
-      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-s" :src="randomImages[1]" />
-      <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-l" :src="randomImages[2]" />
-      <div class="hero">
-        <div class="hero-title">
-          <b>Государственная филармония</b> <nobr><b>Санкт-Петербурга</b></nobr
-          ><br /><nobr>для детей и молодежи</nobr>
-        </div>
-      </div>
+      <input
+        @keyup.enter="onSearch"
+        v-model="searchValue"
+        class="search-input"
+        type="text"
+      />
     </div>
+    <swiper
+      navigation
+      :pagination="{ clickable: true }"
+      :modules="modules"
+      loop
+      :autoplay="autoplay"
+      class="my-swiper"
+    >
+      <swiper-slide>
+        <section>
+          <div class="container">
+            <img
+              :style="{ transform: calculateTransform(0.2) }"
+              class="hero-img hero-img-xl"
+              :src="randomImages[0]"
+            />
+            <img
+              :style="{ transform: calculateTransform(0.2) }"
+              class="hero-img hero-img-s"
+              :src="randomImages[1]"
+            />
+            <img
+              :style="{ transform: calculateTransform(0.2) }"
+              class="hero-img hero-img-l"
+              :src="randomImages[2]"
+            />
+            <div class="hero">
+              <div class="hero-title">
+                <b>Государственная филармония</b><br />
+                <nobr><b>Санкт-Петербурга</b></nobr
+                ><br />
+                <nobr>для детей и молодежи</nobr>
+              </div>
+            </div>
+          </div>
+        </section>
+      </swiper-slide>
+      <swiper-slide v-for="(slide, index) in slides" :key="index">
+        <div class="slide-content">
+          <div class="slide-img-col">
+            <div class="slide-img-wrapper">
+              <img :src="slide.image" alt="Slide Image" class="slide-image" />
+            </div>
+          </div>
+          <div class="slide-content-col">
+            <h2 class="slide-title">{{ slide.title }}</h2>
+            <p class="slide-text">{{ slide.text }}</p>
+            <a :href="slide.link" class="slide-button">
+              {{ slide.buttonText }}
+            </a>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper>
   </section>
 </template>
 
 <script lang="ts">
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/swiper-bundle.css";
+
 export default {
   name: "HeroComponent",
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  setup() {
+    return {
+      modules: [Navigation, Pagination, Autoplay],
+      autoplay: {
+      delay: 4000, 
+      disableOnInteraction: false, 
+    },
+    };
+  },
   data() {
     return {
       searchValue: "",
       randomImages: [] as string[],
       scrollY: 0,
+      slides: [
+        {
+          image: "/src/assets/Events/placeholder.jpeg",
+          title: "Солнышко и снежные человечки",
+          text: "Наш спектакль начнется, когда бабушка Зима уютно расположится в своем кресле и начнет вязать сказки. Она большая выдумщица, мастерица сочинять волшебные истории, которые она бережно хранит в своем любимом шкафу. Одну из таких историй – про Снежных человечков – она поведает зрителям. Снежные человечки отправляются на поиски Солнышка. По дороге Снеговички встречают Сову, Белочку, Зайку, Волчонка и другой лесной народ. Звери замерзли, они ждут, когда придет весна, вернется Солнышко и согреет их...А что же случилось дальше, вы узнаете, посмотрев сказку бабушки Зимы!",
+          buttonText: "подробнее",
+          link: "#slide1",
+        },
+        {
+          image: "/src/assets/Events/placeholder.jpeg",
+          title: "конек горбунёк",
+          text: "Наш спектакль начнется, когда бабушка Зима уютно расположится в своем кресле и начнет вязать сказки. Она большая выдумщица, мастерица сочинять волшебные истории, которые она бережно хранит в своем любимом шкафу. Одну из таких историй – про Снежных человечков – она поведает зрителям. Снежные человечки отправляются на поиски Солнышка. По дороге Снеговички встречают Сову, Белочку, Зайку, Волчонка и другой лесной народ. Звери замерзли, они ждут, когда придет весна, вернется Солнышко и согреет их...А что же случилось дальше, вы узнаете, посмотрев сказку бабушки Зимы!",
+          buttonText: "подробнее",
+          link: "#slide1",
+        },
+        {
+          image: "/src/assets/morozko.jpg",
+          title: 'Ебанько из сказки "Морозко"',
+          text: "Описание слайда 3.",
+          buttonText: "Купить билет",
+          link: "#slide3",
+        },
+      ],
     };
   },
   methods: {
     onSearch() {
-      this.$router.push({path: "/search/" + this.searchValue})
+      this.$router.push({ path: "/search/" + this.searchValue });
     },
     handleScroll() {
-      this.scrollY = window.scrollY; 
+      this.scrollY = window.scrollY;
     },
     calculateTransform(offset: number) {
       return `translate3d(0, ${-this.scrollY * offset}px, 0)`;
@@ -63,15 +151,81 @@ export default {
   },
   mounted() {
     this.generateRandomImages();
-    window.addEventListener("scroll", this.handleScroll); // Слушаем событие прокрутки
+    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll); // Очищаем слушатель
+    window.removeEventListener("scroll", this.handleScroll);
   },
 };
 </script>
 
 <style scoped>
+.slide-button {
+  background-color: #fbc800;
+  color: black;
+  padding: 1rem;
+  font-size: 18px;
+  border-radius: 40rem;
+  margin-top: 2rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+.slide-button:hover {
+  background-color: black;
+  color: white;
+}
+.slide-text {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+.slide-content {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  height: 100vh;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+.slide-title {
+  font-size: 4rem;
+  line-height: 4rem;
+  font-weight: 700;
+}
+.slide-content-col {
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.slide-img-wrapper {
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: contain;
+  display: flex;
+  height: 30rem;
+  width: 30rem;
+  overflow: hidden; 
+  border-radius: 50%;
+}
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slide-img-col {
+  width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section {
+  background-image: url("../../assets/Hero/hero_bg-min.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .hero-title {
   font-size: 5.4rem;
   line-height: 5.4rem;
@@ -82,8 +236,7 @@ export default {
 }
 .container {
   z-index: 2;
-  height: 80vh;
-  background-image: url("../../assets/Hero/hero_bg-min.png");
+  height: 100vh;
   background-size: contain;
   background-position: center;
   display: flex;

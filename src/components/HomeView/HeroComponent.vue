@@ -60,7 +60,7 @@
           </div>
           <div class="slide-content-col">
             <h2 class="slide-title">{{ slide.title }}</h2>
-            <p class="slide-text">{{ slide.text }}</p>
+            <p class="slide-text" v-html="slide.text"></p>
             <a :href="slide.link" class="slide-button">
               {{ slide.buttonText }}
             </a>
@@ -75,6 +75,7 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import SliderModel from "@/api/modules/slider/slider.model";
 
 export default {
   name: "HeroComponent",
@@ -96,30 +97,12 @@ export default {
       searchValue: "",
       randomImages: [] as string[],
       scrollY: 0,
-      slides: [
-        {
-          image: "/src/assets/Events/placeholder.jpeg",
-          title: "Солнышко и снежные человечки",
-          text: "Наш спектакль начнется, когда бабушка Зима уютно расположится в своем кресле и начнет вязать сказки. Она большая выдумщица, мастерица сочинять волшебные истории, которые она бережно хранит в своем любимом шкафу. Одну из таких историй – про Снежных человечков – она поведает зрителям. Снежные человечки отправляются на поиски Солнышка. По дороге Снеговички встречают Сову, Белочку, Зайку, Волчонка и другой лесной народ. Звери замерзли, они ждут, когда придет весна, вернется Солнышко и согреет их...А что же случилось дальше, вы узнаете, посмотрев сказку бабушки Зимы!",
-          buttonText: "подробнее",
-          link: "#slide1",
-        },
-        {
-          image: "/src/assets/Events/placeholder.jpeg",
-          title: "конек горбунёк",
-          text: "Наш спектакль начнется, когда бабушка Зима уютно расположится в своем кресле и начнет вязать сказки. Она большая выдумщица, мастерица сочинять волшебные истории, которые она бережно хранит в своем любимом шкафу. Одну из таких историй – про Снежных человечков – она поведает зрителям. Снежные человечки отправляются на поиски Солнышка. По дороге Снеговички встречают Сову, Белочку, Зайку, Волчонка и другой лесной народ. Звери замерзли, они ждут, когда придет весна, вернется Солнышко и согреет их...А что же случилось дальше, вы узнаете, посмотрев сказку бабушки Зимы!",
-          buttonText: "подробнее",
-          link: "#slide1",
-        },
-        {
-          image: "/src/assets/morozko.jpg",
-          title: 'Ебанько из сказки "Морозко"',
-          text: "Описание слайда 3.",
-          buttonText: "Купить билет",
-          link: "#slide3",
-        },
-      ],
+      slides: [],
     };
+  },
+  async created() {
+    const sliderModel = new SliderModel()
+    this.slides = (await sliderModel.getSlides()).getData()
   },
   methods: {
     onSearch() {

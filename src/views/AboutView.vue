@@ -3,31 +3,33 @@
     <PageHeaderComponent class="animate__animated animate__fadeIn" title="О нас" imgSrc="/src/assets/CircleImages/head_about.png" />
     <template v-for="category in categories">
         <div>
-            <h1>{{ category.name }}</h1>
-            <tempate v-for="person in elite(category.id)">
+            <h1>{{ category.categoryName }}</h1>
+            <template v-for="person in elite(category)">
                 <h3>{{ person.name }}</h3>
                 <p>Elite: {{ person.position }}</p>
-                <img :src="person.image" />
-            </tempate>
-            <tempate v-for="person in popuski(category.id)">
+                <img :src="getImage(person.image)" />
+            </template>
+            <template v-for="person in popuski(category)">
                 <h3>{{ person.name }}</h3>
                 <p>Popusk: {{ person.position }}</p>
-            </tempate>
+            </template>
         </div>
     </template>
-    <template v-for="partner in partners">
-        <img :src="partner.image" />
+    <template v-if="false" v-for="partner in partners">
+        <img :src="getImage(partner.image)" />
     </template>
     <template v-for="vacancy in vacancies">
-        <img :src="vacancy.image" />
+        <img :src="getImage(vacancy.image)" />
         <h1>{{ vacancy.name }}</h1>
-        <p>{{ vacancy.description }}</p>
+        <p v-html="vacancy.description"></p>
     </template>
     <FooterComponent />
 </template>
 
 <script lang="ts">
+import appConf from '@/api/conf/app.conf';
 import PartnersModel from '@/api/modules/partners/partners.model';
+import type PeopleCategoryDto from '@/api/modules/people/people-category.dto';
 import PeopleModel from '@/api/modules/people/people.model';
 import VacancyModel from '@/api/modules/vacancy/vacancy.model';
 import FooterComponent from '@/components/FooterComponent.vue';
@@ -45,8 +47,7 @@ export default {
     }),
     async created() {
         const peopleModel = new PeopleModel()
-        this.people = (await peopleModel.getAll()).getData()
-        this.categories = (await peopleModel.getCategories()).getData()
+        this.categories = (await peopleModel.getAll()).getData()
 
         const vacancyModel = new VacancyModel()
         this.vacancies = (await vacancyModel.getAll()).getData()
@@ -55,11 +56,15 @@ export default {
         this.partners = (await parnersModel.getAll()).getData()
     },
     methods: {
-        elite(cId: number) {
-            return this.people.filter(el => el.categoryId == cId && el.image != null)
+        getImage(url: string) {
+            if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
+            else return url
         },
-        popuski(cId: number) {
-            return this.people.filter(el => el.categoryId == cId && el.image == null)
+        elite(category: PeopleCategoryDto) {
+            return category.people.filter(el => el.image != null)
+        },
+        popuski(category: PeopleCategoryDto) {
+            return category.people.filter(el => el.image == null)
         }
     }
 }

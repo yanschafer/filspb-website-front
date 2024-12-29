@@ -1,34 +1,32 @@
 <template>
   <div class="card-wrapper" @click="goTo(cardData.id)">
-    <div class="img-wrapper">
-      <img class="card-img" :src="cardData.imageUrl" />
+    <div class="img-wrapper" v-if="cardData.image">
+      <img class="card-img" :src="getImage(cardData.image)" />
     </div>
     <div class="header-row">
       <div class="header-col">
         <div class="date">{{ cardData.date }}</div>
       </div>
     </div>
-    <h3 class="heading">{{ cardData.title }}</h3>
-    <p class="description">{{ cardData.description }}</p>
+    <h3 class="heading">{{ cardData.name }}</h3>
+    <p class="description">{{ cardData.shortDescription }}</p>
   </div>
 </template>
 
 <script lang="ts">
+import appConf from '@/api/conf/app.conf';
 import NewsModel from '@/api/modules/news/news.model';
 
 export default {
   name: "NewsCard",
-  props: ["id"],
-  data: () => ({
-    cardData: {}
-  }),
-  async created() {
-    const newsModel = new NewsModel()
-    this.cardData = (await newsModel.getOne(this.id)).getData()
-  },
+  props: ["id", "cardData"],
   methods: {
     goTo(nId: number) {
       this.$router.push({path: `/article/${nId}`})
+    },
+    getImage(url: string) {
+      if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
+      else return url
     }
   }
 };

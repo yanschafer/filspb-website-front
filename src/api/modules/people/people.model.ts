@@ -9,15 +9,9 @@ export default class PeopleModel extends ApiModelUtil {
         super('people')
     }
 
-    public getAll(): Promise<ApiResponseDto<PersonDto>> {
+    public getAll(): Promise<ApiResponseDto<PeopleCategoryDto[]>> {
         return this.unauthorizedRequest(
             new ApiRequestDto('', 'GET')
-        )
-    }
-
-    public getCategories(): Promise<ApiResponseDto<PeopleCategoryDto>> {
-        return this.unauthorizedRequest(
-            new ApiRequestDto('category', 'GET')
         )
     }
 }

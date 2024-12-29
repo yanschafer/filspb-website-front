@@ -3,7 +3,8 @@
     <div class="month-section">
       <div class="event-cards">
         <NewsCard
-          v-for="(news, index) in news"
+          v-for="(item, index) in news"
+          :card-data="item"
           :key="index"
         />
       </div>

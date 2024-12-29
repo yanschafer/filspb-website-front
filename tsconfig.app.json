@@ -9,7 +9,6 @@
     "checkJs": false,
     "noEmitOnError": false,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
     "paths": {
       "@/*": ["./src/*"]
     }

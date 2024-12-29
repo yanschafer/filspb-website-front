@@ -1,8 +1,8 @@
 <template>
-  <div class="card-wrapper" :class="{ 'outdated': isOutdated }">
+  <div @click="goTo(cardData.id)" class="card-wrapper" :class="{ 'outdated': isOutdated }">
     <div class="overlay">
-      <h3 class="heading">{{ cardData.title }}</h3>
-      <span class="subheading">{{ cardData.location }}</span>
+      <h3 class="heading">{{ cardData.name }}</h3>
+      <span class="subheading">{{ cardData.platformName + "\n" + cardData.platformAddress }}</span>
       <div class="authors">
         <div v-for="(author, index) in cardData.authors" :key="index">
           <div class="author-position">{{ author.position }}</div>
@@ -11,11 +11,11 @@
       </div>
       <div class="chips">
         <div class="chip" v-for="(tag, index) in cardData.tags" :key="index">
-          {{ tag }}
+          {{ tag.name }}
         </div>
       </div>
       <button class="overlay-button">купить билет</button>
-      <div class="min-price">от {{ cardData.price }}</div>
+      <div class="min-price">от {{ cardData.price }}р</div>
     </div>
     <div class="header-row">
       <div class="header-col">
@@ -25,19 +25,21 @@
       <div class="header-col">
         <div class="clock-row">
           <i class="fa-regular fa-clock"></i>
-          <div class="clock-text">{{ cardData.duration }}</div>
+          <div class="clock-text">{{ cardData.eventTime }}</div>
         </div>
       </div>
     </div>
     <div class="img-wrapper">
-      <img class="card-img" :src="cardData.imageUrl" />
+      <img class="card-img" :src="getImage(cardData.image)" />
     </div>
-    <h3 class="heading">{{ cardData.title }}</h3>
-    <p class="description">{{ cardData.description }}</p>
+    <h3 class="heading">{{ cardData.name }}</h3>
+    <p class="description" v-html="cardData.shortDescription"></p>
   </div>
 </template>
 
 <script lang="ts">
+import appConf from '@/api/conf/app.conf';
+
 export default {
   name: "EventCard",
   props: {
@@ -50,6 +52,15 @@ export default {
       default: false,
     },
   },
+  methods: {
+    goTo(eventId: number) {
+      this.$router.push({path: `/event/${eventId}`})
+    },
+    getImage(url: string) {
+      if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
+      else return url
+    }
+  }
 };
 </script>
 

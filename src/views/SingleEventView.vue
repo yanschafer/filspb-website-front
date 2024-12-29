@@ -19,45 +19,36 @@
             :key="index"
             class="author"
           >
-            <div class="job">{{ author.job }}</div>
+            <div class="job">{{ author.position }}</div>
             <div class="name">{{ author.name }}</div>
           </div>
         </transition-group>
         <!-- Кнопка "Показать все/Скрыть" -->
-        <div v-if="authors.length > 5" class="show-more-btn" @click="toggleAuthors">
+        <div v-if="eventData.authors.length > 5" class="show-more-btn" @click="toggleAuthors">
           {{ showAllAuthors ? "Скрыть" : "Показать все" }}
         </div>
       </div>
       <div class="text-col">
-        <p class="text">
-          Мюзикл в двух действиях с симфоническим оркестром. Либретто Жанны
-          Жердер при участии Александра Журбина по одноименному произведению
-          Эрнста Теодора Амадея Гофмана.<br /><br />
-          Рождественская повесть-сказка, в которой реальность легко перетекает в
-          фантазию обрела новое музыкальное воплощение, благодаря композитору
-          Александру Журбину. Несмотря на глубокое философское содержание,
-          спектакль понятен и интересен как маленьким зрителям, так и взрослым.
-          <br /><br />
-          Этот волшебный спектакль о любви, юности, победе добрых сил переносит
-          зрителя в волшебную атмосферу рождества.
+        <p class="text" v-html="eventData.description">
         </p>
       </div>
     </div>
   </div>
   <Divider />
   <div class="content-section">
-    <div class="back-btn">
+    <div @click='$router.push({path: "/events"})' class="back-btn">
       << Назад к афише
     </div>
     <h3 class="heading">Как вам спектакль? <br />Оставьте отзыв</h3>
     <div class="form">
-      <input placeholder="Ваше имя" type="text" class="text-input" />
+      <input v-model="name" placeholder="Ваше имя" type="text" class="text-input" />
       <textarea
+        v-model="review"
         placeholder="Ваши впечатления"
         type="textarea"
         class="text-area"
       />
-      <div class="send-button">отправить</div>
+      <div @click="sendReview" class="send-button">отправить</div>
     </div>
   </div>
   <FooterComponent />
@@ -65,6 +56,8 @@
   
 <script lang="ts">
 import EventModel from "@/api/modules/event/event.model";
+import ReviewCreateDto from "@/api/modules/review/review-create.dto";
+import ReviewModel from "@/api/modules/review/review.model";
 import FooterComponent from "@/components/FooterComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
@@ -82,25 +75,9 @@ export default {
   },
   data() {
     return {
-      eventData: {
-        // time: "19:00",
-        // date: "28 декабря",
-        // duration: "1 час 10 мин",
-        // title: "Щелкунчик и мышиный король",
-        // chips: ["6+", "Пушкинская карта", "Новогоднее"],
-        // place: "КДЦ Московский",
-        // address: "Московский проспект, д. 152",
-        // imgSrc: "/src/assets/Events/placeholder.jpeg",
-      },
-      authors: [
-        // { job: "Композитор", name: "Александр Журбин" },
-        // { job: "Либреттист", name: "Жанна Жердер" },
-        // { job: "Режиссер", name: "Иван Иванов" },
-        // { job: "Художник", name: "Петр Петров" },
-        // { job: "Дирижер", name: "Сергей Сергеев" },
-        // { job: "Сценограф", name: "Елена Смирнова" },
-        // { job: "Хореограф", name: "Анна Иванова" },
-      ],
+      name: "",
+      review: "",
+      eventData: {},
       showAllAuthors: false, 
     };
   },
@@ -108,6 +85,7 @@ export default {
     const eventModel = new EventModel()
     //@ts-ignore
     this.eventData = (await eventModel.getOne(parseInt(this.$route.params.id))).getData()
+    this.eventData.authors = JSON.parse(this.eventData.authors)
   },
   computed: {
     displayedAuthors() {
@@ -116,6 +94,15 @@ export default {
     },
   },
   methods: {
+    async sendReview() {
+      const reviewModel = new ReviewModel();
+      const res = await reviewModel.create(new ReviewCreateDto(Date.now(), this.eventData.originalEventId, this.name, this.review))
+      if (res.success) {
+        //Успешное создание
+      } else {
+        //Говорим что все плохо, пусть чекнет поля или типо того 
+      }
+    },
     toggleAuthors() {
       this.showAllAuthors = !this.showAllAuthors;
     },
@@ -199,6 +186,7 @@ export default {
     padding-right: 1rem;
     padding-top: 0.3rem;
     padding-bottom: 0.5rem;
+    cursor: pointer;
 }
 .back-btn {
     font-size: 1.5rem;

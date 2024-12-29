@@ -35,7 +35,7 @@
       <div class="links-col">
         <span class="city">{{systemData.city}}</span>
         <a class="location-link">
-            {{systemDate.addressShort}}
+            {{systemData.addressShort}}
         </a>
         <a class="phone-link" :href="`telme:${systemData.name}`">
             {{systemData.name}}
@@ -58,7 +58,7 @@ import SystemModel from '@/api/modules/system/system.model';
 export default {
   name: "FooterComponent",
   data: () => ({
-    systemData: null
+    systemData: {}
   }),
   async created() {
     const systemModel = new SystemModel()

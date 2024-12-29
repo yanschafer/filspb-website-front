@@ -44,11 +44,12 @@ import SystemModel from '@/api/modules/system/system.model';
 export default {
   name: "HeaderComponent",
   data: () => ({
-    systemData: null
+    systemData: {}
   }),
   async created() {
     const systemModel = new SystemModel()
     this.systemData = (await systemModel.getSystemData()).getData()
+    console.log(this.systemData)
   },
   methods: {
     goTg() {

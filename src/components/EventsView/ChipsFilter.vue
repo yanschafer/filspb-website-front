@@ -1,4 +1,7 @@
 <script lang="ts">
+import useEventsStore from '@/stores/events';
+import { Select } from 'primevue';
+
 export default {
   name: "ChipsFilter",
   props: {
@@ -7,13 +10,29 @@ export default {
       required: true, 
     },
   },
+  setup() {
+    return {
+      eventsStore: useEventsStore()
+    }
+  },
+  methods: {
+    select(chip) {
+      if (chip.selected) {
+        chip.selected = false
+        this.eventsStore.removeTag(chip.id)
+      } else {
+        chip.selected = true
+        this.eventsStore.addTag(chip.id)
+      }
+    }
+  }
 };
 </script>
 
 <template>
   <div class="chips-row">
-    <div class="chip" v-for="(chip, index) in chips" :key="index">
-      <span class="chip-text">{{ chip }}</span>
+    <div @click="select(chip)" class="chip" :class="{'chip-active': chip.selected}" v-for="(chip, index) in chips" :key="index">
+      <span class="chip-text">{{ chip.name }}</span>
     </div>
   </div>
 </template>
@@ -35,6 +54,11 @@ export default {
   border: 2px solid black;
   padding: 1rem;
   height: 30px;
+  cursor: pointer;
+  transition-duration: .3s;
+}
+.chip-active {
+  background-color: #fbc800;
 }
 .chip-text {
   color: black;

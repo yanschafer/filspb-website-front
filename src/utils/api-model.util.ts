@@ -16,9 +16,10 @@ export default class ApiModelUtil {
   private onRefresh: ApiRequestDto | null = null;
 
   private buildUrl(endpoint: string): string {
-    const baseUrl = `${appConf.endpoint}${this.baseEndpoint}${endpoint}`
+    const baseUrl = `${appConf.endpoint}/${this.baseEndpoint}/client/${endpoint}`
       .replace('//', '/')
-      .replace('//', '/');
+      .replace('//', '/')
+      .replace(/\/$/, '')
 
     return `${appConf.proto}://${baseUrl}`;
   }

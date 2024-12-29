@@ -10,7 +10,7 @@ export default class SystemModel extends ApiModelUtil {
 
     public getSystemData(): Promise<ApiResponseDto<SystemDto>> {
         return this.unauthorizedRequest(
-            new ApiRequestDto('', 'GET')
+            new ApiRequestDto('/1', 'GET')
         )
     }
 }

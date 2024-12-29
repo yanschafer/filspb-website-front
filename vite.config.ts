@@ -8,7 +8,14 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   base: './',
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          // Specify your custom element condition here
+          isCustomElement: (tag) => tag.includes('nobr') // Example: Treat all tags with a dash as custom elements
+        }
+      }
+    }),
     vueDevTools(),
   ],
   resolve: {

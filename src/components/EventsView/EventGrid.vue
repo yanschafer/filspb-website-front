@@ -1,21 +1,24 @@
 <template>
   <div class="event-grid">
-    <div v-for="(events, month) in groupedEvents" :key="month" class="month-section">
-      <h2 class="month-title">{{ month }}</h2>
-      <div class="event-cards">
-        <EventCard
-          v-for="(event, index) in events"
-          @click="goTo(event.id)"
-          :key="index"
-          :cardData="event"
-          :isOutdated="isOutdated(event)"
-        />
+    <template v-for="year in groupedEvents">
+      <div v-for="month in year.months" :key="month" class="month-section">
+        <h2 class="month-title">{{ renderYear(year.year) }} {{ months[month.month] }}</h2>
+        <div class="event-cards">
+          <EventCard
+            v-for="(event, index) in month.events"
+            @click="goTo(event.id)"
+            :key="index"
+            :cardData="event"
+            :isOutdated="isOutdated(event)"
+          />
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
+import useEventsStore from '@/stores/events';
 import EventCard from './EventCard.vue';
 
 export default {
@@ -23,77 +26,71 @@ export default {
   components: {
     EventCard,
   },
-  props: {
-    events: {
-      type: Array,
-      required: true,
-    },
+  setup() {
+    return {
+      eventStore: useEventsStore()
+    }
   },
+  data: () => ({
+    months: {
+      0: 'Январь',
+      1: 'Февраль',
+      2: "Март",
+      3: "Апрель",
+      4: 'Май',
+      5: 'Июнь',
+      6: 'Июль',
+      7: 'Август',
+      8: 'Сентябрь',
+      9: 'Октябрь',
+      10: 'Ноябрь',
+      11: 'Декабрь',
+    }
+  }),
   computed: {
+    events() {
+      return this.eventStore.getEvents
+    },
     groupedEvents() {
       if (!this.events || this.events.length === 0) {
         return {};
       }
 
-      const grouped: { [key: string]: any[] } = {};
-
-      // Сортировка по дате, которая не работает
-      const sortedEvents = this.events.sort((a, b) => {
-        const parsedDateA = this.parseDate(a.date);
-        const parsedDateB = this.parseDate(b.date);
-        return parsedDateA.getTime() - parsedDateB.getTime(); 
-      });
+      const grouped: { [key: string]: any } = {};
 
       // Группировка по месяцам, которую ебал в рот
-      sortedEvents.forEach((event) => {
-        const parsedDate = this.parseDate(event.date); 
-        const month = parsedDate.toLocaleString('default', { month: 'long' });
-        if (!grouped[month]) {
-          grouped[month] = [];
+      this.events.forEach((event) => {
+        const year = (new Date(event.date)).getFullYear()
+        const month = (new Date(event.date)).getMonth()
+        if (!grouped[year]) {
+          grouped[year] = {[month]: [event]};
+        } else {
+          if (!grouped[year][month]) {
+            grouped[year][month] = [event]
+          } else {
+            grouped[year][month].push(event);
+          }
         }
-        grouped[month].push(event);
       });
 
-      return grouped;
+      return Object.entries(grouped).sort().reverse().map(el => ({
+        year: el[0],
+        months: Object.entries(el[1]).sort().reverse().map(m => ({
+            month: m[0],
+            events: m[1]
+        }))
+      }));
     },
   },
   methods: {
     // Проверка на устаревшие мероприятия, чтобы сделать карточку outdated, но я где-то обосрался и это не работает
     isOutdated(event) {
-      const parsedDate = this.parseDate(event.date);
-      return parsedDate < new Date(); 
+      return false
     },
-    parseDate(dateString: string) {
-      // Массив месяцев, потому что я пытался сделать автоматический вывод на месяцы
-      const months = {
-        январь: 0,
-        февраль: 1,
-        март: 2,
-        апрель: 3,
-        май: 4,
-        июнь: 5,
-        июль: 6,
-        август: 7,
-        сентябрь: 8,
-        октябрь: 9,
-        ноябрь: 10,
-        декабрь: 11,
-      };
-
-      const regex = /(\d+)\s([а-яА-Я]+)/;
-      const match = dateString.match(regex);
-      
-      if (match && match.length === 3) {
-        const day = match[1];
-        const month = months[match[2].toLowerCase()];
-        const currentYear = new Date().getFullYear();
-
-        if (month !== undefined) {
-          return new Date(currentYear, month, parseInt(day)); 
-        }
-      }
-
-      return new Date();
+    renderYear(year) {
+      console.log(year)
+      if ((new Date()).getFullYear() != year) return year 
+      else return null
     },
     goTo(eId: number) {
       this.$router.push({path: `/event/${eId}`})

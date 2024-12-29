@@ -3,8 +3,9 @@
     <template v-for="person in people">
         <div>
             <h1>{{ person.name }}</h1>
-            <img :src="person.image" />
+            <img :src="getImage(person.image)" />
             <p>{{ person.email }}</p>
+            <p>{{ person.position }}</p>
         </div>
     </template> 
     <div>
@@ -16,7 +17,7 @@
         <div>
             <h1>{{ dep.name }}</h1>
             <p>{{ dep.phone }}</p>
-            <p>{{ dep.timeTable }}</p>
+            <p v-html="dep.timeTable"></p>
         </div>
     </template>
     <p>Our socials: <a :href="main.vk">VK</a></p>
@@ -24,12 +25,12 @@
 </template>
 
 <script lang="ts">
-//@ts-nocheck
 import DepContactsModel from '@/api/modules/contacts/dep-contacts.model';
 import PeopleContactsModel from '@/api/modules/contacts/people-contacts.model';
 import SystemModel from '@/api/modules/system/system.model';
 import FooterComponent from '@/components/FooterComponent.vue';
 import HeaderComponent from '@/components/HeaderComponent.vue';
+import appConf from '@/api/conf/app.conf';
 
 export default {
     name: "ContactsView",
@@ -37,7 +38,7 @@ export default {
     data: () => ({
         people: [],
         deps: [],
-        main: null
+        main: {}
     }),
     async created() {
         const peopleModel = new PeopleContactsModel()
@@ -47,6 +48,12 @@ export default {
         this.people = (await peopleModel.getAll()).getData().slice(0, 3)
         this.deps = (await depsModel.getAll()).getData().slice(0, 3)
         this.main = (await systemModel.getSystemData()).getData()
+    },
+    methods: {
+        getImage(url: string) {
+            if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
+            else return url
+        },
     }
 }
 

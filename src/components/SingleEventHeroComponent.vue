@@ -1,7 +1,7 @@
 <template>
   <div class="event-hero-wrapper">
     <div class="event-hero-img-col">
-      <img class="event-hero-img" :src="event.imgSrc" />
+      <img class="event-hero-img" :src="getImage(event.image)" />
     </div>
     <div class="event-hero-content">
       <div class="event-hero-header">
@@ -10,22 +10,22 @@
           <h4 class="date">{{ event.date }}</h4>
         </div>
         <div class="event-hero-time-col">
-          <h2 class="time-long">{{ event.duration }}</h2>
+          <h2 class="time-long">{{ event.eventTime }}</h2>
         </div>
       </div>
       <div class="event-hero-heading">
-        <h1 class="heading">{{ event.title }}</h1>
+        <h1 class="heading">{{ event.name }}</h1>
       </div>
       <div class="event-hero-chips">
-        <div class="chip" v-for="(chip, index) in event.chips" :key="index">
-          {{ chip }}
+        <div class="chip" v-for="(chip, index) in event.tags" :key="index">
+          {{ chip.name }}
         </div>
       </div>
       <div class="event-hero-place">
-        <span class="place">{{ event.place }}</span>
+        <span class="place">{{ event.platformName }}</span>
       </div>
       <div class="event-hero-adress">
-        <span class="adress">{{ event.address }}</span>
+        <span class="adress">{{ event.platformAddress }}</span>
       </div>
       <div class="button">
         купить билет
@@ -35,6 +35,8 @@
 </template>
 
 <script lang="ts">
+import appConf from '@/api/conf/app.conf';
+
 export default {
   name: "SingleEventHero",
   props: {
@@ -43,6 +45,12 @@ export default {
       required: true,
     },
   },
+  methods: {
+    getImage(url: string) {
+      if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
+      else return url
+    }
+  }
 };
 </script>
 

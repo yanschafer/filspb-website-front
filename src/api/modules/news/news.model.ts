@@ -15,6 +15,13 @@ export default class NewsModel extends ApiModelUtil {
         )
     }
 
+
+    public getLast(count: number = 4): Promise<ApiResponseDto<ArticleListDto[]>> {
+        return this.unauthorizedRequest(
+            new ApiRequestDto(`last/${count}`, 'GET')
+        )
+    }
+
     public getOne(id: number): Promise<ApiResponseDto<ArticleDto>> {
         return this.unauthorizedRequest(
             new ApiRequestDto(`${id}`, 'GET')

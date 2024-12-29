@@ -3,7 +3,7 @@
     <div class="page-header-col">
       <div class="heading-row">
         <div class="page-header-col">
-          <a class="logo-link">
+          <a @click="$router.push({path: '/'})" class="logo-link">
             <b>Государственная филармония</b><br />
             <nobr><b>Санкт-Петербурга</b></nobr> <br />для детей и молодежи
           </a>
@@ -32,8 +32,8 @@
 
 <script lang="ts">
 import PlatformModel from '@/api/modules/platform/platform.model';
-import SystemDto from '@/api/modules/system/system.dto';
 import SystemModel from '@/api/modules/system/system.model';
+import useEventsStore from '@/stores/events';
 import { Select, DatePicker } from 'primevue';
 export default {
   name: "PageHeaderComponent",
@@ -55,16 +55,17 @@ export default {
       default: false,
     },
   },
+  setup() {
+    return {
+      eventStore: useEventsStore()
+    }
+  },
   data: () => ({
     dates: null,
     selectedLocation: null,
-    locations: [
-        { name: 'Адмиралтейство'},
-        { name: 'АртРазБег'},
-        { name: 'Гатчинский ДК'},
-        { name: 'Дворец искусств Ленинградской области'},
-    ],
-    systemData: null
+    prevLocation: null,
+    locations: [],
+    systemData: {}
   }),
   async created() {
     const systemModel = new SystemModel()
@@ -75,10 +76,21 @@ export default {
   },
   methods: {
     platformSelection() {
-      
+      if (this.selectedLocation == this.prevLocation) {
+        this.eventStore.selectPlatform("")
+        this.selectedLocation = null
+      } else {
+        this.eventStore.selectPlatform(this.selectedLocation.name)
+      }
+      this.prevLocation = this.selectedLocation
     },
-    datesSelection() {
+    datesSelection(data) {
+      if (data[0] == null && data[1] == null) return this.eventStore.updatePeriod()
+      if (data[0] == null || data[1] == null) return
 
+      const start = data[0].getTime()
+      const end = data[1].getTime()
+      this.eventStore.updatePeriod(start, end)
     }
   }
 };

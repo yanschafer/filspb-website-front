@@ -7,7 +7,7 @@
             src="../../assets/Icons/magnifying-glass-solid.svg"
           />
         </div>
-        <input class="search-input" type="text" />
+        <input @keyup.enter="onSearch" v-model="searchValue" class="search-input" type="text" />
       </div>
     <div class="container">
       <img :style="{ transform: calculateTransform(0.2) }" class="hero-img hero-img-xl" :src="randomImages[0]" />
@@ -28,11 +28,15 @@ export default {
   name: "HeroComponent",
   data() {
     return {
+      searchValue: "",
       randomImages: [] as string[],
       scrollY: 0,
     };
   },
   methods: {
+    onSearch() {
+      this.$router.push({path: "/search/" + this.searchValue})
+    },
     handleScroll() {
       this.scrollY = window.scrollY; 
     },

@@ -5,7 +5,9 @@ import ContactsView from '@/views/ContactsView.vue'
 import AboutView from '@/views/AboutView.vue'
 import SingleEventView from '@/views/SingleEventView.vue'
 import SingleArticleView from '@/views/SingleArticleView.vue'
+import SearchView from '@/views/SearchView.vue'
 import NewsView from '@/views/NewsView.vue'
+import DocumentView from '@/views/DocumentView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +54,16 @@ const router = createRouter({
       name: 'single-article',
       component: SingleArticleView,
     },
+    {
+      path: '/search/:query',
+      name: 'search',
+      component: SearchView
+    },
+    {
+      path: '/documents',
+      name: 'documents',
+      component: DocumentView
+    }
   ],
 })
 

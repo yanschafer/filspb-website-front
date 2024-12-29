@@ -41,9 +41,9 @@
             {{systemData.name}}
         </a>
         <div class="nav-links-group">
-            <a class="nav-link" href="#">ДОКУМЕНТЫ</a>
-            <a class="nav-link" href="#">ГОСЗАКАЗ</a>
-            <a class="nav-link" href="#">КОНТАКТЫ</a>
+            <a class="nav-link" @click="$router.push({path: '/documents'})">ДОКУМЕНТЫ</a>
+            <a class="nav-link" href="https://zakupki.gov.ru/epz/main/public/home.html">ГОСЗАКАЗ</a>
+            <a class="nav-link" @click="$router.push({path: '/contacts'})">КОНТАКТЫ</a>
         </div>
         <span>Разработала студия Волкова, 2024</span>
       </div>
@@ -79,6 +79,7 @@ export default {
 <style scoped>
 .nav-link {
     font-weight: 600;
+    cursor: pointer;
 }
 .nav-links-group {
     display: flex;

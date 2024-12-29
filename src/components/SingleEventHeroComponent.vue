@@ -27,8 +27,11 @@
       <div class="event-hero-adress">
         <span class="adress">{{ event.platformAddress }}</span>
       </div>
-      <div class="button">
+      <div v-if="!event.soldOut" @click="buy(event)" class="button">
         купить билет
+      </div>
+      <div v-else class="button">
+        билетов нет
       </div>
     </div>
   </div>
@@ -36,6 +39,7 @@
 
 <script lang="ts">
 import appConf from '@/api/conf/app.conf';
+import type EventDto from '@/api/modules/event/event.dto';
 
 export default {
   name: "SingleEventHero",
@@ -49,6 +53,9 @@ export default {
     getImage(url: string) {
       if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
       else return url
+    },
+    buy(event: EventDto) {
+      // event.purchaseLink
     }
   }
 };

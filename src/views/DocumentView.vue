@@ -1,6 +1,6 @@
 <template>
     <div v-for="doc in docs">
-        <h1 @click="downloadDoc(doc.url)">{{ doc.name }}</h1>
+        <h1 @click="downloadDoc(doc.doc)">{{ doc.name }}</h1>
     </div>
 </template>
 

@@ -35,7 +35,7 @@
             src="../assets/Icons/magnifying-glass-solid.svg"
           />
         </div>
-        <input class="search-input" type="text" />
+        <input @keyup.enter="onSearch" v-model="searchValue" class="search-input" type="text" />
       </div>
     </div>
     <div class="news-cards-grid">
@@ -69,6 +69,7 @@ export default {
     FooterComponent,
   },
   data: () => ({
+    searchValue: "",
     news: []
   }),
   setup() {
@@ -89,6 +90,9 @@ export default {
     }
   },
   methods: {
+    onSearch() {
+      this.$router.push({path: "/search/" + this.searchValue})
+    },
     goToEvents() {
       this.$router.push("/events");
     },

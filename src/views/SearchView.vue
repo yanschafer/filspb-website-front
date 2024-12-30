@@ -50,7 +50,9 @@ export default {
       else return url;
     },
     find() {
-      this.$router.push({ path: `/search/${this.query}` });
+      this.$router.push({ path: `/search/${this.query}` }).finally(() => {
+        this.search()
+      });
     },
     async search() {
       const searchModel = new SearchModel();

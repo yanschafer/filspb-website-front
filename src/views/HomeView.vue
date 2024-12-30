@@ -84,7 +84,7 @@ export default {
   },
   async created() {
     const newsModel = new NewsModel()
-    this.news = (await newsModel.getLast()).getData()
+    this.news = (await newsModel.getLast(3)).getData()
   },
   computed: {
     events() {

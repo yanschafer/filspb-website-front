@@ -78,6 +78,15 @@
     </p>
   </section>
   <section class="section">
+    <template v-for="child in children">
+      <div>
+        <h1>{{ child.name }}</h1>
+        <p v-html="child.description"></p>
+        <img :src="getImage(child.image)" />
+      </div>
+    </template>
+  </section>
+  <section class="section">
     <div class="accordeon">
       <AccordionComponent :categories="categories" :getImage="getImage" />
     </div>
@@ -103,6 +112,7 @@ import FooterComponent from "@/components/FooterComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
 import VacancyListComponent from "@/components/AboutView/VacancyListComponent.vue";
+import ChildrenModel from "@/api/modules/children/children.model";
 
 export default {
   name: "AboutView",
@@ -122,6 +132,7 @@ export default {
     partners: [],
     vacancies: [],
     expandedVacancyId: null,
+    children: [],
     modules: [Navigation],
   }),
   async created() {
@@ -133,6 +144,9 @@ export default {
       ...vacancy,
       expanded: false,
     }));
+
+    const childrenModel = new ChildrenModel()
+    this.children = (await childrenModel.getAll()).getData()
 
     const partnersModel = new PartnersModel();
     this.partners = (await partnersModel.getAll()).getData();

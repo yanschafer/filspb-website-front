@@ -7,7 +7,7 @@
           <div class="eye-img-wrapper">
             <img class="eye-img" src="../assets/Icons/eye-solid.svg" />
           </div>
-          <div class="contrast-mode-text">ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ</div>
+          <div @click="toggleContrastMode" class="contrast-mode-text">ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ</div>
         </div>
         <div class="links-group">
             <!-- <div class="link-wrapper">
@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts">
+import { useContrastStore } from "@/stores/contrastStore";
 //@ts-nocheck
 import SystemModel from '@/api/modules/system/system.model';
 
@@ -63,8 +64,14 @@ export default {
   async created() {
     const systemModel = new SystemModel()
     this.systemData = (await systemModel.getSystemData()).getData()
+    const contrastStore = useContrastStore();
+    contrastStore.initialize();
   },
   methods: {
+    toggleContrastMode() {
+      const contrastStore = useContrastStore();
+      contrastStore.toggleContrastMode();
+    },
     goTg() {
         window.location = this.systemData.telegram
     },

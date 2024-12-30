@@ -1,7 +1,8 @@
 <template>
   <div class="section">
     <h1 class="heading">Люди филармонии</h1>
-    <Accordion v-model="activeIndex">
+    <!-- Указываем activeIndex через v-model -->
+    <Accordion :value="0" v-model:activeIndex="activeIndex">
       <AccordionPanel
         v-for="(category, index) in categories"
         :key="category.id"
@@ -54,6 +55,7 @@ import Accordion from "primevue/accordion";
 import AccordionPanel from "primevue/accordionpanel";
 import AccordionHeader from "primevue/accordionheader";
 import AccordionContent from "primevue/accordioncontent";
+import { ref, onMounted, watch } from "vue";
 import type { PropType } from "vue";
 import type PeopleCategoryDto from "@/api/modules/people/people-category.dto";
 
@@ -75,19 +77,44 @@ export default {
       required: true,
     },
   },
-  data: () => ({
-    activeIndex: 0,
-  }),
-  methods: {
-    elite(category: PeopleCategoryDto) {
-      return category.people.filter((el) => el.image != null);
-    },
-    popuski(category: PeopleCategoryDto) {
-      return category.people.filter((el) => el.image == null);
-    },
+  setup(props) {
+    const activeIndex = ref(null); // Инициализация
+
+    onMounted(() => {
+      // Принудительное раскрытие первого элемента
+      setTimeout(() => {
+        if (props.categories.length > 0) {
+          activeIndex.value = 0; // Устанавливаем первый элемент активным
+        }
+      }, 0);
+    });
+
+    // Обновляем activeIndex при изменении categories
+    watch(
+      () => props.categories,
+      (newCategories) => {
+        if (newCategories.length > 0 && activeIndex.value === null) {
+          activeIndex.value = 0; // Устанавливаем первый элемент активным
+        }
+      }
+    );
+
+    const elite = (category: PeopleCategoryDto) =>
+      category.people.filter((el) => el.image != null);
+    const popuski = (category: PeopleCategoryDto) =>
+      category.people.filter((el) => el.image == null);
+
+    return {
+      activeIndex,
+      elite,
+      popuski,
+    };
   },
 };
 </script>
+
+
+
 
 <style scoped>
 .section {

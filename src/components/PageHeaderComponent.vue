@@ -125,6 +125,7 @@ export default {
 }
 .heading {
   font-size: 6rem;
+  transform: translateY(17px);
 }
 .heading-img {
   width: 10vw;

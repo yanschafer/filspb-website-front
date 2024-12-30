@@ -1,4 +1,5 @@
 <template>
+    <div v-if="contrastStore.isOverlayVisible" class="overlay animate__animated animate__fadeIn"></div>
 <div class="navbar">
     <div class="number">
         <a class="link-number" :href="`telme:${systemData.name}`">{{systemData.name}}</a>
@@ -18,13 +19,13 @@
         <div class="eye-img-wrapper">
             <img class="eye-img" src="../assets/Icons/eye-solid.svg" />
         </div>
-        <div class="contrast-mode-text">
+        <div class="contrast-mode-text" @click="toggleContrastMode">
             ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ
         </div>
     </div>
     <div class="social-links-group">
         <div class="icon-wrapper">
-            <img class="social-icon" src="../assets/Icons/eye-solid.svg" >
+            <img @click="toggleContrastMode" class="social-icon" src="../assets/Icons/eye-solid.svg" >
         </div>
         <div class="icon-wrapper">
             <img @click="goTg" class="social-icon" src="../assets/Icons/telegram.svg" >
@@ -39,30 +40,71 @@
 <script lang="ts">
 //@ts-nocheck
 
-import SystemModel from '@/api/modules/system/system.model';
+import SystemModel from "@/api/modules/system/system.model";
+import { useContrastStore } from "@/stores/contrastStore";
 
 export default {
   name: "HeaderComponent",
   data: () => ({
-    systemData: {}
+    systemData: {},
+    isContrastMode: false, // Состояние версии для слабовидящих
   }),
   async created() {
-    const systemModel = new SystemModel()
-    this.systemData = (await systemModel.getSystemData()).getData()
-    console.log(this.systemData)
+    const systemModel = new SystemModel();
+    this.systemData = (await systemModel.getSystemData()).getData();
+
+    const contrastStore = useContrastStore();
+    contrastStore.initialize(); // Проверим состояние на странице
+
+    console.log(this.systemData);
+  },
+  computed: {
+    contrastStore() {
+      return useContrastStore();
+    },
+    isOverlayVisible() {
+      return this.contrastStore.isOverlayVisible; // Безопасный доступ через computed
+    }
   },
   methods: {
     goTg() {
-        window.location = this.systemData.telegram
+      window.location = this.systemData.telegram;
     },
     goVK() {
-        window.location = this.systemData.vk
-    }
+      window.location = this.systemData.vk;
+    },
+    toggleContrastMode() {
+      const contrastStore = useContrastStore();
+      contrastStore.toggleContrastMode();
+    },
   }
-}
+};
 </script>
 
+
+
+
 <style scoped>
+/* Белый оверлей */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* Плавное исчезновение */
+}
+
+.overlay.v-enter-active,
+.overlay.v-leave-active {
+  opacity: 1;
+}
+.overlay.v-enter, .overlay.v-leave-to {
+  opacity: 0;
+}
 .navbar {
     display: flex;
     width: 100%;

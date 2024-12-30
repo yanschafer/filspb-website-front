@@ -66,25 +66,44 @@
       Санкт-Петербурге и одной из немногих в России, специализирующейся на
       репертуаре для детей и молодежи.
     </h1>
-    <p class="text"><br><br>
+    <p class="text">
+      <br /><br />
       На протяжении более 55 лет артисты непрерывно погружают зрителей всех
       возрастов в искусство, посредством музыки, кукольных представлений,
-      драматических спектаклей и литературных чтений.<br><br> Ежегодно в двух залах
-      Филармонии, а также на площадках Петербурга для зрителей несколько
-      творческих коллективов дают более 1000 авторских неповторимых
-      представлений.<br><br> Приоритетным направлением Филармонии является создание и
-      поддержка молодежных инициатив, реализация государственных программ в
-      сфере культуры.<br><br><b>Воспитывать зрителя нужно с детства – чтобы вырастить молодежь, которая потом приведет в филармонические залы своих детей. Это системный процесс, требующий постоянного внимания</b>
+      драматических спектаклей и литературных чтений.<br /><br />
+      Ежегодно в двух залах Филармонии, а также на площадках Петербурга для
+      зрителей несколько творческих коллективов дают более 1000 авторских
+      неповторимых представлений.<br /><br />
+      Приоритетным направлением Филармонии является создание и поддержка
+      молодежных инициатив, реализация государственных программ в сфере
+      культуры.<br /><br /><b
+        >Воспитывать зрителя нужно с детства – чтобы вырастить молодежь, которая
+        потом приведет в филармонические залы своих детей. Это системный
+        процесс, требующий постоянного внимания</b
+      >
     </p>
   </section>
-  <section class="section">
-    <template v-for="child in children">
-      <div>
-        <h1>{{ child.name }}</h1>
-        <p v-html="child.description"></p>
-        <img :src="getImage(child.image)" />
-      </div>
-    </template>
+
+  <section class="text-section kaef">
+    <p class="text">
+      Мы ведем активную работу по формированию юной филармонической аудитории. За один год в Филармонии проходит цикл следующих детских программ:
+    </p>
+  </section>
+
+  <ChildEventsComponent :children="children" :getImage="getImage" />
+
+  <section class="text-section kaef">
+    <p class="text">
+      <br /><br />
+      На сегодняшний момент Площадка Филармонии это – формирование навыков
+      общения со сверстниками расширение кругозора и формирование мировоззрения
+      личности молодого человека; сохранение и преумножение культурного наследия
+      и традиций нашей страны; использование возможностей культурного отдыха для
+      решения общественно-полезных задач и обсуждения важнейших социальных
+      вопросов и проектов среди молодежи.<br><br> <b>Дар общения, умение установить контакт
+      с аудиторией любого возраста — непременное условие успешной работы в</b>
+      Филармонии.
+    </p>
   </section>
   <section class="section">
     <div class="accordeon">
@@ -99,6 +118,7 @@
 </template>
 
 <script lang="ts">
+import ChildEventsComponent from "@/components/AboutView/ChildEventsComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import PartnersComponent from "@/components/AboutView/PartnersComponent.vue";
@@ -125,6 +145,7 @@ export default {
     SwiperSlide,
     PartnersComponent,
     VacancyListComponent,
+    ChildEventsComponent
   },
   data: () => ({
     people: [],
@@ -145,8 +166,8 @@ export default {
       expanded: false,
     }));
 
-    const childrenModel = new ChildrenModel()
-    this.children = (await childrenModel.getAll()).getData()
+    const childrenModel = new ChildrenModel();
+    this.children = (await childrenModel.getAll()).getData();
 
     const partnersModel = new PartnersModel();
     this.partners = (await partnersModel.getAll()).getData();
@@ -180,6 +201,40 @@ export default {
 </script>
 
 <style scoped>
+.child-events {
+  display: flex;
+  gap: 1rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  margin-bottom: 2rem;
+}
+.child-name {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+.child-text {
+  font-size: 1.3rem;
+}
+.child-img {
+  display: flex;
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+.single-children-wrapper {
+  background-color: #f3f3f3;
+  padding: 2rem;
+  border-radius: 2rem;
+  width: 34rem;
+}
+.children-wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
 .card {
   background: #fbc800;
   width: 20rem;
@@ -203,15 +258,15 @@ export default {
   font-size: 1.2rem;
 }
 .cards-wrapper {
-    position: relative;
-    bottom: 66px;
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-    /* height: max-content; */
-    height: 33rem;
+  position: relative;
+  bottom: 66px;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  /* height: max-content; */
+  height: 33rem;
 }
 .accordeon {
   background-color: #f3f3f3;

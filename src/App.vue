@@ -7,6 +7,9 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style>
+.hidden {
+  display: none !important;
+}
 .swiper-button-next,
 .swiper-button-prev {
   color: #fbc800!important;

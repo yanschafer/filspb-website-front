@@ -2,7 +2,7 @@
     <section class="partners">
             <h1 class="heading">Наши партнеры</h1>
     <Swiper
-      :slides-per-view="10"
+      :slides-per-view="8"
       space-between="1"
       loop="true"
       :modules="modules"

@@ -112,8 +112,8 @@ a {
 }
 .footer-section {
   background-color: #fbc800;
-  padding-right: 10rem;
-  padding-left: 10rem;
+  padding-right: 5rem;
+  padding-left: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

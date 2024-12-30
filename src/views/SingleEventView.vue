@@ -5,7 +5,7 @@
     title="Афиша"
     imgSrc="/src/assets/CircleImages/3.png"
   />
-  <div class="content-section">
+  <div class="content-section animate__animated animate__fadeIn">
     <SingleEventHeroComponent :event="eventData" />
   </div>
   <Divider />

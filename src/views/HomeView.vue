@@ -19,15 +19,6 @@
       />
     </div>
   </section>
-  <section>
-    <div class="cards-grid">
-      <RepertoireCard
-        v-for="(event, index) in repertoire"
-        :key="index"
-        :card-data="event"
-      />
-    </div>
-  </section>
   <section class="news-section">
     <div class="news-header-row">
       <div class="heading-col">
@@ -68,7 +59,6 @@ import HeroComponent from "@/components/HomeView/HeroComponent.vue";
 import NewsCard from "@/components/NewsView/NewsCard.vue";
 import useEventsStore from "@/stores/events";
 import NewsModel from "@/api/modules/news/news.model";
-import RepModel from "@/api/modules/rep/rep.model";
 
 export default {
   name: "EventsSection",
@@ -83,7 +73,6 @@ export default {
   data: () => ({
     searchValue: "",
     news: [],
-    repertoire: []
   }),
   setup() {
     const eventStore =  useEventsStore()
@@ -96,9 +85,6 @@ export default {
   async created() {
     const newsModel = new NewsModel()
     this.news = (await newsModel.getLast()).getData()
-
-    const rep = new RepModel()
-    this.repertoire = (await rep.getAll()).getData()
   },
   computed: {
     events() {

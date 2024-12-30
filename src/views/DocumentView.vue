@@ -1,14 +1,24 @@
 <template>
-    <div v-for="doc in docs">
-        <h1 @click="downloadDoc(doc.doc)">{{ doc.name }}</h1>
+    <HeaderComponent />
+    <PageHeaderComponent class="animate__animated animate__fadeIn" title="Документы" imgSrc="/src/assets/CircleImages/14.png" />
+
+    <div class="docs-wrapper" v-for="(doc, index) in docs">
+        <h1 class="dock" @click="downloadDoc(doc.doc)">{{ doc.name }}</h1>
+        <Divider v-if="index < docs.length - 1"></Divider>
     </div>
+    <FooterComponent />
 </template>
 
 <script lang="ts">
+import HeaderComponent from '@/components/HeaderComponent.vue';
+import PageHeaderComponent from '@/components/PageHeaderComponent.vue';
+import FooterComponent from '@/components/FooterComponent.vue';
 import DocumentModel from '@/api/modules/documents/document.model';
+import { Divider } from 'primevue';
 
 export default {
     name: "DocumentView",
+    components: {HeaderComponent, PageHeaderComponent, FooterComponent, Divider},
     data: () => ({
         docs: []
     }),
@@ -34,3 +44,22 @@ export default {
     }
 }
 </script>
+<style scoped>
+.docs-wrapper {
+    padding-left: 5rem;
+    padding-right: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+.dock {
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+}
+.dock:hover {
+    opacity: 1;
+}
+</style>

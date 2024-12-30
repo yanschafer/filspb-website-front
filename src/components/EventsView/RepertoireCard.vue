@@ -44,7 +44,6 @@
   .card-wrapper {
     width: 20rem;
     height: 100%;
-    min-height: 40rem;
     padding: 1rem 1rem 2rem 1rem;
     background: #f3f3f3;
     border-radius: 2rem;
@@ -52,6 +51,7 @@
     overflow: hidden;
     filter: none;
     transition: filter 0.3s;
+    filter: grayscale(100%)
   }
   
   .card-wrapper.outdated {

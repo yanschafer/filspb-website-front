@@ -2,7 +2,7 @@
   <!-- ааауаыыыы -->
   <HeaderComponent />
   <PageHeaderComponent class="animate__animated animate__fadeIn" title="Новости" imgSrc="/src/assets/CircleImages/13.png" />
-  <NewsGrid :news="news" class="animate__animated animate__fadeIn" />
+  <NewsGrid :news="news" class="news animate__animated animate__fadeIn" />
   <FooterComponent />
 </template>
 
@@ -27,4 +27,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.news {
+  margin-bottom: 2rem;
+}
+</style>

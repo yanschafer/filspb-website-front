@@ -100,6 +100,11 @@ export default {
 <style scoped>
 .logo-link {
   font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.logo-link:hover {
+  color: #f3ca00;
 }
 .page-header-wrapper {
   display: flex;

@@ -7,7 +7,7 @@
       <div class="event-hero-header">
         <div class="event-hero-date-col">
           <h3 class="time">{{ event.time }}</h3>
-          <h4 class="date">{{ event.date }}</h4>
+          <h4 class="date">{{ formatDate(event.date) }}</h4>
         </div>
         <div class="event-hero-time-col">
           <h2 class="time-long">{{ event.eventTime }}</h2>
@@ -50,6 +50,10 @@ export default {
     },
   },
   methods: {
+    formatDate(timestamp: number) {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+    },
     getImage(url: string) {
       if (!url) return null
       if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
@@ -69,6 +73,16 @@ export default {
     height: 40rem;
     border-radius: 3rem;
     overflow: hidden;
+}
+.button:hover {
+  background: transparent;
+  color: black;
+  border: 1px solid black;
+}
+.button {
+  border: 1px solid black;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 .event-hero-img-col {
     width: 590px;

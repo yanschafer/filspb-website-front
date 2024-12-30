@@ -19,7 +19,7 @@
     </div>
     <div class="header-row">
       <div class="header-col">
-        <div class="date">{{ cardData.date }}</div>
+        <div class="date">{{ formatDate(cardData.date) }}</div>
         <div class="time">{{ cardData.time }}</div>
       </div>
       <div class="header-col">
@@ -53,6 +53,10 @@ export default {
     },
   },
   methods: {
+    formatDate(timestamp: number) {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+    },
     goTo(eventId: number) {
       this.$router.push({path: `/event/${eventId}`})
     },

@@ -6,7 +6,7 @@
     imgSrc="/src/assets/CircleImages/13.png"
   />
   <Divider />
-  <div class="content-section">
+  <div class="content-section animate__animated animate__fadeIn">
     <div class="text-wrapper">
       <div class="back-btn" @click="$router.back()"><< Назад к новостям</div>
       <div class="text-col">

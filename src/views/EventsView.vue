@@ -1,11 +1,11 @@
 <template>
   <HeaderComponent />
-  <PageHeaderComponent :utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/src/assets/CircleImages/3.png" />
+  <PageHeaderComponent :utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/filspb/CircleImages/3.png" />
 
   <ChipsFilter :chips="chipsData" class="animate__animated animate__fadeIn" />
   <EventGrid class="animate__animated animate__fadeIn" />
  
-  <section class="section"> 
+  <section class="section repertoire-section"> 
     <h1 class="heading">Наш репертуар</h1>
     <div class="cards-grid">
       <RepertoireCard

@@ -1,6 +1,6 @@
 <template>
     <HeaderComponent />
-    <PageHeaderComponent class="animate__animated animate__fadeIn" title="Документы" imgSrc="/src/assets/CircleImages/14.png" />
+    <PageHeaderComponent class="animate__animated animate__fadeIn" title="Документы" imgSrc="/filspb/CircleImages/14.png" />
 
     <div class="docs-wrapper" v-for="(doc, index) in docs">
         <h1 class="dock" @click="downloadDoc(doc.doc)">{{ doc.name }}</h1>
@@ -46,20 +46,106 @@ export default {
 </script>
 <style scoped>
 .docs-wrapper {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding: 0 5rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     margin-bottom: 3rem;
 }
+
 .dock {
+    font-size: 1.8rem;
     font-weight: 600;
     cursor: pointer;
     opacity: 0.7;
     transition: all 0.3s ease-in-out;
+    padding: 1rem 0;
+    line-height: 1.3;
+}
+
+.dock:hover {
+    opacity: 1;
+}
+
+/* Добавляем стили для планшетов */
+@media screen and (max-width: 1024px) {
+    .docs-wrapper {
+        padding: 0 3rem;
+        gap: 1.5rem;
+    }
+
+    .dock {
+        font-size: 1.6rem;
+    }
+}
+
+/* Добавляем стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .docs-wrapper {
+        padding: 0 2rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .dock {
+        font-size: 1.4rem;
+        padding: 0.8rem 0;
+    }
+}
+
+/* Добавляем стили для маленьких мобильных устройств */
+@media screen and (max-width: 480px) {
+    .docs-wrapper {
+        padding: 0 1rem;
+    }
+
+    .dock {
+        font-size: 1.2rem;
+        padding: 0.6rem 0;
+    }
+    .dock:hover {
+    opacity: 1;
+}
 }
 .dock:hover {
     opacity: 1;
+}
+
+/* Добавляем стили для планшетов */
+@media screen and (max-width: 1024px) {
+    .docs-wrapper {
+        padding: 0 3rem;
+        gap: 1.5rem;
+    }
+
+    .dock {
+        font-size: 1.6rem;
+    }
+}
+
+/* Добавляем стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .docs-wrapper {
+        padding: 0 2rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .dock {
+        font-size: 1.4rem;
+        padding: 0.8rem 0;
+    }
+}
+
+/* Добавляем стили для маленьких мобильных устройств */
+@media screen and (max-width: 480px) {
+    .docs-wrapper {
+        padding: 0 1rem;
+    }
+
+    .dock {
+        font-size: 1.2rem;
+        padding: 0.6rem 0;
+    }
 }
 </style>

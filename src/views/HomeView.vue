@@ -1,6 +1,6 @@
 <template>
-  <HeaderComponent class="animate__animated animate__fadeIn" />
-  <HeroComponent class="animate__animated animate__fadeIn" />
+  <HeaderComponent class="animate__animated animate__fadeIn header" />
+  <HeroComponent class="animate__animated animate__fadeIn hero" />
   <section class="events-section">
     <div class="all-events-row">
       <div class="spacer"></div>
@@ -102,7 +102,17 @@ export default {
 };
 </script>
 
+<style scoped>
+.header {
+  position: relative;
+  z-index: 1000;
+}
+</style>
 <style>
+.hero {
+  position: relative;
+  z-index: 0;
+}
 .all-news-link {
   display: flex;
   align-items: center;
@@ -214,6 +224,12 @@ export default {
   filter: brightness(0) saturate(100%) invert(57%) sepia(77%) saturate(2877%)
     hue-rotate(6deg) brightness(97%) contrast(93%);
 }
+@media (max-width: 480px) {
+  .cards-grid {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
 .cards-grid {
   display: flex;
   flex-wrap: wrap;
@@ -241,6 +257,14 @@ export default {
   align-items: center;
   gap: 1rem;
 }
+
+@media (max-width: 768px) {
+  .all-events-row {
+    justify-content: center !important;
+    padding-right: 0;
+  }
+}
+
 .all-events-heading {
   font-size: 18px;
   font-weight: 600;

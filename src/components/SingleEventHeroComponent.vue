@@ -68,96 +68,291 @@ export default {
 
 <style scoped>
 .event-hero-wrapper {
-    background-color: #f3ca00;
-    display: flex;
-    height: 40rem;
-    border-radius: 3rem;
-    overflow: hidden;
+  background-color: #f3ca00;
+  display: flex;
+  height: 40rem;
+  border-radius: 3rem;
+  overflow: hidden;
 }
-.button:hover {
-  background: transparent;
-  color: black;
-  border: 1px solid black;
+
+.event-hero-img-col {
+  width: 590px;
+  min-width: 590px;
 }
+
+.event-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-hero-content {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 7rem;
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.event-hero-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.time {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.date {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.time-long {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.heading {
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: 700;
+}
+
+.event-hero-chips {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  height: 2rem;
+  border: 1px solid #000;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  padding: 0 1.1rem;
+  border-radius: 1.8rem;
+  font-family: 'Times', 'Georgia';
+  font-weight: 400;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.event-hero-place {
+  font-size: 1.3rem;
+}
+
+.event-hero-adress {
+  font-size: 1.3rem;
+}
+
 .button {
+  font-size: 1.3rem;
+  padding: 0.3rem 1rem 0.5rem;
+  background-color: black;
+  color: white;
+  font-weight: 200;
+  max-width: fit-content;
+  border-radius: 40rem;
   border: 1px solid black;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.event-hero-img-col {
-    width: 590px;
-    min-width: 590px;
+
+.button:hover {
+  background: transparent;
+  color: black;
 }
-.event-hero-img {
+
+@media screen and (max-width: 1024px) {
+  .event-hero-wrapper {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .event-hero-img-col {
+    width: 100%;
+    min-width: 100%;
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  }
+
+  .event-hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
+  }
+
+  .event-hero-content {
+    padding: 2rem;
+  }
+
+  .heading {
+    font-size: 2.5rem;
+    line-height: 2.8rem;
+  }
 }
-.event-hero-content {
-    display: flex;
+
+@media screen and (max-width: 768px) {
+  .event-hero-wrapper {
+    border-radius: 2rem;
+  }
+
+  .event-hero-content {
+    padding: 1.5rem;
+  }
+
+  .event-hero-header {
     flex-direction: column;
-    padding: 5rem 7rem;
-    width: 100%;
-    justify-content: center;
-    gap: 1rem;
-}
-.event-hero-header {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-}
-.time {
-    font-size: 1.6rem;
-    font-weight: 600;
-}
-.date {
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-.time-long {
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-.heading {
-    font-size: 3rem;
-    line-height: 3rem;
-    font-weight: 700;
-}
-.event-hero-chips {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-.chip {
-    height: 2rem;
-    border: 1px solid #000;
+    gap: 0.5rem;
+  }
+
+  .heading {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+
+  .time, .date, .time-long {
     font-size: 1.2rem;
+  }
+
+  .chip {
+    font-size: 1rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    padding: 0 0.8rem;
+  }
+
+  .event-hero-place,
+  .event-hero-adress {
+    font-size: 1.1rem;
+  }
+
+  .button {
+    font-size: 1.1rem;
+    padding: 0.2rem 0.8rem 0.4rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .event-hero-wrapper {
+    border-radius: 1.5rem;
+  }
+
+  .event-hero-content {
+    padding: 1rem;
+  }
+
+  .heading {
+    font-size: 1.8rem;
     line-height: 2rem;
-    padding: 0 1.1rem;
-    border-radius: 1.8rem;
-    font-family: 'Times', 'Georgia';
-    font-weight: 400;
-    display: inline-block;
-    vertical-align: middle;
+  }
+
+  .time, .date, .time-long {
+    font-size: 1.1rem;
+  }
 }
-.event-hero-place {
-    font-size: 1.3rem;
+
+.button:hover {
+  background: transparent;
+  color: black;
 }
-.event-hero-adress {
-    font-size: 1.3rem;
+
+@media screen and (max-width: 1024px) {
+  .event-hero-wrapper {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .event-hero-img-col {
+    width: 100%;
+    min-width: 100%;
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  }
+
+  .event-hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .event-hero-content {
+    padding: 2rem;
+  }
+
+  .heading {
+    font-size: 2.5rem;
+    line-height: 2.8rem;
+  }
 }
-.button {
-    font-size: 1.3rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.3rem;
-    padding-bottom: 0.5rem;
-    background-color: black;
-    color: white;
-    font-weight: 200;
-    max-width: fit-content;
-    border-radius: 40rem;
+
+@media screen and (max-width: 768px) {
+  .event-hero-wrapper {
+    border-radius: 2rem;
+  }
+
+  .event-hero-content {
+    padding: 1.5rem;
+  }
+
+  .event-hero-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .heading {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+
+  .time, .date, .time-long {
+    font-size: 1.2rem;
+  }
+
+  .chip {
+    font-size: 1rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    padding: 0 0.8rem;
+  }
+
+  .event-hero-place,
+  .event-hero-adress {
+    font-size: 1.1rem;
+  }
+
+  .button {
+    font-size: 1.1rem;
+    padding: 0.2rem 0.8rem 0.4rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .event-hero-wrapper {
+    border-radius: 1.5rem;
+  }
+
+  .event-hero-content {
+    padding: 1rem;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+    line-height: 2rem;
+  }
+
+  .time, .date, .time-long {
+    font-size: 1.1rem;
+  }
 }
 </style>

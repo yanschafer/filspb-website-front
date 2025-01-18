@@ -3,7 +3,7 @@
   <PageHeaderComponent
     class="animate__animated animate__fadeIn"
     title="Афиша"
-    imgSrc="/src/assets/CircleImages/3.png"
+    imgSrc="/filspb/CircleImages/3.png"
   />
   <div class="content-section animate__animated animate__fadeIn">
     <SingleEventHeroComponent :event="eventData" />
@@ -122,99 +122,192 @@ export default {
   gap: 5rem;
 }
 .authors-col-wrapper {
-    width: 60vw;
-    gap: 2rem;
-    display: flex;
-    flex-direction: column;
+  width: 60vw;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 .authors-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .job {
-    font-size: 1rem;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .name {
-    font-size: 1.5rem;
-    font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 .text {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 .text-input {
-    border: 2px solid #000;
-    height: 4.2rem;
-    border-radius: 1rem;
-    background: #fff;
-    font-size: 1.5rem;
-    padding: 0 2rem;
-    width: 80%;
+  border: 2px solid #000;
+  height: 4.2rem;
+  border-radius: 1rem;
+  background: #fff;
+  font-size: 1.5rem;
+  padding: 0 2rem;
+  width: 80%;
 }
 .text-area {
-    border: 2px solid #000;
-    height: 8.2rem;
-    border-radius: 1rem;
-    background: #fff;
-    font-size: 1.5rem;
-    padding: 0 2rem;
-    padding-top: 1rem;
-    width: 80%;
+  border: 2px solid #000;
+  height: 8.2rem;
+  border-radius: 1rem;
+  background: #fff;
+  font-size: 1.5rem;
+  padding: 0 2rem;
+  padding-top: 1rem;
+  width: 80%;
 }
 .heading {
-    font-size: 3rem;
-    line-height: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .send-button {
-    color: #000;
-    background-color: #f3ca00;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border-radius: 40rem;
-    width: max-content;
-    font-size: 1.3rem;
-    font-size: 1.3rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.3rem;
-    padding-bottom: 0.5rem;
-    cursor: pointer;
+  color: #000;
+  background-color: #f3ca00;
+  box-shadow: none;
+  border-radius: 40rem;
+  width: max-content;
+  font-size: 1.3rem;
+  padding: 0.3rem 1rem 0.5rem;
+  cursor: pointer;
 }
 .back-btn {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
 }
 .back-btn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 .show-more-btn {
   font-size: 1rem;
   font-weight: 600;
-  color: #f3ca00;
   cursor: pointer;
-  text-align: left;
-  margin-top: 1rem;
 }
-.show-more-btn:hover {
-  text-decoration: underline;
+
+@media screen and (max-width: 768px) {
+  .content-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .text-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .authors-col-wrapper {
+    width: 100%;
+  }
+  .job {
+    font-size: 0.9rem;
+  }
+  .name {
+    font-size: 1.2rem;
+  }
+  .text {
+    font-size: 1.2rem;
+  }
+  .heading {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+  .text-input,
+  .text-area {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+  .back-btn {
+    font-size: 1.2rem;
+  }
 }
-/* Анимация для плавного появления/исчезновения */
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease;
+
+@media screen and (max-width: 480px) {
+  .content-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .text-wrapper {
+    gap: 1.5rem;
+  }
+  .job {
+    font-size: 0.8rem;
+  }
+  .name {
+    font-size: 1.1rem;
+  }
+  .text {
+    font-size: 1.1rem;
+  }
+  .heading {
+    font-size: 1.8rem;
+    line-height: 2rem;
+  }
+  .text-input {
+    height: 3.5rem;
+  }
+  .send-button {
+    font-size: 1.1rem;
+  }
 }
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+.heading {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+  .text-input,
+  .text-area {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+  .back-btn {
+    font-size: 1.2rem;
+  }
+
+@media screen and (max-width: 480px) {
+  .content-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .text-wrapper {
+    gap: 1.5rem;
+  }
+  .job {
+    font-size: 0.8rem;
+  }
+  .name {
+    font-size: 1.1rem;
+  }
+  .text {
+    font-size: 1.1rem;
+  }
+  .heading {
+    font-size: 1.8rem;
+    line-height: 2rem;
+  }
+  .text-input {
+    height: 3.5rem;
+  }
+  .send-button {
+    font-size: 1.1rem;
+  }
 }
 </style>
+
+  
+

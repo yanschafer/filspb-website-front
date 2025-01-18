@@ -1,4 +1,5 @@
 import './assets/main.css'
+import './assets/responsive.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -9,6 +10,7 @@ import 'animate.css';
 
 import App from './App.vue'
 import router from './router'
+
 const russianLocale = {
     accept: 'Принять',
     reject: 'Отклонить',
@@ -31,7 +33,7 @@ const russianLocale = {
     weekHeader: 'Нед',
     dateFormat: 'dd.mm.yy',
     firstDayOfWeek: 1,
-  };
+};
 
 const app = createApp(App)
 const FilSpb = definePreset(Aura, {
@@ -51,12 +53,16 @@ const FilSpb = definePreset(Aura, {
         }
     }
 })
+
 app.use(createPinia())
 app.use(router)
 app.use(PrimeVue, {
     locale: russianLocale,
     theme: {
-        preset: FilSpb
+        preset: FilSpb,
+        options: {
+          darkModeSelector: 'light'
+      }
     }
 });
 

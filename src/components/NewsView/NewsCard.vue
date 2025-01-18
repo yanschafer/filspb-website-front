@@ -26,7 +26,6 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import appConf from '@/api/conf/app.conf';
 import NewsModel from '@/api/modules/news/news.model';
@@ -76,6 +75,7 @@ export default {
   flex-direction: row;
   align-items: center;
   width: 100%;
+  gap: 1rem;
 }
 
 .img-wrapper {
@@ -110,6 +110,15 @@ export default {
   flex: 1;
 }
 
+.header-row {
+  margin-bottom: 0.5rem;
+}
+
+.date {
+  font-size: 1.1rem;
+  color: #666;
+}
+
 .heading {
   font-size: 2rem;
   line-height: 2.5rem;
@@ -119,5 +128,107 @@ export default {
 
 .description {
   font-size: 1.1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .card-wrapper.horizontal-layout {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .img-wrapper.horizontal-img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 0.5rem;
+  }
+
+  .content-wrapper.horizontal-content {
+    padding-left: 0;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .img-wrapper.horizontal-img {
+    height: 180px;
+  }
+
+  .heading {
+    font-size: 1.3rem;
+    line-height: 1.6rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .date {
+    font-size: 1rem;
+  }
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .card-wrapper.horizontal-layout {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .img-wrapper.horizontal-img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 0.5rem;
+  }
+
+  .content-wrapper.horizontal-content {
+    padding-left: 0;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .img-wrapper.horizontal-img {
+    height: 180px;
+  }
+
+  .heading {
+    font-size: 1.3rem;
+    line-height: 1.6rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .date {
+    font-size: 1rem;
+  }
 }
 </style>
+
+

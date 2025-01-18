@@ -1,0 +1,691 @@
+/* Адаптивные стили для разных размеров экранов */
+
+/* Базовые стили для карточек и секций */
+.cards-wrapper {
+  margin-bottom: 4rem !important;
+  position: relative !important;
+}
+
+.card {
+  position: relative !important;
+  z-index: 1 !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.card-text {
+  max-height: 150px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.card:hover {
+  z-index: 2 !important;
+}
+
+.card:hover .card-text {
+  max-height: 500px !important;
+}
+
+/* Выравнивание отступов между секциями */
+.text-section {
+  margin-bottom: 4rem !important;
+}
+
+.text-section.kaef {
+  margin-top: 4rem !important;
+}
+
+/* Для экранов меньше 1600px */
+@media screen and (max-width: 1600px) {
+  .page-header-wrapper .heading {
+    font-size: 5rem !important;
+    line-height: 1.2 !important;
+  }
+  .page-header-wrapper .logo-link {
+    font-size: 1.1rem !important;
+    line-height: 1.4 !important;
+  }
+  .page-header-wrapper .number-heading {
+    font-size: 1.7rem !important;
+    line-height: 1.3 !important;
+  }
+  .event-title {
+    font-size: 3.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .event-description {
+    font-size: 1.1rem !important;
+    line-height: 1.5 !important;
+  }
+  /* Card styles */
+  .card-wrapper {
+    width: 18rem !important;
+    min-height: 35rem !important;
+  }
+  .card-wrapper .heading {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .description {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+  .card-wrapper .date {
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .time {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .overlay-button {
+    font-size: 1.1rem !important;
+  }
+  /* Footer styles */
+  .footer-section .title {
+    font-size: 1.1rem !important;
+    line-height: 1.4 !important;
+  }
+  .footer-section .city {
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-link {
+    font-size: 1rem !important;
+  }
+  .footer-section .phone-link {
+    font-size: 1.1rem !important;
+  }
+  .footer-section .location-link {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  /* AboutView styles */
+  .text-section .heading {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .text-section .text {
+    font-size: 1.1rem !important;
+    line-height: 1.5 !important;
+  }
+  .card {
+    width: 18rem !important;
+  }
+  .card-heading {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .card-text {
+    font-size: 1.1rem !important;
+    line-height: 1.4 !important;
+  }
+  .cards-wrapper {
+    height: 31rem !important;
+    margin-bottom: 2rem !important;
+  }
+  /* Child events styles */
+  .child-name {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .child-text {
+    font-size: 1.1rem !important;
+    line-height: 1.5 !important;
+  }
+  .single-children-wrapper {
+    width: 32rem !important;
+  }
+  /* Vacancy cards */
+  .vacancy-card {
+    width: 18rem !important;
+  }
+  .vacancy-title {
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+  }
+  .vacancy-description {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+  .text-section {
+    margin-bottom: 3.5rem !important;
+  }
+  .text-section.kaef {
+    margin-top: 3.5rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .news-section {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  .news-heading {
+    font-size: 3rem!important;
+    line-height: 3rem!important;
+    margin-bottom: 1rem !important;
+  }
+  .news-header-row {
+    -ms-flex-direction: column!important;
+    flex-direction: column!important;
+    gap: 1rem;
+    align-items: flex-start !important;
+  }
+  .footer-section {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  .footer-section .links-col {
+    align-items: center !important;
+  }
+  .footer-section .nav-links-group {
+    align-items: center !important;
+  }
+  .footer-header {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .footer-section .content-row .title {
+    text-align: center!important;
+  }
+  .page-header-wrapper {
+    padding-left: 1.5rem!important;
+    padding-right: 1.5rem !important;
+    flex-direction: column!important;
+    gap: 1rem !important;
+  }
+  .page-header-wrapper .page-header-col .nubmer-wrapper {
+    display: none!important;
+  }
+  .page-header-wrapper .page-header-col .heading-img {
+    width: 19vw!important;
+  }
+  .page-header-wrapper .heading {
+    transform: translateY(6px)!important;
+  }
+  .chips-row {
+    flex-wrap: wrap !important;
+  }
+  .event-grid {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  .repertoire-section {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  .repertoire-section .cards-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+  }
+  .repertoire-section .cards-grid .card-wrapper  {
+    min-height: max-content!important;
+  }
+}
+/* Для экранов меньше 1366px */
+@media screen and (max-width: 1366px) {
+  .page-header-wrapper .heading {
+    font-size: 4rem !important;
+    line-height: 1.2 !important;
+  }
+  .page-header-wrapper .logo-link {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+  .page-header-wrapper .number-heading {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  .event-title {
+    font-size: 3rem !important;
+    line-height: 1.2 !important;
+  }
+  .event-description {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  .about-text {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  /* Card styles */
+  .card-wrapper {
+    width: 16rem !important;
+    min-height: 32rem !important;
+  }
+  .card-wrapper .heading {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .description {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+  }
+  .card-wrapper .date {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .time {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .overlay-button {
+    font-size: 1rem !important;
+  }
+  .card-wrapper .author-name {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .author-position {
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+  }
+  /* Footer styles */
+  .footer-section .title {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+  .footer-section .city {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-link {
+    font-size: 0.9rem !important;
+  }
+  .footer-section .phone-link {
+    font-size: 1rem !important;
+  }
+  .footer-section .location-link {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-links-group {
+    gap: 1.5rem !important;
+  }
+  /* AboutView styles */
+  .text-section .heading {
+    font-size: 2.2rem !important;
+    line-height: 1.2 !important;
+  }
+  .text-section .text {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  .card {
+    width: 16rem !important;
+  }
+  .card-heading {
+    font-size: 1.6rem !important;
+    line-height: 1.2 !important;
+  }
+  .card-text {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+  .cards-wrapper {
+    height: 29rem !important;
+    gap: 1.5rem !important;
+    margin-bottom: 7rem !important;
+  }
+  /* Child events styles */
+  .child-name {
+    font-size: 1.6rem !important;
+    line-height: 1.2 !important;
+  }
+  .child-text {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  .single-children-wrapper {
+    width: 30rem !important;
+  }
+  .child-events {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+  }
+  /* Vacancy cards */
+  .vacancy-card {
+    width: 16rem !important;
+  }
+  .vacancy-title {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .vacancy-description {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+  .vacancies-grid {
+    gap: 20px !important;
+  }
+  .text-section {
+    margin-bottom: 3rem !important;
+  }
+  .text-section.kaef {
+    margin-top: 3rem !important;
+  }
+}
+
+/* Для экранов меньше 1024px */
+@media screen and (max-width: 1024px) {
+  .page-header-wrapper .heading {
+    font-size: 3rem !important;
+    line-height: 1.2 !important;
+  }
+  .page-header-wrapper .logo-link {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+  .page-header-wrapper .number-heading {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+  }
+  .event-title {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .about-heading {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  /* Card styles */
+  .card-wrapper {
+    width: 14rem !important;
+    min-height: 30rem !important;
+  }
+  .card-wrapper .heading {
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .description {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+  .card-wrapper .date {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .time {
+    font-size: 0.85rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .overlay-button {
+    font-size: 0.9rem !important;
+    padding: 0.8rem 1.6rem !important;
+  }
+  .card-wrapper .chip {
+    font-size: 0.8rem !important;
+  }
+  /* Footer styles */
+  .footer-section .title {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+  .footer-section .city {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-link {
+    font-size: 0.85rem !important;
+  }
+  .footer-section .phone-link {
+    font-size: 0.9rem !important;
+  }
+  .footer-section .location-link {
+    font-size: 0.85rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-links-group {
+    gap: 1rem !important;
+  }
+  .footer-section .contrast-mode-text {
+    font-size: 0.85rem !important;
+  }
+  /* AboutView styles */
+  .text-section .heading {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  .text-section .text {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  .card {
+    width: 14rem !important;
+  }
+  .card-heading {
+    font-size: 1.4rem !important;
+    line-height: 1.2 !important;
+  }
+  .card-text {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+  .cards-wrapper {
+    height: 27rem !important;
+    gap: 1rem !important;
+    margin-bottom: 6rem !important;
+  }
+  .text-section {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+  /* Child events styles */
+  .child-name {
+    font-size: 1.4rem !important;
+    line-height: 1.2 !important;
+  }
+  .child-text {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  .single-children-wrapper {
+    width: 28rem !important;
+    padding: 1.5rem !important;
+  }
+  .child-events {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+  .child-img {
+    max-width: 25rem !important;
+  }
+  /* Vacancy cards */
+  .vacancy-card {
+    width: 14rem !important;
+  }
+  .vacancy-title {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .vacancy-description {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+  }
+  .vacancies-grid {
+    gap: 16px !important;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)) !important;
+  }
+  .text-section {
+    margin-bottom: 2.5rem !important;
+  }
+  .text-section.kaef {
+    margin-top: 2.5rem !important;
+  }
+}
+
+/* Для экранов меньше 768px */
+@media screen and (max-width: 768px) {
+  .page-header-wrapper .heading {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .page-header-wrapper .logo-link {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+  .page-header-wrapper .number-heading {
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+  }
+  .event-title {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  .event-description {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  .about-heading {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  /* Card styles */
+  .card-wrapper {
+    width: 100% !important;
+    min-height: 28rem !important;
+  }
+  .card-wrapper .heading {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .description {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+  .card-wrapper .date {
+    font-size: 0.85rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .time {
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+  }
+  .card-wrapper .overlay-button {
+    font-size: 0.85rem !important;
+    padding: 0.7rem 1.4rem !important;
+  }
+  .card-wrapper .min-price {
+    font-size: 0.8rem !important;
+  }
+  /* Footer styles */
+  .footer-section .title {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+  }
+  .footer-section .city {
+    font-size: 0.85rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-link {
+    font-size: 0.8rem !important;
+  }
+  .footer-section .phone-link {
+    font-size: 0.85rem !important;
+  }
+  .footer-section .location-link {
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+  }
+  .footer-section .nav-links-group {
+    gap: 0.8rem !important;
+    flex-direction: column !important;
+  }
+  .footer-section .contrast-mode-text {
+    font-size: 0.8rem !important;
+  }
+  .footer-section .content-row {
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+  /* AboutView styles */
+  .text-section .heading {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .text-section .text {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+  .cards-wrapper {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+    margin-bottom: 4rem !important;
+  }
+  .card {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+  .card:hover {
+    margin-bottom: 2rem !important;
+  }
+  .card:last-child {
+    margin-bottom: 0 !important;
+  }
+  .card-heading {
+    font-size: 1.3rem !important;
+    line-height: 1.2 !important;
+  }
+  .card-text {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+  }
+  .text-section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  /* Child events styles */
+  .child-name {
+    font-size: 1.2rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+  .child-text {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+  .single-children-wrapper {
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+  .child-events {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    flex-direction: column !important;
+  }
+  .child-img {
+    max-width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+  /* Vacancy cards */
+  .vacancy-card {
+    width: 100% !important;
+  }
+  .vacancy-title {
+    font-size: 0.85rem !important;
+    line-height: 1.3 !important;
+  }
+  .vacancy-description {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+  .vacancies-grid {
+    gap: 12px !important;
+    grid-template-columns: 1fr !important;
+  }
+  .vacancy-image {
+    height: 120px !important;
+  }
+  .text-section {
+    margin-bottom: 2rem !important;
+  }
+  .text-section.kaef {
+    margin-top: 2rem !important;
+  }
+  .cards-wrapper {
+    margin-bottom: 2rem !important;
+  }
+}

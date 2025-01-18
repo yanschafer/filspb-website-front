@@ -152,6 +152,7 @@ a {
     height: 100%;
     max-width: 30px;
     max-height: 30px;
+    cursor: pointer;
 }
 .info-col {
   display: flex;
@@ -164,6 +165,7 @@ a {
 }
 .contrast-mode-text {
     font-weight: 500;
+    cursor: pointer;
 }
 .eye-img {
         width: 100%;

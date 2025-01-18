@@ -1,7 +1,7 @@
 <template>
   <!-- ааауаыыыы -->
   <HeaderComponent />
-  <PageHeaderComponent class="animate__animated animate__fadeIn" title="Новости" imgSrc="/src/assets/CircleImages/13.png" />
+  <PageHeaderComponent class="animate__animated animate__fadeIn" title="Новости" imgSrc="/filspb/CircleImages/13.png" />
   <NewsGrid :news="news" class="news animate__animated animate__fadeIn" />
   <FooterComponent />
 </template>

@@ -60,7 +60,6 @@
 
 body {
   height: calc(var(--vh, 1vh)* 100);
-  color: var(--color-text);
   background: var(--color-background);
   transition:
     color 0.5s,

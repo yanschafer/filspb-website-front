@@ -9,7 +9,7 @@
           </a>
           <h1 class="heading">{{ title }}</h1>
         </div>
-        <img class="heading-img" :src="imgSrc" alt="Header Image" />
+        <img class="heading-img" :src="resolvedImgSrc" alt="Header Image" />
       </div>
     </div>
     <div class="page-header-col">
@@ -24,7 +24,7 @@
         <Select v-model="selectedLocation" @update:modelValue="platformSelection" :options="locations" filter optionLabel="name" placeholder="все площадки" class="w-full md:w-56" />
     </div>
     <div v-if="utils" class="page-header-col">
-      <DatePicker v-model="dates" @update:modelValue="datesSelection" selectionMode="range" placeholder="дата" :manualInput="false" class="w-full md:w-56" />
+      <DatePicker v-model="dates" @update:modelValue="datesSelection" selectionMode="range" placeholder="Выберите дату" :manualInput="false" class="w-full md:w-56" />
     </div>
   </div>
 </template>
@@ -35,6 +35,7 @@ import PlatformModel from '@/api/modules/platform/platform.model';
 import SystemModel from '@/api/modules/system/system.model';
 import useEventsStore from '@/stores/events';
 import { Select, DatePicker } from 'primevue';
+
 export default {
   name: "PageHeaderComponent",
   components: {Select, DatePicker},
@@ -47,7 +48,7 @@ export default {
     imgSrc: {
       type: String,
       required: true,
-      default: "../assets/CircleImages/3.png", 
+      default: "/filspb/CircleImages/3.png", 
     },
     utils: {
       type: Boolean,
@@ -67,6 +68,16 @@ export default {
     locations: [],
     systemData: {}
   }),
+  computed: {
+    resolvedImgSrc() {
+      try {
+        return this.imgSrc;
+      } catch (e) {
+        console.error('Failed to load image:', e);
+        return "/filspb/CircleImages/3.png";
+      }
+    }
+  },
   async created() {
     const systemModel = new SystemModel()
     const platformModel = new PlatformModel()
@@ -118,23 +129,27 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: end;
-}
-.heading-row {
-  display: flex;
+  }
+
+  .heading-row {
+    display: flex;
   align-items: end;
 }
 .heading {
   font-size: 6rem;
   transform: translateY(17px);
-}
-.heading-img {
+  }
+
+  .heading-img {
   width: 10vw;
-}
-.number-heading {
+  }
+
+  .number-heading {
   font-size: 2rem;
-}
-.number-link {
-  text-decoration: none;
+  }
+
+  .number-link {
+    text-decoration: none;
   color: black;
   transition: all 0.3s ease-in-out;
 }
@@ -166,15 +181,54 @@ export default {
 :deep(.p-datepicker-input.p-placeholder) {
   color: black;
   font-weight: 600;
-}
+  }
 :deep(.p-datepicker-input.p-placeholder) {
   color: black !important;
   font-weight: 600 !important;
 }
+:deep(.dp__input) {
+  &::placeholder {
+    color: black;
+    font-weight: 700;
+  }
+}
+
+/* Если предыдущий вариант не сработает из-за специфики Vue, используем этот: */
+:deep(.dp__input::placeholder) {
+  color: black;
+  font-weight: 700;
+}
 </style>
 <style>
-.p-datepicker-input.p-placeholder {
+.p-datepicker input::placeholder,
+.p-inputtext::placeholder {
   color: black !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
+</style>
+<style>
+:deep(.p-datepicker) input::placeholder,
+:deep(.p-datepicker-input)::placeholder,
+:deep(.p-inputtext)::placeholder {
+  color: black !important;
+  font-weight: 700 !important;
+}
+
+:deep(.p-datepicker .p-inputtext),
+:deep(.p-calendar .p-inputtext) {
+  &::placeholder {
+    color: black !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Добавляем более специфичные стили */
+:deep(.p-datepicker) {
+  .p-inputtext::placeholder {
+    color: black !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Глобальные стили для датапикера */
 </style>

@@ -3,7 +3,7 @@
     <PageHeaderComponent
     class="animate__animated animate__fadeIn"
     title="Контакты"
-    imgSrc="/src/assets/CircleImages/head_about.png"
+    imgSrc="/filspb/CircleImages/head_about.png"
   />
   <div class="people-wrapper animate__animated animate__fadeIn">
     <template v-for="person in people">
@@ -88,82 +88,88 @@ export default {
 <style scoped>
 .people-wrapper {
     display: flex;
-    gap: 16px; /* Расстояние между карточками */
+    gap: 16px;
     width: 100%;
     justify-content: space-between;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding: 0 5rem;
     margin-bottom: 3rem;
 }
+
 .contact-wrapper-second {
-padding: 2rem;
+    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .mail-col {
-    flex: 1; /* Занимает одинаковую долю */
+    flex: 1;
     display: flex;
-    justify-content: flex-start; /* Выравнивание содержимого влево */
-    align-items: center; /* Центрирование по вертикали */
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .phone-col {
-    flex: 1; /* Занимает одинаковую долю */
+    flex: 1;
     display: flex;
-    justify-content: center; /* Центрирование содержимого по центру */
-    align-items: center; /* Центрирование по вертикали */
+    justify-content: center;
+    align-items: center;
 }
 
 .timetable-col {
-    flex: 1; /* Занимает одинаковую долю */
+    flex: 1;
     display: flex;
-    justify-content: flex-end; /* Выравнивание содержимого вправо */
-    align-items: center; /* Центрирование по вертикали */
+    justify-content: flex-end;
+    align-items: center;
 }
+
 .link-default {
     transition: all 0.3s ease-in-out;
 }
+
 .link-yellow {
     transition: all 0.3s ease-in-out;
 }
+
 .depts-wrapper {
     background-color: #f3f3f3;
     display: flex;
     flex-direction: column;
     border-radius: 2rem;
-    margin-top: 2rem;
-    margin-left: 5rem;
-    margin-right: 5rem;
+    margin: 2rem 5rem 0;
 }
+
 a {
     text-decoration: none;
     font-size: 2rem;
     color: black;
 }
+
 .link-yellow:hover {
     color: white;
 }
+
 .link-default:hover {
     color: #f3ca00;
 }
+
 .person-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center; /* Центровка текста под изображением */
-    width: 300px; /* Фиксированная ширина карточки */
+    text-align: center;
+    width: 300px;
 }
 
 .person-img-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px; /* Фиксированная ширина контейнера */
-    height: 200px; /* Фиксированная высота контейнера */
-    overflow: hidden; /* Обрезка изображения */
-    border-radius: 1rem; /* Если нужен круглый аватар */
-    background-color: #f3f3f3; /* Фоновый цвет, если изображение отсутствует */
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: #f3f3f3;
     margin-bottom: 1rem;
 }
 
@@ -183,17 +189,16 @@ a {
 .person-img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Обеспечивает обрезку изображения под контейнер */
+    object-fit: cover;
 }
 
 .contact-wrapper {
     display: flex;
-    align-items: center; /* Центрирование содержимого по вертикали */
+    align-items: center;
     background-color: #f3f3f3;
     padding: 2rem;
     border-radius: 2rem;
-    margin-left: 5rem;
-    margin-right: 5rem;
+    margin: 0 5rem;
 }
 
 .main {
@@ -208,19 +213,285 @@ a {
 .adress {
     font-size: 2rem;
 }
+
 .vk-logo {
-    max-width: 3vw;
+    width: 3rem;
+    height: 3rem;
 }
+
 .social-text {
     font-size: 2rem;
     font-weight: 600;
     display: flex;
     gap: 1rem;
-    width: 100;
-    justify-content: end;
-    margin-left: 5rem;
-    margin-right: 5rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 2rem 5rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .people-wrapper {
+        padding: 0 3rem;
+        gap: 1rem;
+    }
+
+    .person-wrapper {
+        width: 250px;
+    }
+
+    .person-img-wrapper {
+        width: 180px;
+        height: 180px;
+    }
+
+    .contact-wrapper,
+    .depts-wrapper {
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+
+    .social-text {
+        margin: 2rem 3rem;
+        font-size: 1.8rem;
+    }
+
+    a {
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .people-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .person-wrapper {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 2rem;
+    }
+
+    .contact-wrapper,
+    .contact-wrapper-second {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        text-align: center;
+    }
+
+    .mail-col,
+    .phone-col,
+    .timetable-col {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .depts-wrapper {
+        margin: 2rem 2rem 0;
+    }
+
+    .phone,
+    .adress {
+        font-size: 1.6rem;
+    }
+
+    .social-text {
+        margin: 2rem;
+        font-size: 1.6rem;
+        justify-content: center;
+    }
+
+    a {
+        font-size: 1.6rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .people-wrapper {
+        padding: 0 1rem;
+    }
+
+    .person-img-wrapper {
+        width: 150px;
+        height: 150px;
+    }
+
+    .person-name {
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+    }
+
+    .person-position,
+    .person-email {
+        font-size: 1.1rem;
+    }
+
+    .contact-wrapper,
+    .contact-wrapper-second {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding: 1rem;
+    }
+
+    .depts-wrapper {
+        margin: 1rem 1rem 0;
+        border-radius: 1rem;
+    }
+
+    .phone,
+    .adress {
+        font-size: 1.4rem;
+    }
+
+    .social-text {
+        margin: 1.5rem 1rem;
+        font-size: 1.4rem;
+    }
+
+    a {
+        font-size: 1.4rem;
+    }
+
+    .vk-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .people-wrapper {
+        padding: 0 3rem;
+        gap: 1rem;
+    }
+
+    .person-wrapper {
+        width: 250px;
+    }
+
+    .person-img-wrapper {
+        width: 180px;
+        height: 180px;
+    }
+
+    .contact-wrapper,
+    .depts-wrapper {
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+
+    .social-text {
+        margin: 2rem 3rem;
+        font-size: 1.8rem;
+    }
+
+    a {
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .people-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .person-wrapper {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 2rem;
+    }
+
+    .contact-wrapper,
+    .contact-wrapper-second {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        text-align: center;
+    }
+
+    .mail-col,
+    .phone-col,
+    .timetable-col {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .depts-wrapper {
+        margin: 2rem 2rem 0;
+    }
+
+    .phone,
+    .adress {
+        font-size: 1.6rem;
+    }
+
+    .social-text {
+        margin: 2rem;
+        font-size: 1.6rem;
+        justify-content: center;
+    }
+
+    a {
+        font-size: 1.6rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .people-wrapper {
+        padding: 0 1rem;
+    }
+
+    .person-img-wrapper {
+        width: 150px;
+        height: 150px;
+    }
+
+    .person-name {
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+    }
+
+    .person-position,
+    .person-email {
+        font-size: 1.1rem;
+    }
+
+    .contact-wrapper,
+    .contact-wrapper-second {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding: 1rem;
+    }
+
+    .depts-wrapper {
+        margin: 1rem 1rem 0;
+        border-radius: 1rem;
+    }
+
+    .phone,
+    .adress {
+        font-size: 1.4rem;
+    }
+
+    .social-text {
+        margin: 1.5rem 1rem;
+        font-size: 1.4rem;
+    }
+
+    a {
+        font-size: 1.4rem;
+    }
+
+    .vk-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
 }
 </style>

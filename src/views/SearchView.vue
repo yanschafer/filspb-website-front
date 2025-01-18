@@ -3,14 +3,14 @@
     <PageHeaderComponent
       class="animate__animated animate__fadeIn"
       title="Поиск по сайту"
-      imgSrc="/src/assets/CircleImages/3.png"
+      imgSrc="/filspb/CircleImages/3.png"
     />
     <section class="section">
       <div class="search-box">
         <div class="search-icon-wrapper">
           <img
             class="search-icon"
-            src="../assets/Icons/magnifying-glass-solid.svg"
+            src="@/assets/Icons/magnifying-glass-solid.svg"
           />
         </div>
         <input
@@ -53,14 +53,18 @@
   import appConf from "@/api/conf/app.conf";
   import type SearchResultDto from "@/api/modules/search/search-result.dto";
   import SearchModel from "@/api/modules/search/search.model";
-  
+  import heroBg from '@/assets/Hero/hero_bg-min.png'
+
   export default {
     name: "SearchView",
     components: { HeaderComponent, PageHeaderComponent, FooterComponent },
-    data: () => ({
-      query: "",
-      res: [],
-    }),
+    data() {
+      return {
+        heroBg,
+        query: "",
+        res: [],
+      }
+    },
     created() {
       //@ts-ignore
       this.query = this.$route.params.query;
@@ -95,7 +99,7 @@
   .section {
     position: relative;
     height: 30vh;
-    background-image: url("../../assets/Hero/hero_bg-min.png");
+    background-image: v-bind('url(' + heroBg + ')');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -197,4 +201,3 @@
     margin: 0;
   }
   </style>
-  

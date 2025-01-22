@@ -8,6 +8,8 @@ import SingleArticleView from '@/views/SingleArticleView.vue'
 import SearchView from '@/views/SearchView.vue'
 import NewsView from '@/views/NewsView.vue'
 import DocumentView from '@/views/DocumentView.vue'
+import SingleSeasonEventView from '@/views/SingleSeasonEventView.vue'
+import SeasonEventsView from '@/views/SeasonEventsView.vue'
 
 const router = createRouter({
   history: createWebHistory('/filspb/'),
@@ -48,6 +50,16 @@ const router = createRouter({
       path: '/event/:id',
       name: 'single-event',
       component: SingleEventView,
+    },
+    {
+      path: '/season-events',
+      name: 'season-events',
+      component: SeasonEventsView,
+    },
+    {
+      path: '/season-event/:id',
+      name: 'single-season-event',
+      component: SingleSeasonEventView,
     },
     {
       path: '/article/:id',

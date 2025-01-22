@@ -46,6 +46,18 @@
       />
     </div>
   </section>
+
+  <section class="section"> 
+      <h1 class="heading" @click="goToSeasons()">Наши абонементы</h1>
+      <div class="cards-grid">
+        <div @click="goToSeason(event.id)" class="card" v-for="event in seasonEvents">
+            <h1>{{ event.name }}</h1>
+            <img :src="getImage(event.image)" />
+            <p>{{ event.shortDescription }}</p>
+        </div>
+      </div>
+    </section>
+
   <FooterComponent />
 </template>
 
@@ -59,6 +71,7 @@ import HeroComponent from "@/components/HomeView/HeroComponent.vue";
 import NewsCard from "@/components/NewsView/NewsCard.vue";
 import useEventsStore from "@/stores/events";
 import NewsModel from "@/api/modules/news/news.model";
+import SeasonEventModel from "@/api/modules/season_events/season-event.model";
 
 export default {
   name: "EventsSection",
@@ -72,6 +85,7 @@ export default {
   },
   data: () => ({
     searchValue: "",
+    seasonEvents: [],
     news: [],
   }),
   setup() {
@@ -85,6 +99,8 @@ export default {
   async created() {
     const newsModel = new NewsModel()
     this.news = (await newsModel.getLast(3)).getData()
+    const eventModel = new SeasonEventModel()
+    this.seasonEvents = (await eventModel.getLast(3)).getData()
   },
   computed: {
     events() {
@@ -92,12 +108,23 @@ export default {
     }
   },
   methods: {
+    getImage(url: string) {
+        if (!url) return null
+        if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
+        else return url
+    },
     onSearch() {
       this.$router.push({path: "/search/" + this.searchValue})
     },
     goToEvents() {
       this.$router.push("/events");
     },
+    goToSeasons() {
+      this.$router.push("/season-events");
+    },
+    goToSeason(id) {
+      this.$router.push("/season-event/" + id);
+    }
   }
 };
 </script>

@@ -54,7 +54,10 @@
         <div class="slide-content">
           <div class="slide-img-col">
             <div class="slide-img-wrapper">
-              <img :src="slide.image" alt="Slide Image" class="slide-image" />
+              <img :src="slide.desktopImage" alt="Slide Image" class="slide-image" />
+            </div>
+            <div class="slide-img-wrapper">
+              <img :src="slide.mobileImage" alt="Slide Image" class="slide-image" />
             </div>
           </div>
           <div class="slide-content-col">

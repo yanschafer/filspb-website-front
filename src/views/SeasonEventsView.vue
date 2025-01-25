@@ -1,14 +1,12 @@
 <template>
     <HeaderComponent />
-    <PageHeaderComponent :utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/src/assets/CircleImages/3.png" />
+    <PageHeaderComponent  class="animate__animated animate__fadeIn" title="Абонементы" />
    
     <section class="section"> 
-      <h1 class="heading">Наши абонементы</h1>
       <div class="cards-grid">
-        <div @click="goToSeason(event.id)" class="card" v-for="event in events">
-            <h1>{{ event.name }}</h1>
-            <img :src="getImage(event.image)" />
-            <p>{{ event.shortDescription }}</p>
+        <div @click="goToSeason(event.id)" class="season-card" v-for="event in events">
+          <h3 class="heading">{{ event.name }}</h3>
+          <p class="description" v-html="event.shortDescription"></p>
         </div>
       </div>
     </section>
@@ -60,16 +58,53 @@ export default {
     padding-right: 5rem;
     margin-bottom: 3rem;
   }
+
   .cards-grid {
-    display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    gap: 2rem;
   }
+
   .heading {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
+
+  .season-card {
+    width: 20rem;
+    height: 100%;
+    min-height: 15rem;
+    padding: 2rem;
+    background: #f3f3f3;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .season-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .season-card .heading {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    font-weight: 600;
+  }
+
+  .season-card .description {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    .section {
+      padding-right: 2rem;
+      padding-left: 2rem;
+    }
+  }
   </style>
-  

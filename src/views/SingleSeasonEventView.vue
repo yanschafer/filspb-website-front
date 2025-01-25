@@ -1,16 +1,31 @@
 <template>
     <HeaderComponent />
-    <PageHeaderComponent :utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/src/assets/CircleImages/3.png" />
+    <PageHeaderComponent  class="animate__animated animate__fadeIn" title="Абонементы" />
    
     <section class="section"> 
-      <h1>{{ event.name }}</h1>
-      <img :src="getImage(event.image)" />
-      <p>{{ event.shortDescription }}</p>
-      <p v-html="event.description"></p>
-      <button v-if="event.isActive" @click="buy(event.purchaseLink)">Купить {{ event.price }}</button>
-      <p v-else>Продажа остановлена</p>
-      <div v-for="included in event.events">
-          <a @click="goToEvent(included.id)">{{ included.name }}</a>
+      <div class="content-wrapper">
+        <div class="main-content">
+          <h1 class="title">{{ event.name }}</h1>
+          <img :src="getImage(event.image)" />
+          <div class="description" v-html="event.description"></div>
+          
+          <div class="included-events">
+            <h2 class="subtitle">Мероприятия в абонементе:</h2>
+            <div class="events-list">
+              <div v-for="included in event.events" :key="included.id" class="event-item" @click="goToEvent(included.id)">
+                <h3 class="event-name">{{ included.name }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="side-content">
+          <div class="price-box">
+            <div class="price" v-if="event.price">{{ event.price }}₽</div>
+            <button v-if="event.isActive" @click="buy(event.purchaseLink)" class="buy-button">Купить абонемент</button>
+            <div v-else class="inactive-notice">Продажа остановлена</div>
+          </div>
+        </div>
       </div>
     </section>
     <FooterComponent />
@@ -53,20 +68,132 @@ export default {
   
   <style scoped>
   .section {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding: 4rem 5rem;
     margin-bottom: 3rem;
   }
-  .cards-grid {
-    display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+
+  .content-wrapper {
+    display: flex;
+    gap: 4rem;
   }
-  .heading {
+
+  .main-content {
+    flex: 2;
+  }
+
+  .side-content {
+    flex: 1;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  .subtitle {
     font-size: 2rem;
     font-weight: 600;
-    margin-top: 2rem;
+    margin: 2rem 0;
+  }
+
+  .description {
+    font-size: 1.2rem;
+    line-height: 1.6;
     margin-bottom: 2rem;
   }
+
+  .included-events {
+    margin-top: 3rem;
+  }
+
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .event-item {
+    padding: 1.5rem;
+    background: #f3f3f3;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .event-item:hover {
+    transform: translateX(10px);
+  }
+
+  .event-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .price-box {
+    position: sticky;
+    top: 2rem;
+    padding: 2rem;
+    background: #f3f3f3;
+    border-radius: 2rem;
+  }
+
+  .price {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .buy-button {
+    width: 100%;
+    padding: 1rem;
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .buy-button:hover {
+    background: transparent;
+    color: #000;
+  }
+
+  .inactive-notice {
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding: 2rem;
+    }
+
+    .content-wrapper {
+      flex-direction: column;
+    }
+
+    .side-content {
+      order: -1;
+    }
+
+    .price-box {
+      position: static;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+    }
+  }
   </style>
-  

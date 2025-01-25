@@ -51,6 +51,7 @@
           <router-link to="/events" @click="toggleMenu">афиша</router-link>
           <router-link to="/news" @click="toggleMenu">новости</router-link>
           <router-link to="/contacts" @click="toggleMenu">контакты</router-link>
+          <router-link to="/accessibility" @click="toggleMenu">доступная среда</router-link>
           <div class="sub-menu">
             <router-link to="/documents" @click="toggleMenu">Документы</router-link>
             <router-link to="/goszakaz" @click="toggleMenu">Госзаказ</router-link>

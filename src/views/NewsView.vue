@@ -2,7 +2,11 @@
   <!-- ааауаыыыы -->
   <HeaderComponent />
   <PageHeaderComponent class="animate__animated animate__fadeIn" title="Новости" imgSrc="/filspb/CircleImages/13.png" />
-  <NewsGrid :news="news" class="news animate__animated animate__fadeIn" />
+  <NewsGrid 
+    :news="news" 
+    :is-news-page="true"
+    class="news animate__animated animate__fadeIn" 
+  />
   <FooterComponent />
 </template>
 

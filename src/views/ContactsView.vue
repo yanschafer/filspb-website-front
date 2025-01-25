@@ -26,7 +26,7 @@
             <a :href="`tel:${main.phone}`" class="phone link-yellow">{{ main.name }}</a>
         </div>
         <div class="timetable-col">
-            <p class="adress">{{ main.address }}</p>
+            <p class="adress">{{ main.address }}<br> (здание находится не капитальном ремонте)</p>
         </div>
         
     </div>
@@ -189,7 +189,8 @@ a {
 .person-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: white;
 }
 
 .contact-wrapper {
@@ -211,7 +212,7 @@ a {
 }
 
 .adress {
-    font-size: 2rem;
+    text-align: right;
 }
 
 .vk-logo {

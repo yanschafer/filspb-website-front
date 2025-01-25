@@ -19,6 +19,28 @@
       />
     </div>
   </section>
+
+  <section class="season-section">
+    <div class="all-events-row abonements-row">
+      <div class="heading-col">
+        <h1 class="news-heading abonements-heading">Наши абонементы</h1>
+      </div>
+      <div class="spacer"></div>
+      <div class="btn-wrapper" @click="goToSeasons">
+        <h5 class="all-events-heading">все абонементы</h5>
+        <div class="all-events-btn">
+          <img class="arrow" src="../assets/Icons/arrow-right-solid.svg" />
+        </div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div @click="goToSeason(event.id)" class="season-card" v-for="event in seasonEvents" :key="event.id">
+        <h3 class="heading">{{ event.name }}</h3>
+        <p class="description" v-html="event.shortDescription"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="news-section">
     <div class="news-header-row">
       <div class="heading-col">
@@ -46,17 +68,6 @@
       />
     </div>
   </section>
-
-  <section class="section"> 
-      <h1 class="heading" @click="goToSeasons()">Наши абонементы</h1>
-      <div class="cards-grid">
-        <div @click="goToSeason(event.id)" class="card" v-for="event in seasonEvents">
-            <h1>{{ event.name }}</h1>
-            <img :src="getImage(event.image)" />
-            <p>{{ event.shortDescription }}</p>
-        </div>
-      </div>
-    </section>
 
   <FooterComponent />
 </template>
@@ -252,6 +263,13 @@ export default {
     hue-rotate(6deg) brightness(97%) contrast(93%);
 }
 @media (max-width: 480px) {
+  .abonements-row {
+    display: flex!important;
+    flex-direction: column!important;
+  }
+  .abonements-heading {
+    text-align: center!important;
+  }
   .cards-grid {
     padding-right: 2rem;
     padding-left: 2rem;
@@ -280,7 +298,7 @@ export default {
 }
 .all-events-row {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
 }
@@ -309,5 +327,46 @@ export default {
 }
 .all-events-btn:hover {
   background-color: black;
+}
+.season-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 4rem;
+  padding-right: 5rem;
+  padding-left: 5rem;
+}
+
+.season-card {
+  width: 20rem;
+  height: 100%;
+  min-height: 15rem;
+  padding: 2rem;
+  background: #f3f3f3;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.season-card:hover {
+  transform: translateY(-5px);
+}
+
+.season-card .heading {
+  font-size: 2rem;
+  line-height: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.season-card .description {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+  .season-section {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
 }
 </style>

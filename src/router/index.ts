@@ -10,6 +10,7 @@ import NewsView from '@/views/NewsView.vue'
 import DocumentView from '@/views/DocumentView.vue'
 import SingleSeasonEventView from '@/views/SingleSeasonEventView.vue'
 import SeasonEventsView from '@/views/SeasonEventsView.vue'
+import AccessibilityView from '@/views/AccessibilityView.vue'
 
 const router = createRouter({
   history: createWebHistory('/filspb/'),
@@ -75,6 +76,11 @@ const router = createRouter({
       path: '/documents',
       name: 'documents',
       component: DocumentView
+    },
+    {
+      path: '/accessibility',
+      name: 'accessibility',
+      component: AccessibilityView
     }
   ],
 })

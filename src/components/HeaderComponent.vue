@@ -23,6 +23,9 @@
             <div class="nav-link">
               <router-link to="/contacts" class="nav-link-text">КОНТАКТЫ</router-link>
             </div>
+            <div class="nav-link">
+              <router-link to="/accessibility" class="nav-link-text">ДОСТУПНАЯ СРЕДА</router-link>
+            </div>
           </div>
           <div class="contrast-mode">
             <div class="eye-img-wrapper">

@@ -1,7 +1,10 @@
 <template>
   <div
     class="card-wrapper"
-    :class="{ 'horizontal-layout': layout === 'horizontal' }"
+    :class="{ 
+      'horizontal-layout': layout === 'horizontal',
+      'news-page-card': isNewsPage 
+    }"
     @click="goTo(cardData.id)"
   >
     <div
@@ -39,6 +42,10 @@ export default {
       type: String,
       default: "vertical", // "vertical" или "horizontal"
     },
+    isNewsPage: {
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     goTo(nId: number) {
@@ -63,19 +70,27 @@ export default {
 
 <style scoped>
 .card-wrapper {
-  width: 20rem;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  width: 18rem; /* Возвращаем фиксированную ширину по умолчанию */
+}
+
+/* Специальные стили для страницы новостей */
+.card-wrapper.news-page-card {
+  width: 100% !important;
 }
 
 .card-wrapper.horizontal-layout {
   flex-direction: row;
   align-items: center;
-  width: 100%;
   gap: 1rem;
+}
+
+.card-wrapper.horizontal-layout.news-page-card {
+  width: 100% !important;
 }
 
 .img-wrapper {
@@ -102,133 +117,69 @@ export default {
 }
 
 .content-wrapper {
-  padding: 1rem 0;
-}
-
-.content-wrapper.horizontal-content {
-  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   flex: 1;
 }
 
 .header-row {
-  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-col {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .date {
-  font-size: 1.1rem;
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.7;
 }
 
 .heading {
-  font-size: 2rem;
-  line-height: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
 }
 
 .description {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: #333;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Медиа-запросы для страницы новостей */
+@media screen and (max-width: 1600px) {
+  .card-wrapper.news-page-card {
+    width: 100% !important;
+    min-height: auto !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card-wrapper.news-page-card {
+    width: 100% !important;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .card-wrapper.horizontal-layout {
-    flex-direction: column;
-    gap: 0.5rem;
+  .card-wrapper.news-page-card {
+    width: 100% !important;
   }
-
+  
   .img-wrapper.horizontal-img {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 0.5rem;
+    height: 6rem;
+    width: 6rem;
   }
-
-  .content-wrapper.horizontal-content {
-    padding-left: 0;
-  }
-
+  
   .heading {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .description {
-    font-size: 1rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .img-wrapper.horizontal-img {
-    height: 180px;
-  }
-
-  .heading {
-    font-size: 1.3rem;
-    line-height: 1.6rem;
-  }
-
-  .description {
-    font-size: 0.9rem;
-  }
-
-  .date {
-    font-size: 1rem;
-  }
-}
-
-.description {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: #333;
-}
-
-@media screen and (max-width: 768px) {
-  .card-wrapper.horizontal-layout {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .img-wrapper.horizontal-img {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 0.5rem;
-  }
-
-  .content-wrapper.horizontal-content {
-    padding-left: 0;
-  }
-
-  .heading {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .description {
-    font-size: 1rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .img-wrapper.horizontal-img {
-    height: 180px;
-  }
-
-  .heading {
-    font-size: 1.3rem;
-    line-height: 1.6rem;
-  }
-
-  .description {
-    font-size: 0.9rem;
-  }
-
-  .date {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }
 </style>
-
-

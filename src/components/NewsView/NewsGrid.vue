@@ -8,7 +8,11 @@
       <div class="event-cards" :class="{ 'loading': isLoading }">
         <!-- Отображаем элементы и Divider между ними -->
         <template v-for="(item, index) in paginatedNews" :key="index">
-          <NewsCard :card-data="item" layout="horizontal" />
+          <NewsCard 
+            :card-data="item" 
+            layout="horizontal" 
+            :is-news-page="isNewsPage"
+          />
           <!-- Divider добавляется между карточками, кроме последней -->
           <Divider v-if="index < paginatedNews.length - 1" />
         </template>
@@ -39,6 +43,10 @@ export default {
     news: {
       type: Array,
       required: true,
+    },
+    isNewsPage: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

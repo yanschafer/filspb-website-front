@@ -41,163 +41,204 @@
       </div>
     </div>
     <div v-else class="no-results">
-  <p>Ничего не найдено по вашему запросу.</p>
-</div>
+      <p>Ничего не найдено по вашему запросу.</p>
+    </div>
     <FooterComponent />
-  </template>
+</template>
   
-  <script lang="ts">
-  import HeaderComponent from "@/components/HeaderComponent.vue";
-  import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
-  import FooterComponent from "@/components/FooterComponent.vue";
-  import appConf from "@/api/conf/app.conf";
-  import type SearchResultDto from "@/api/modules/search/search-result.dto";
-  import SearchModel from "@/api/modules/search/search.model";
-  import heroBg from '@/assets/Hero/hero_bg-min.png'
+<script lang="ts">
+import { defineComponent, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import PageHeaderComponent from "@/components/PageHeaderComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
+import appConf from "@/api/conf/app.conf";
+import type SearchResultDto from "@/api/modules/search/search-result.dto";
+import SearchModel from "@/api/modules/search/search.model";
+import heroBg from '@/assets/Hero/hero_bg-min.png';
 
-  export default {
-    name: "SearchView",
-    components: { HeaderComponent, PageHeaderComponent, FooterComponent },
-    data() {
-      return {
-        heroBg,
-        query: "",
-        res: [],
-      }
-    },
-    created() {
-      //@ts-ignore
-      this.query = this.$route.params.query;
-      if (this.query) this.search();
-    },
-    methods: {
-      getImage(url: string) {
-        if (!url) return null;
-        if (url[0] == "/")
-          return `${appConf.proto}://${appConf.endpoint}/files${url}`;
-        else return url;
-      },
-      find() {
-        this.$router.push({ path: `/search/${this.query}` }).finally(() => {
-          this.search();
-        });
-      },
-      async search() {
+export default defineComponent({
+  name: "SearchView",
+  components: { HeaderComponent, PageHeaderComponent, FooterComponent },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const query = ref("");
+    const res = ref([]);
+
+    const getImage = (url: string) => {
+      if (!url) return null;
+      if (url[0] === "/")
+        return `${appConf.proto}://${appConf.endpoint}/files${url}`;
+      return url;
+    };
+
+    const find = async () => {
+      if (!query.value.trim()) return;
+      
+      try {
+        // Сначала выполняем поиск
         const searchModel = new SearchModel();
-        //@ts-ignore
-        this.res = (await searchModel.find(this.query)).getData();
-      },
-      go(item: SearchResultDto) {
-        if (!item.isArticle) this.$router.push({ path: `/event/${item.id}` });
-        else this.$router.push({ path: `/article/${item.id}` });
-      },
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .section {
-    position: relative;
-    height: 30vh;
-    background-image: v-bind('url(' + heroBg + ')');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        const results = await searchModel.find(query.value);
+        res.value = results.getData();
+        
+        // Затем обновляем URL
+        router.push({ path: `/search/${query.value}` });
+      } catch (error) {
+        console.error('Ошибка при поиске:', error);
+        res.value = [];
+      }
+    };
+
+    const search = async () => {
+      if (!query.value.trim()) return;
+      
+      try {
+        const searchModel = new SearchModel();
+        const results = await searchModel.find(query.value);
+        res.value = results.getData();
+      } catch (error) {
+        console.error('Ошибка при поиске:', error);
+        res.value = [];
+      }
+    };
+
+    const go = (item: SearchResultDto) => {
+      if (!item.isArticle) {
+        router.push({ path: `/event/${item.id}` });
+      } else {
+        router.push({ path: `/article/${item.id}` });
+      }
+    };
+
+    // Watch for route changes
+    watch(() => route.params.query, (newQuery) => {
+      if (newQuery) {
+        query.value = newQuery as string;
+        search();
+      }
+    }, { immediate: true });
+
+    return {
+      query,
+      res,
+      getImage,
+      find,
+      go,
+      heroBg
+    };
   }
+});
+</script>
   
-  .search-box {
-    border-bottom: 2px solid black;
-    width: max-content;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    z-index: 8;
-  }
-  
-  .search-icon-wrapper {
-    width: 1.3rem;
-  }
-  .no-results {
-  text-align: center;
-  margin-top: 2rem;
+<style scoped>
+.section {
+  position: relative;
+  height: 30vh;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 2rem;
+}
+
+.search-icon-wrapper {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+}
+
+.search-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.search-results {
+  padding: 2rem 5rem;
+}
+
+.search-item-wrapper {
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.search-item {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: 0.3s;
+}
+
+.search-item:hover {
+  background-color: #f5f5f5;
+}
+
+.img-wrapper {
+  width: 200px;
+  height: 200px;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-wrapper {
+  flex: 1;
+}
+
+.item-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.item-description {
   font-size: 1.2rem;
   color: #555;
-  margin-bottom: 5rem;
+  margin: 0;
 }
-  .search-icon {
-    width: 100%;
-    max-width: 2rem;
-    height: auto;
-  }
-  
-  .search-input {
-    border: none;
-    background-color: transparent;
-    padding: 0.5rem;
-    outline: none;
-    font-size: 1.5rem;
-  }
-  
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
   .search-results {
     padding: 2rem;
   }
   
-  .search-item-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
-  
   .search-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    width: 100%;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .search-item:hover {
-    transform: scale(1.02);
+    flex-direction: column;
   }
   
   .img-wrapper {
-    flex-shrink: 0;
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 300px;
   }
-  
-  .text-wrapper {
-    padding: 1rem;
-    flex-grow: 1;
-  }
-  
-  .item-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0 0 0.5rem 0;
-  }
-  
-  .item-description {
-    font-size: 1rem;
-    color: #555;
-    margin: 0;
-  }
-  </style>
+}
+</style>

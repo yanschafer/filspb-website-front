@@ -52,21 +52,21 @@
       </swiper-slide>
       <swiper-slide v-for="(slide, index) in slides" :key="index">
         <div class="slide-content">
-          <div class="slide-img-col">
-            <div class="slide-img-wrapper">
-              <img :src="slide.desktopImage" alt="Slide Image" class="slide-image" />
-            </div>
-            <div class="slide-img-wrapper">
-              <img :src="slide.mobileImage" alt="Slide Image" class="slide-image" />
-            </div>
-          </div>
-          <div class="slide-content-col">
-            <h2 class="slide-title">{{ slide.title }}</h2>
-            <p class="slide-text" v-html="slide.text"></p>
-            <a :href="slide.link" class="slide-button">
-              {{ slide.buttonText }}
-            </a>
-          </div>
+          <!-- Десктопная версия -->
+          <img 
+            :src="slide.desktopImage" 
+            alt="Slide Image" 
+            class="slide-image slide-image-desktop" 
+          />
+          <!-- Мобильная версия -->
+          <img 
+            :src="slide.mobileImage" 
+            alt="Slide Image" 
+            class="slide-image slide-image-mobile" 
+          />
+          <a :href="slide.link" class="slide-button">
+            {{ slide.buttonText }}
+          </a>
         </div>
       </swiper-slide>
     </swiper>
@@ -165,46 +165,88 @@ export default {
   margin-top: 1rem;
 }
 .slide-content {
-  display: flex;
-  gap: 2rem;
+  position: relative;
   width: 100%;
-  height: 100vh;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  height: 100%;
 }
-.slide-title {
-  font-size: 4rem;
-  line-height: 4rem;
-  font-weight: 700;
-}
-.slide-content-col {
-  display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-}
-.slide-img-wrapper {
-  border-radius: 50%;
-  overflow: hidden;
-  object-fit: contain;
-  display: flex;
-  height: 30rem;
-  width: 30rem;
-  overflow: hidden; 
-  border-radius: 50%;
-}
+
 .slide-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
-.slide-img-col {
-  width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+/* Десктопная версия */
+.slide-image-desktop {
+  display: block;
+  width: 1920px;
+  height: 600px;
 }
+
+/* Мобильная версия */
+.slide-image-mobile {
+  display: none;
+  width: 390px;
+  height: 500px;
+  object-fit: contain;
+}
+
+.slide-button {
+  position: absolute;
+  padding: 15px 30px;
+  background: black;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+/* Десктопная версия - кнопка справа снизу */
+@media (min-width: 769px) {
+  .slide-button {
+    bottom: 40px;
+    right: 40px;
+  }
+  
+  .slide-image-desktop {
+    display: block;
+  }
+  
+  .slide-image-mobile {
+    display: none;
+  }
+}
+
+/* Мобильная версия - кнопка внизу по центру */
+@media (max-width: 768px) {
+  .slide-button {
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .slide-image-desktop {
+    display: none;
+  }
+  
+  .slide-image-mobile {
+    display: block;
+  }
+}
+
+.slide-button:hover {
+  background: var(--primary-color-dark);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .slide-button:hover {
+    transform: translateX(-50%) translateY(-2px);
+  }
+}
+
 .section {
   background-image: url("../../assets/Hero/hero_bg-min.png");
   background-size: contain;
@@ -239,10 +281,9 @@ export default {
 
   .slide-content {
     flex-direction: column!important;
-    padding: 1rem 3rem!important;
+    padding: 0!important;
     gap: 1rem!important;
-    height: auto!important;
-    min-height: calc(100vh - 4rem)!important;
+    height: 100%!important;
     align-items: center!important;
     justify-content: center!important;
     align-content: center!important;
@@ -299,6 +340,7 @@ export default {
     font-size: 1.8rem !important;
         line-height: 1.8rem !important;
         padding: 0!important;
+        min-width: 100% !important;
         text-align: center !important;
   }
 
@@ -401,8 +443,6 @@ export default {
   gap: 2rem;
   width: 100%;
   height: 100vh;
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 
 .slide-title {
@@ -413,9 +453,9 @@ export default {
 
 .slide-content-col {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .slide-img-wrapper {
@@ -425,22 +465,22 @@ export default {
   display: flex;
   height: 30rem;
   width: 30rem;
-  overflow: hidden;
+  overflow: hidden; 
   border-radius: 50%;
 }
 
 .slide-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .slide-img-col {
   width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .all-events-link {
@@ -455,6 +495,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    display: flex!important;
+    width: 100%!important;
+  }
   .all-events-link {
     display: block;
   }

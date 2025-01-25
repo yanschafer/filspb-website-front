@@ -81,11 +81,7 @@
         потом приведет в филармонические залы своих детей. Это системный
         процесс, требующий постоянного внимания</b
       >
-    </p>
-  </section>
-
-  <section class="text-section kaef">
-    <p class="text">
+      <br><br>
       Мы ведем активную работу по формированию юной филармонической аудитории. За один год в Филармонии проходит цикл следующих детских программ:
     </p>
   </section>
@@ -246,6 +242,7 @@ export default {
   padding-bottom: 2rem;
   padding-top: 1rem;
   border-radius: 2rem;
+  min-height: 25rem;
 }
 .card-img {
   border-radius: 1rem;

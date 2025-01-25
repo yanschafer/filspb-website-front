@@ -11,8 +11,9 @@
         <AccordionHeader>{{ category.categoryName }}</AccordionHeader>
         <AccordionContent>
           <div class="people-grid">
+            <!-- Сначала выводим людей с фото -->
             <div
-              v-for="person in elite(category)"
+              v-for="person in withPhotos(category)"
               :key="person.id"
               class="person-card"
             >
@@ -24,24 +25,15 @@
               <h3 class="person-name">{{ person.name }}</h3>
               <p class="person-position">{{ person.position }}</p>
             </div>
-          </div>
-
-          <!-- Список для людей без фото -->
-          <div v-if="popuski(category).length" class="people-list">
+            
+            <!-- Затем выводим людей без фото -->
             <div
-              v-for="(person, index) in popuski(category)"
+              v-for="person in withoutPhotos(category)"
               :key="person.id"
-              class="person-list-item"
+              class="person-card no-photo"
             >
-              <div>
-                <h3 class="person-name">{{ person.name }}</h3>
-                <p class="person-position">{{ person.position }}</p>
-              </div>
-              <!-- Разделитель -->
-              <div
-                v-if="index < popuski(category).length - 1"
-                class="divider"
-              ></div>
+              <h3 class="person-name">{{ person.name }}</h3>
+              <p class="person-position">{{ person.position }}</p>
             </div>
           </div>
         </AccordionContent>
@@ -99,15 +91,15 @@ export default {
       }
     );
 
-    const elite = (category: PeopleCategoryDto) =>
-      category.people.filter((el) => el.image != null);
-    const popuski = (category: PeopleCategoryDto) =>
-      category.people.filter((el) => el.image == null);
+    const withPhotos = (category: PeopleCategoryDto) =>
+      category.people.filter((el) => el.image !== null && el.image !== '');
+    const withoutPhotos = (category: PeopleCategoryDto) =>
+      category.people.filter((el) => el.image === null || el.image === '');
 
     return {
       activeIndex,
-      elite,
-      popuski,
+      withPhotos,
+      withoutPhotos,
     };
   },
 };
@@ -156,6 +148,18 @@ export default {
   color: #666;
 }
 
+.person-card.no-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.person-card.no-photo .person-name,
+.person-card.no-photo .person-position {
+  margin: 4px 0;
+}
+
 /* Стили для аккордеона */
 :deep(.p-accordion) {
   font-family: inherit;
@@ -199,321 +203,38 @@ export default {
 }
 
 :deep(.p-accordion .p-accordion-content) {
+  border: none !important;
   background: transparent !important;
-  border: none;
   padding: 1.5rem 0;
 }
 
-:deep(.p-accordion .p-accordion-tab) {
-  background: transparent !important;
+:deep(.p-accordion-header-text) {
+  margin-right: auto;
 }
 
 :deep(.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link) {
-  background: transparent !important;
-  border-color: #e0e0e0;
+  background: transparent;
+  border-color: transparent;
+  color: #000;
 }
 
-:deep(.p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:hover) {
-  background: transparent !important;
-  border-color: #e0e0e0;
+:deep(.p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link) {
+  border: none;
 }
 
-:deep(.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader) {
-  background: transparent !important;
+:deep(.p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link) {
+  background: transparent;
+  border-color: transparent;
+  color: #000;
 }
 
-:deep(.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader .p-accordion-header-link) {
-  background: transparent !important;
+:deep(.p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus) {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
 }
 
-/* Список для людей без фото */
-.people-list {
-  margin-top: 24px;
-}
-
-.person-list-item {
-  text-align: left;
-  padding: 1rem 0;
-}
-
-.person-list-item .person-name {
-  font-size: 1em;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.person-list-item .person-position {
-  font-size: 0.9em;
-  color: #666;
-}
-
-/* Разделитель */
-.divider {
-  height: 1px;
-  background-color: #e0e0e0;
-  margin: 1rem 0;
-}
-
-/* Медиа-запросы для адаптивности */
-@media screen and (max-width: 1024px) {
-  .section {
-    padding: 0 3rem;
-  }
-
-  .heading {
-    font-size: 2.5rem;
-  }
-
-  :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
-    font-size: 1.8rem;
-    padding: 1.25rem 0;
-  }
-
-  .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 20px;
-  }
-
-  .person-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 24px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .section {
-    padding: 0 2rem;
-  }
-
-  .heading {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
-    font-size: 1.5rem;
-    padding: 1rem 0;
-  }
-
-  .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 16px;
-  }
-
-  .person-image {
-    width: 90px;
-    height: 90px;
-    border-radius: 20px;
-  }
-
-  .person-name {
-    font-size: 1em;
-  }
-
-  .person-position {
-    font-size: 0.8em;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .section {
-    padding: 0 1rem;
-  }
-
-  .heading {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-
-  :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
-    font-size: 1.3rem;
-    padding: 0.8rem 0;
-  }
-
-  .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-  }
-
-  .person-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 16px;
-  }
-
-  .person-name {
-    font-size: 0.9em;
-    margin-top: 8px;
-  }
-
-  .person-position {
-    font-size: 0.75em;
-  }
-
-  .person-list-item {
-    padding: 0.8rem 0;
-  }
-
-  .person-list-item .person-name {
-    font-size: 0.9em;
-  }
-
-  .person-list-item .person-position {
-    font-size: 0.8em;
-  }
-
-  .divider {
-    margin: 0.8rem 0;
-  }
-}
-:deep(.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader) {
-  background: transparent !important;
-}
-
-:deep(.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader .p-accordion-header-link) {
-  background: transparent !important;
-}
-
-/* Список для людей без фото */
-.people-list {
-  margin-top: 24px;
-}
-
-.person-list-item {
-  text-align: left;
-  padding: 1rem 0;
-}
-
-.person-list-item .person-name {
-  font-size: 1em;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.person-list-item .person-position {
-  font-size: 0.9em;
-  color: #666;
-}
-
-/* Разделитель */
-.divider {
-  height: 1px;
-  background-color: #e0e0e0;
-  margin: 1rem 0;
-}
-
-/* Медиа-запросы для адаптивности */
-@media screen and (max-width: 1024px) {
-  .section {
-    padding: 0 3rem;
-  }
-
-  .heading {
-    font-size: 2.5rem;
-  }
-
-  :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
-    font-size: 1.8rem;
-    padding: 1.25rem 0;
-  }
-
-  .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 20px;
-  }
-
-  .person-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 24px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .section {
-    padding: 0 2rem;
-  }
-
-  .heading {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
-    font-size: 1.5rem;
-    padding: 1rem 0;
-  }
-
-  .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 16px;
-  }
-
-  .person-image {
-    width: 90px;
-    height: 90px;
-    border-radius: 20px;
-  }
-
-  .person-name {
-    font-size: 1em;
-  }
-
-  .person-position {
-    font-size: 0.8em;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .section {
-    padding: 0 1rem;
-  }
-
-  .heading {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-
-  :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
-    font-size: 1.3rem;
-    padding: 0.8rem 0;
-  }
-
-  .people-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-  }
-
-  .person-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 16px;
-  }
-
-  .person-name {
-    font-size: 0.9em;
-    margin-top: 8px;
-  }
-
-  .person-position {
-    font-size: 0.75em;
-  }
-
-  .person-list-item {
-    padding: 0.8rem 0;
-  }
-
-  .person-list-item .person-name {
-    font-size: 0.9em;
-  }
-
-  .person-list-item .person-position {
-    font-size: 0.8em;
-  }
-
-  .divider {
-    margin: 0.8rem 0;
-  }
+:deep(.p-accordion-header:hover) {
+  opacity: 0.7;
 }
 </style>

@@ -60,7 +60,7 @@ export default {
       else return url
     },
     buy(event: EventDto) {
-      // event.purchaseLink
+      event.purchaseLink
     }
   }
 };

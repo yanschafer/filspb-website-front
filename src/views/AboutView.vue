@@ -4,6 +4,7 @@
     class="animate__animated animate__fadeIn"
     title="О нас"
     imgSrc="/filspb/CircleImages/head_about.png"
+    :utils="false"
   />
   <section class="text-section">
     <h1 class="heading">
@@ -60,7 +61,7 @@
       </p>
     </div>
   </div>
-  <section class="text-section kaef">
+  <section class="text-section text-section-2">
     <h1 class="heading">
       «Государственная филармония для детей и молодежи» является единственной в
       Санкт-Петербурге и одной из немногих в России, специализирующейся на
@@ -82,11 +83,11 @@
         процесс, требующий постоянного внимания</b
       >
       <br><br>
-      Мы ведем активную работу по формированию юной филармонической аудитории. За один год в Филармонии проходит цикл следующих детских программ:
+      Мы ведем активную работу по формированию юной филармонической аудитории.
     </p>
   </section>
 
-  <ChildEventsComponent :children="children" :getImage="getImage" />
+  <!-- <ChildEventsComponent :children="children" :getImage="getImage" /> -->
 
   <section class="text-section kaef">
     <p class="text">
@@ -97,8 +98,7 @@
       и традиций нашей страны; использование возможностей культурного отдыха для
       решения общественно-полезных задач и обсуждения важнейших социальных
       вопросов и проектов среди молодежи.<br><br> <b>Дар общения, умение установить контакт
-      с аудиторией любого возраста — непременное условие успешной работы в</b>
-      Филармонии.
+      с аудиторией любого возраста — непременное условие успешной работы в Филармонии.</b>
     </p>
   </section>
   <section class="section">
@@ -265,6 +265,9 @@ export default {
   justify-content: center;
   /* height: max-content; */
   height: 33rem;
+}
+.text-section-2 {
+  margin-bottom: 0!important;
 }
 .accordeon {
   background-color: #f3f3f3;

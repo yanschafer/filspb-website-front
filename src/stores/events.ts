@@ -39,8 +39,8 @@ const useEventsStore = defineStore('events', {
         async updatePeriod(start: number = Date.now() - 30 * 24 * 60 * 60 * 1000, end: number = Date.now() + 30 * 24 * 60 * 60 * 1000) {
             const eventModel = new EventModel()
             this.useFilters = true
-            this.event = []
-            this.events = (await eventModel.getByPeriod(start, end)).getData()
+            const newEvents = (await eventModel.getByPeriod(start, end)).getData()
+            this.events = newEvents
         }
     }
 })

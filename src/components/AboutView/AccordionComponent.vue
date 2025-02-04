@@ -10,35 +10,35 @@
       >
         <AccordionHeader>{{ category.categoryName }}</AccordionHeader>
         <AccordionContent>
-          <div class="people-grid">
-            <!-- Сначала выводим людей с фото -->
-            <div
-              v-for="person in withPhotos(category)"
-              :key="person.id"
-              class="person-card"
-            >
-              <img
-                :src="getImage(person.image)"
-                alt="Person Photo"
-                class="person-image"
-              />
-              <h3 class="person-name">{{ person.name }}</h3>
-              <p class="person-position">{{ person.position }}</p>
-            </div>
-            
-            <!-- Затем выводим людей без фото -->
-            <div
-              v-for="person in withoutPhotos(category)"
-              :key="person.id"
-              class="person-card no-photo"
-            >
-              <h3 class="person-name">{{ person.name }}</h3>
-              <p class="person-position">{{ person.position }}</p>
+          <div class="accordion-content">
+            <div class="people-grid">
+              <div
+                v-for="person in sortPeopleByPosition(category.people)"
+                :key="person.name"
+                :class="['person-card', { 'no-photo': !person.image }]"
+              >
+                <img
+                  v-if="person.image"
+                  :src="getImage(person.image)"
+                  alt="Person Photo"
+                  class="person-image"
+                />
+                <h3 class="person-name">{{ person.name }}</h3>
+                <p class="person-position">{{ person.position }}</p>
+              </div>
             </div>
           </div>
+          <Button 
+            v-if="category.categoryName === 'Симфонический оркестр'"
+            class="view-orchestra-btn p-button-outlined"
+            @click="showOrchestraComposition"
+          >
+            Просмотреть состав
+          </Button>
         </AccordionContent>
       </AccordionPanel>
     </Accordion>
+    <OrchestraCompositionModal ref="orchestraModal" />
   </div>
 </template>
 
@@ -47,6 +47,8 @@ import Accordion from "primevue/accordion";
 import AccordionPanel from "primevue/accordionpanel";
 import AccordionHeader from "primevue/accordionheader";
 import AccordionContent from "primevue/accordioncontent";
+import Button from "primevue/button";
+import OrchestraCompositionModal from "./OrchestraCompositionModal.vue";
 import { ref, onMounted, watch } from "vue";
 import type { PropType } from "vue";
 import type PeopleCategoryDto from "@/api/modules/people/people-category.dto";
@@ -58,6 +60,8 @@ export default {
     AccordionPanel,
     AccordionHeader,
     AccordionContent,
+    Button,
+    OrchestraCompositionModal
   },
   props: {
     categories: {
@@ -70,13 +74,69 @@ export default {
     },
   },
   setup(props) {
-    const activeIndex = ref(null); // Инициализация
+    const activeIndex = ref(null); 
+    const orchestraModal = ref(null);
+
+    const positionOrder = {
+      'Отдел продаж и работе со зрителями': [
+        'Руководитель отдела',
+        'Главный специалист',
+        'Главный специалист по реализации билетов',
+        'Главный администратор',
+        'Администратор',
+        'Кассир билетный',
+        'Ведущий концерта'
+      ],
+      'Симфонический оркестр': [
+        'Заместитель директора по музыкальной части',
+        'Дирижер симфонического оркестра',
+        'Библиотекарь (нотный)'
+      ]
+    };
+
+    const sortPeopleByPosition = (people) => {
+      // Получаем текущую активную категорию
+      const currentCategory = props.categories[activeIndex.value];
+      const categoryName = currentCategory?.categoryName || '';
+      
+      // Получаем порядок позиций для данной категории
+      const categoryOrder = positionOrder[categoryName];
+      
+      // Если это категория с заданным порядком должностей
+      if (categoryOrder) {
+        return [...people].sort((a, b) => {
+          const posA = categoryOrder.indexOf(a.position);
+          const posB = categoryOrder.indexOf(b.position);
+          
+          // Если обе позиции найдены в заданном порядке
+          if (posA !== -1 && posB !== -1) {
+            return posA - posB;
+          }
+          // Если только одна позиция найдена, она должна быть первой
+          if (posA !== -1) return -1;
+          if (posB !== -1) return 1;
+          
+          // Для позиций не из списка, сортируем по алфавиту
+          return a.position.localeCompare(b.position);
+        });
+      }
+      
+      // Для остальных категорий сортируем только по наличию фото
+      const withPhotos = people.filter(person => person.image);
+      const withoutPhotos = people.filter(person => !person.image);
+      
+      return [...withPhotos, ...withoutPhotos];
+    };
+
+    const showOrchestraComposition = () => {
+      orchestraModal.value?.show();
+    };
 
     onMounted(() => {
       // Принудительное раскрытие первого элемента
       setTimeout(() => {
         if (props.categories.length > 0) {
-          activeIndex.value = 0; // Устанавливаем первый элемент активным
+          activeIndex.value = 0; 
         }
       }, 0);
     });
@@ -86,20 +146,16 @@ export default {
       () => props.categories,
       (newCategories) => {
         if (newCategories.length > 0 && activeIndex.value === null) {
-          activeIndex.value = 0; // Устанавливаем первый элемент активным
+          activeIndex.value = 0; 
         }
       }
     );
 
-    const withPhotos = (category: PeopleCategoryDto) =>
-      category.people.filter((el) => el.image !== null && el.image !== '');
-    const withoutPhotos = (category: PeopleCategoryDto) =>
-      category.people.filter((el) => el.image === null || el.image === '');
-
     return {
       activeIndex,
-      withPhotos,
-      withoutPhotos,
+      sortPeopleByPosition,
+      orchestraModal,
+      showOrchestraComposition
     };
   },
 };
@@ -116,14 +172,21 @@ export default {
   margin-bottom: 2rem;
 }
 
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
 .people-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 24px;
-  margin-top: 16px;
+  width: 100%;
 }
 
-/* Карточка человека с фото */
 .person-card {
   text-align: center;
 }
@@ -158,6 +221,11 @@ export default {
 .person-card.no-photo .person-name,
 .person-card.no-photo .person-position {
   margin: 4px 0;
+}
+
+.view-orchestra-btn {
+  margin-top: 1rem;
+  align-self: center;
 }
 
 /* Стили для аккордеона */

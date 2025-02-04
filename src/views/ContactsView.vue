@@ -3,6 +3,7 @@
     <PageHeaderComponent
     class="animate__animated animate__fadeIn"
     title="Контакты"
+    :utils="false"
     imgSrc="/filspb/CircleImages/head_about.png"
   />
   <div class="people-wrapper animate__animated animate__fadeIn">
@@ -45,7 +46,7 @@
         </div>
     </template>
     </div>
-    <p class="social-text">Мы в социальных сетях: <a target="_blank" :href="main.vk"><img class="vk-logo" src="../assets/Icons/vk.svg"></a></p>
+    <!-- <p class="social-text">Мы в социальных сетях: <a target="_blank" :href="main.vk"><img class="vk-logo" src="../assets/Icons/vk.svg"></a></p> -->
     <FooterComponent />
 </template>
 
@@ -137,6 +138,7 @@ export default {
     flex-direction: column;
     border-radius: 2rem;
     margin: 2rem 5rem 0;
+    margin-bottom: 3rem;
 }
 
 a {

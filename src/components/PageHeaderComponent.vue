@@ -24,7 +24,13 @@
         <Select v-model="selectedLocation" @update:modelValue="platformSelection" :options="locations" filter optionLabel="name" placeholder="все площадки" class="w-full md:w-56" />
     </div>
     <div v-if="utils" class="page-header-col">
-      <DatePicker v-model="dates" @update:modelValue="datesSelection" selectionMode="range" placeholder="Выберите дату" :manualInput="false" class="w-full md:w-56" />
+      <DatePicker v-model="dates" @update:modelValue="datesSelection" selectionMode="range" placeholder="Выберите дату" :manualInput="false" class="w-full md:w-56">
+        <template #date="slotProps">
+          <div class="flex align-items-center" :class="{ 'has-event': hasEventOnDay(slotProps.date) }">
+            {{ slotProps.date.day }}
+          </div>
+        </template>
+      </DatePicker>
     </div>
   </div>
 </template>
@@ -35,6 +41,7 @@ import PlatformModel from '@/api/modules/platform/platform.model';
 import SystemModel from '@/api/modules/system/system.model';
 import useEventsStore from '@/stores/events';
 import { Select, DatePicker } from 'primevue';
+import { storeToRefs } from 'pinia';
 
 export default {
   name: "PageHeaderComponent",
@@ -53,21 +60,22 @@ export default {
     utils: {
       type: Boolean,
       required: false,
-      default: false,
-    },
-  },
-  setup() {
-    return {
-      eventStore: useEventsStore()
+      default: true
     }
   },
-  data: () => ({
-    dates: null,
-    selectedLocation: null,
-    prevLocation: null,
-    locations: [],
-    systemData: {}
-  }),
+  setup() {
+    const eventStore = useEventsStore();
+    const { events } = storeToRefs(eventStore);
+    return { eventStore, events };
+  },
+  data() {
+    return {
+      dates: null,
+      selectedLocation: null,
+      locations: [],
+      systemData: {}
+    }
+  },
   computed: {
     resolvedImgSrc() {
       try {
@@ -76,6 +84,9 @@ export default {
         console.error('Failed to load image:', e);
         return "/filspb/CircleImages/3.png";
       }
+    },
+    eventDates() {
+      return this.events.map(event => new Date(event.date).toISOString().split('T')[0]);
     }
   },
   async created() {
@@ -102,6 +113,10 @@ export default {
       const start = data[0].getTime()
       const end = data[1].getTime()
       this.eventStore.updatePeriod(start, end)
+    },
+    hasEventOnDay(date) {
+      const dateString = `${date.year}-${String(date.month + 1).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
+      return this.eventDates.includes(dateString);
     }
   }
 };
@@ -197,6 +212,38 @@ export default {
 :deep(.dp__input::placeholder) {
   color: black;
   font-weight: 700;
+}
+.has-event {
+  position: relative;
+}
+
+.has-event::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #f59e0b;
+  border-radius: 50%;
+}
+
+:deep(.p-highlight) .has-event::after {
+  background-color: white;
+}
+
+:deep(.p-datepicker-calendar td.p-datepicker-today) {
+  background: transparent;
+}
+
+:deep(.p-datepicker-calendar td) {
+  padding: 0.2rem;
+}
+
+:deep(.p-datepicker-calendar td.p-highlight) {
+  background: #f59e0b;
+  color: white;
 }
 </style>
 <style>

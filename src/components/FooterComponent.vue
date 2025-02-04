@@ -144,7 +144,7 @@ export default {
   display: flex;
     gap: 1rem;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: end;
     flex: 1;
     max-width: 400px;
@@ -232,7 +232,7 @@ a {
 .info-col {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   flex: 1;
   max-width: 400px;
   min-width: 300px;

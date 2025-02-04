@@ -3,6 +3,7 @@
   <PageHeaderComponent
     class="animate__animated animate__fadeIn"
     title="Новости"
+    :utils="false"
     imgSrc="/filspb/CircleImages/13.png"
   />
   <Divider />

@@ -27,12 +27,7 @@
       <div class="event-hero-adress">
         <span class="adress">{{ event.platformAddress }}</span>
       </div>
-      <div v-if="!event.soldOut" @click="buy(event)" class="button">
-        купить билет
-      </div>
-      <div v-else class="button">
-        билетов нет
-      </div>
+      <div id="wb-button-root" class="wb-button-root" :data-performance_id="getPerformanceId(event.purchaseLink)">Купить билет</div>
     </div>
   </div>
 </template>
@@ -49,6 +44,9 @@ export default {
       required: true,
     },
   },
+  created() {
+    console.log('Event soldOut status:', this.event.soldOut, typeof this.event.soldOut);
+  },
   methods: {
     formatDate(timestamp: number) {
       const date = new Date(timestamp);
@@ -58,6 +56,9 @@ export default {
       if (!url) return null
       if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
       else return url
+    },
+    getPerformanceId(purchaseLink: string): string {
+      return purchaseLink ? purchaseLink.replace('pl', '') : '';
     },
     buy(event: EventDto) {
       event.purchaseLink
@@ -151,20 +152,20 @@ export default {
   font-size: 1.3rem;
 }
 
-.button {
-  font-size: 1.3rem;
-  padding: 0.3rem 1rem 0.5rem;
-  background-color: black;
-  color: white;
-  font-weight: 200;
-  max-width: fit-content;
-  border-radius: 40rem;
-  border: 1px solid black;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+#wb-button-root {
+  font-size: 1.3rem!important;
+  padding: 0.3rem 1rem 0.5rem!important;
+  background-color: black!important;
+  color: white!important;
+  font-weight: 200!important;
+  max-width: fit-content!important;
+  border-radius: 40rem!important;
+  border: 1px solid black!important;
+  cursor: pointer!important;
+  transition: all 0.3s ease-in-out!important;
 }
 
-.button:hover {
+#wb-button-root:hover {
   background: transparent;
   color: black;
 }

@@ -1,6 +1,6 @@
 <template>
     <HeaderComponent />
-    <PageHeaderComponent  class="animate__animated animate__fadeIn" title="Абонементы" />
+    <PageHeaderComponent :utils="false"  class="animate__animated animate__fadeIn" title="Абонементы" />
    
     <section class="section"> 
       <div class="content-wrapper">

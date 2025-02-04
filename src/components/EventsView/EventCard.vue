@@ -14,7 +14,9 @@
           {{ tag.name }}
         </div>
       </div>
-      <button class="overlay-button">купить билет</button>
+      <div class="btn-row">
+        <div id="wb-button-root" class="wb-button-root" :data-performance_id="getPerformanceId(cardData.purchaseLink)">Купить билет</div>
+      </div>
       <div class="min-price">от {{ cardData.price }}р</div>
     </div>
     <div class="header-row">
@@ -63,6 +65,9 @@ export default {
     getImage(url: string) {
       if (url[0] == "/") return `${appConf.proto}://${appConf.endpoint}/files${url}`
       else return url
+    },
+    getPerformanceId(purchaseLink: string): string {
+      return purchaseLink ? purchaseLink.replace('pl', '') : '';
     }
   }
 };
@@ -109,26 +114,31 @@ export default {
   opacity: 1;
   visibility: visible;
 }
-
-.overlay-button {
-  padding: 1rem 2rem;
-  background-color: #000;
-  color: #fff;
-  width: 100%;
-  border: none;
-  border-radius: 40rem;
-  cursor: pointer;
-  border: 2px solid black;
-  font-size: 1.2rem;
-  transition: all 0.3s ease-in-out;
+.min-price {
+  text-align: center;
+}
+#wb-button-root {
+  font-size: 1.3rem!important;
+  padding: 0.3rem 1rem 0.5rem!important;
+  background-color: black!important;
+  color: white!important;
+  font-weight: 200!important;
+  max-width: fit-content!important;
+  border-radius: 40rem!important;
+  border: 1px solid black!important;
+  cursor: pointer!important;
+  transition: all 0.3s ease-in-out!important;
+  text-align:center;
 }
 
-.overlay-button:hover {
-  background-color: transparent;
-  border: 2px solid black;
+#wb-button-root:hover {
+  background: transparent;
   color: black;
 }
-
+.btn-row {
+  display: flex;
+  justify-content: center;
+}
 .header-row {
   display: flex;
   justify-content: space-between;
@@ -164,7 +174,8 @@ export default {
   display: flex;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  height: 12rem; 
+  height: 12rem;
+  max-height: 12rem;
   overflow: hidden; 
   border-radius: 1rem;
 }
@@ -172,6 +183,7 @@ export default {
 .card-img {
   width: 100%;
   border-radius: 1rem;
+  object-fit: cover;
 }
 
 .heading {

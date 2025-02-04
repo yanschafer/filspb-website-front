@@ -43,7 +43,8 @@
   <style scoped>
   .card-wrapper {
     width: 20rem;
-    height: 100%;
+    height: 12rem;
+    max-height: 12rem;
     padding: 1rem 1rem 2rem 1rem;
     background: #f3f3f3;
     border-radius: 2rem;
@@ -144,6 +145,7 @@
   .card-img {
     width: 100%;
     border-radius: 1rem;
+    object-fit: cover;
   }
   
   .heading {

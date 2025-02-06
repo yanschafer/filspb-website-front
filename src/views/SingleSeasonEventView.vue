@@ -12,9 +12,14 @@
           <div class="included-events">
             <h2 class="subtitle">Мероприятия в абонементе:</h2>
             <div class="events-list">
-              <div v-for="included in event.events" :key="included.id" class="event-item" @click="goToEvent(included.id)">
-                <h3 class="event-name">{{ included.name }}</h3>
-              </div>
+              <template v-for="included in event.events" :key="included.id">
+                <div v-if="included.id" class="event-item" @click="goToEvent(included.id)">
+                  <h3 class="event-name">{{ included.name }}</h3>
+                </div>
+                <div v-else class="event-item">
+                  <h3 class="event-name">{{ included.name }}</h3>
+                </div>
+              </template>
             </div>
           </div>
         </div>

@@ -57,28 +57,41 @@ export default {
       }
 
       const grouped: { [key: string]: any } = {};
+      const currentDate = new Date('2025-02-06'); // Using the provided current time
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
 
-      // Группировка по месяцам, которую ебал в рот
+      // Group events by year and month, but only include current and future events
       this.events.forEach((event) => {
-        const year = (new Date(event.date)).getFullYear()
-        const month = (new Date(event.date)).getMonth()
+        const eventDate = new Date(event.date);
+        const year = eventDate.getFullYear();
+        const month = eventDate.getMonth();
+
+        // Skip events from past months
+        if (year < currentYear || (year === currentYear && month < currentMonth)) {
+          return;
+        }
+
         if (!grouped[year]) {
           grouped[year] = {[month]: [event]};
         } else {
           if (!grouped[year][month]) {
-            grouped[year][month] = [event]
+            grouped[year][month] = [event];
           } else {
             grouped[year][month].push(event);
           }
         }
       });
 
-      return Object.entries(grouped).sort().reverse().map(el => ({
+      // Sort years ascending (current year first, then future years)
+      return Object.entries(grouped).sort().map(el => ({
         year: el[0],
-        months: Object.entries(el[1]).sort().reverse().map(m => ({
+        months: Object.entries(el[1])
+          .sort((a, b) => Number(a[0]) - Number(b[0])) // Sort months chronologically
+          .map(m => ({
             month: m[0],
             events: m[1]
-        }))
+          }))
       }));
     },
   },

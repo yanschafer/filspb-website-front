@@ -13,7 +13,7 @@ import SeasonEventsView from '@/views/SeasonEventsView.vue'
 import AccessibilityView from '@/views/AccessibilityView.vue'
 
 const router = createRouter({
-  history: createWebHistory('/filspb/'),
+  history: createWebHistory('/'),
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;

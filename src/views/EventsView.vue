@@ -1,6 +1,6 @@
 <template>
   <HeaderComponent />
-  <PageHeaderComponent :utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/filspb/CircleImages/3.png" />
+  <PageHeaderComponent :utils="true" class="animate__animated animate__fadeIn" title="Афиша" imgSrc="/CircleImages/3.png" />
 
   <ChipsFilter :chips="chipsData" class="animate__animated animate__fadeIn" />
   <EventGrid class="animate__animated animate__fadeIn" />

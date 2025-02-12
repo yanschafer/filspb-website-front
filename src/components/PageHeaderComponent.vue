@@ -55,7 +55,7 @@ export default {
     imgSrc: {
       type: String,
       required: true,
-      default: "/filspb/CircleImages/3.png", 
+      default: "/CircleImages/3.png", 
     },
     utils: {
       type: Boolean,
@@ -82,7 +82,7 @@ export default {
         return this.imgSrc;
       } catch (e) {
         console.error('Failed to load image:', e);
-        return "/filspb/CircleImages/3.png";
+        return "/CircleImages/3.png";
       }
     },
     eventDates() {

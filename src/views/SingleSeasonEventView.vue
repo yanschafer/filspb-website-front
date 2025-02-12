@@ -27,8 +27,7 @@
         <div class="side-content">
           <div class="price-box">
             <div class="price" v-if="event.price">{{ event.price }}₽</div>
-            <button v-if="event.isActive" @click="buy(event.purchaseLink)" class="buy-button">Купить абонемент</button>
-            <div v-else class="inactive-notice">Продажа остановлена</div>
+            <div id="wb-button-root" class="wb-button-root" :data-performance_id="getPerformanceId(event.purchaseLink)">Купить билет</div>
           </div>
         </div>
       </div>
@@ -66,7 +65,10 @@ export default {
         },
         goToEvent(id) {
           this.$router.push({path: `/event/${id}`})
-        }
+        },
+        getPerformanceId(purchaseLink: string): string {
+          return purchaseLink ? purchaseLink.replace('pl', '') : '';
+        },
     }
 };
 </script>

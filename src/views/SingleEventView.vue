@@ -4,7 +4,7 @@
     class="animate__animated animate__fadeIn"
     title="Афиша"
     :utils="false"
-    imgSrc="/filspb/CircleImages/3.png"
+    imgSrc="/CircleImages/3.png"
   />
   <div class="content-section animate__animated animate__fadeIn">
     <SingleEventHeroComponent :event="eventData" />

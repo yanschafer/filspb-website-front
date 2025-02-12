@@ -4,7 +4,7 @@
     class="animate__animated animate__fadeIn"
     title="Контакты"
     :utils="false"
-    imgSrc="/filspb/CircleImages/head_about.png"
+    imgSrc="/CircleImages/head_about.png"
   />
   <div class="people-wrapper animate__animated animate__fadeIn">
     <template v-for="person in people">

@@ -4,7 +4,7 @@
       class="animate__animated animate__fadeIn"
       title="Поиск по сайту"
       :utils="false"
-      imgSrc="/filspb/CircleImages/3.png"
+      imgSrc="/CircleImages/3.png"
     />
     <section class="section">
       <div class="search-box">

@@ -4,7 +4,7 @@
     class="animate__animated animate__fadeIn"
     title="Доступная среда"
     :utils="false"
-    imgSrc="/filspb/CircleImages/13.png"
+    imgSrc="/CircleImages/13.png"
   />
   <Divider />
   <div class="content-section animate__animated animate__fadeIn">

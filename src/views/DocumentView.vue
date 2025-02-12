@@ -1,6 +1,6 @@
 <template>
     <HeaderComponent />
-    <PageHeaderComponent :utils="false" class="animate__animated animate__fadeIn" title="Документы" imgSrc="/filspb/CircleImages/14.png" />
+    <PageHeaderComponent :utils="false" class="animate__animated animate__fadeIn" title="Документы" imgSrc="/CircleImages/14.png" />
 
     <div class="docs-wrapper" v-for="(doc, index) in docs">
         <h1 class="dock" @click="downloadDoc(doc.doc)">{{ doc.name }}</h1>

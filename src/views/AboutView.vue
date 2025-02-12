@@ -3,7 +3,7 @@
   <PageHeaderComponent
     class="animate__animated animate__fadeIn"
     title="О нас"
-    imgSrc="/filspb/CircleImages/head_about.png"
+    imgSrc="/CircleImages/head_about.png"
     :utils="false"
   />
   <section class="text-section">
@@ -302,7 +302,7 @@ export default {
   text-align: center; /* Центровка текста для карточек */
 }
 .cards-section {
-  background-image: url("/filspb/CircleImages/about_bg.jpg");
+  background-image: url("/CircleImages/about_bg.jpg");
   background-size: cover;
   height: 100vh;
   position: relative;

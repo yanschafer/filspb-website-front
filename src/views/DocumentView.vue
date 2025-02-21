@@ -15,6 +15,7 @@ import PageHeaderComponent from '@/components/PageHeaderComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
 import DocumentModel from '@/api/modules/documents/document.model';
 import { Divider } from 'primevue';
+import appConf from '@/api/conf/app.conf';
 
 export default {
     name: "DocumentView",
@@ -30,7 +31,7 @@ export default {
     methods: {
         async downloadDoc(url: string) {
             const filename = url.split('/')[url.split('/').length - 1]
-            const response = await fetch(url);
+            const response = await fetch(`${appConf.proto}://${appConf.endpoint}/files${url}`);
             if (!response.ok) throw new Error('Network response was not ok');
             const blob = await response.blob();
             const link = document.createElement('a');

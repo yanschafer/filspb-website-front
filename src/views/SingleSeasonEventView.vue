@@ -203,4 +203,21 @@ export default {
       font-size: 1.5rem;
     }
   }
+  #wb-button-root {
+  font-size: 1.3rem!important;
+  padding: 0.3rem 1rem 0.5rem!important;
+  background-color: black!important;
+  color: white!important;
+  font-weight: 200!important;
+  max-width: fit-content!important;
+  border-radius: 40rem!important;
+  border: 1px solid black!important;
+  cursor: pointer!important;
+  transition: all 0.3s ease-in-out!important;
+}
+
+#wb-button-root:hover {
+  background: transparent;
+  color: black;
+}
   </style>

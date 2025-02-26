@@ -27,7 +27,7 @@
             <a :href="`tel:${main.phone}`" class="phone link-yellow">{{ main.name }}</a>
         </div>
         <div class="timetable-col">
-            <p class="adress">{{ main.address }}<br> (здание находится не капитальном ремонте)</p>
+            <p class="adress">{{ main.address }}<br></p>
         </div>
         
     </div>

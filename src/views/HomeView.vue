@@ -20,7 +20,7 @@
     </div>
   </section>
 
-  <section class="season-section">
+  <section v-if="seasonEvents && seasonEvents.length > 0" class="season-section">
     <div class="all-events-row abonements-row">
       <div class="heading-col">
         <h1 class="news-heading abonements-heading">Наши абонементы</h1>
@@ -197,6 +197,38 @@ export default {
   padding-left: 5rem;
   padding-top: 2rem;
 }
+@media (max-width: 480px) {
+  .search-icon-wrapper {
+    min-width: 16px!important;
+  }
+  .search-icon {
+    width: 16px!important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .news-section {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+  
+  .news-header-row {
+    flex-direction: column!important;
+    gap: 1rem;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 .events-section {
   display: flex;
   flex-direction: column;

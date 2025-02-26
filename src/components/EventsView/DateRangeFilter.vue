@@ -28,7 +28,8 @@
             :class="{
               active: isActive(date.value),
               range: isInRange(date.value),
-              we: isWeekend(date.value)
+              we: isWeekend(date.value),
+              past: isPastDate(date.value)
             }"
             @click="selectDate(date)"
           >
@@ -40,7 +41,6 @@
     </swiper>
   </div>
 </template>
-
 
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -87,6 +87,11 @@ export default {
   },
   methods: {
     selectDate(date) {
+      // Не позволяем выбирать прошедшие даты
+      if (this.isPastDate(date.value)) {
+        return;
+      }
+      
       if (this.selectedDates.length === 0) {
         this.selectedDates = [date.value];
       } else if (this.selectedDates.length === 1) {
@@ -101,6 +106,10 @@ export default {
       this.$emit("update:dates", this.selectedDates);
     },
     selectMonth(from, to) {
+      // Проверяем, не является ли весь месяц прошедшим
+      if (this.isPastDate(to)) {
+        return;
+      }
       this.selectedDates = [from, to];
       this.$emit("update:dates", this.selectedDates);
     },
@@ -117,6 +126,11 @@ export default {
     },
     isWeekend(value) {
       return isWeekend(parseISO(value));
+    },
+    isPastDate(value) {
+      const currentDate = new Date('2025-02-14'); // Используем текущую дату из метаданных
+      const dateToCheck = parseISO(value);
+      return dateToCheck < currentDate;
     },
   },
 };
@@ -217,5 +231,16 @@ export default {
   position: relative;
   z-index: 4;
 }
+.events_date__date.past {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
+.events_date__date.past.active {
+  background: none;
+}
+
+.events_date__date.past:before {
+  display: none;
+}
 </style>

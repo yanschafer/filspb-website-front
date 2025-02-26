@@ -32,18 +32,35 @@
       </div>
     </div>
     <div class="img-wrapper">
-      <img class="card-img" :src="getImage(cardData.image)" />
+      <ImageSkeleton v-if="!imageLoaded" aspectRatio="4/3" />
+      <img 
+        :src="getImage(cardData.image)" 
+        :alt="cardData.name"
+        @load="imageLoaded = true"
+        class="animate__animated animate__fadeIn event-img"
+        :style="{ display: imageLoaded ? 'block' : 'none' }"
+      />
     </div>
     <h3 class="heading">{{ cardData.name }}</h3>
     <p class="description" v-html="cardData.shortDescription"></p>
+    <div class="mobile-buy-button">
+      <div class="btn-row">
+        <div id="wb-button-root" class="wb-button-root" :data-performance_id="getPerformanceId(cardData.purchaseLink)">Купить билет</div>
+      </div>
+      <div class="min-price">от {{ cardData.price }}р</div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import appConf from '@/api/conf/app.conf';
+import ImageSkeleton from '@/components/common/ImageSkeleton.vue'
 
 export default {
   name: "EventCard",
+  components: {
+    ImageSkeleton
+  },
   props: {
     cardData: {
       type: Object,
@@ -53,6 +70,11 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  data() {
+    return {
+      imageLoaded: false
+    }
   },
   methods: {
     formatDate(timestamp: number) {
@@ -108,12 +130,37 @@ export default {
   justify-content: center;
   gap: 1rem;
   cursor: pointer;
+  z-index: 2;
+}
+
+@media (max-width: 478px) {
+  .card-wrapper {
+    min-height: max-content!important;
+    height: 100%!important;
+  }
+}
+@media (max-width: 768px) {
+  .overlay {
+    display: none;
+  }
+  
+  .mobile-buy-button {
+    display: block;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-buy-button {
+    display: none;
+  }
 }
 
 .card-wrapper:hover .overlay {
   opacity: 1;
   visibility: visible;
 }
+
 .min-price {
   text-align: center;
 }
@@ -170,11 +217,18 @@ export default {
   font-weight: 600;
 }
 
+.event-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
 .img-wrapper {
-  display: flex;
   margin-top: 1rem;
   margin-bottom: 1rem;
   height: 12rem;
+  width: 100%;
+  z-index: 1;
   max-height: 12rem;
   overflow: hidden; 
   border-radius: 1rem;

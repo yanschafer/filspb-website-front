@@ -1,30 +1,36 @@
 <template>
   <div class="event-grid">
-    <template v-for="year in groupedEvents">
-      <div v-for="month in year.months" :key="month" class="month-section">
-        <h2 class="month-title">{{ renderYear(year.year) }} {{ months[month.month] }}</h2>
-        <div class="event-cards">
-          <EventCard
-            v-for="(event, index) in month.events"
-            @click="goTo(event.id)"
-            :key="index"
-            :cardData="event"
-            :isOutdated="isOutdated(event)"
-          />
+    <LoadingSpinner :show="eventStore.isLoading" />
+    <div v-if="!eventStore.isLoading" class="events-container">
+      <template v-for="year in groupedEvents">
+        <div v-for="month in year.months" :key="month" class="month-section">
+          <h2 class="month-title">{{ renderYear(year.year) }} {{ months[month.month] }}</h2>
+          <div class="event-cards">
+            <EventCard
+              v-for="(event, index) in month.events"
+              @click="goTo(event.id)"
+              :key="index"
+              class="animate__animated animate__fadeIn"
+              :cardData="event"
+              :isOutdated="isOutdated(event)"
+            />
+          </div>
         </div>
-      </div>
-    </template>
+      </template>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import useEventsStore from '@/stores/events';
 import EventCard from './EventCard.vue';
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
 export default {
   name: "EventGrid",
   components: {
     EventCard,
+    LoadingSpinner,
   },
   setup() {
     return {
@@ -57,20 +63,44 @@ export default {
       }
 
       const grouped: { [key: string]: any } = {};
-      const currentDate = new Date('2025-02-06'); // Using the provided current time
+      const currentDate = new Date('2025-02-26'); // Используем текущую дату из метаданных
       const currentYear = currentDate.getFullYear();
       const currentMonth = currentDate.getMonth();
+      const currentDay = currentDate.getDate();
+
+      // Keep track of added event IDs to prevent duplicates
+      const addedEventIds = new Set();
 
       // Group events by year and month, but only include current and future events
       this.events.forEach((event) => {
         const eventDate = new Date(event.date);
         const year = eventDate.getFullYear();
         const month = eventDate.getMonth();
+        const day = eventDate.getDate();
 
-        // Skip events from past months
-        if (year < currentYear || (year === currentYear && month < currentMonth)) {
+        // Skip past events (including past events from current month)
+        if (year < currentYear || 
+            (year === currentYear && month < currentMonth) ||
+            (year === currentYear && month === currentMonth && day < currentDay)) {
           return;
         }
+
+        // Skip if we've already added this event
+        if (addedEventIds.has(event.id)) {
+          return;
+        }
+
+        // Skip events that are more than 2 months ahead when not date filtered
+        if (!this.eventStore.isDateFiltered) {
+          const twoMonthsLater = new Date(currentDate);
+          twoMonthsLater.setMonth(currentMonth + 2, 1);
+          if (eventDate > twoMonthsLater) {
+            return;
+          }
+        }
+
+        // Add event ID to our tracking set
+        addedEventIds.add(event.id);
 
         if (!grouped[year]) {
           grouped[year] = {[month]: [event]};
@@ -78,27 +108,63 @@ export default {
           if (!grouped[year][month]) {
             grouped[year][month] = [event];
           } else {
-            grouped[year][month].push(event);
+            // Проверяем, нет ли уже такого события в этом месяце
+            if (!grouped[year][month].some(e => e.id === event.id)) {
+              grouped[year][month].push(event);
+            }
           }
         }
       });
 
-      // Sort years ascending (current year first, then future years)
-      return Object.entries(grouped).sort().map(el => ({
-        year: el[0],
-        months: Object.entries(el[1])
-          .sort((a, b) => Number(a[0]) - Number(b[0])) // Sort months chronologically
+      // Convert to array and sort
+      const result = Object.entries(grouped).sort().map(el => {
+        const year = el[0];
+        const months = Object.entries(el[1])
+          .sort((a, b) => Number(a[0]) - Number(b[0]))
           .map(m => ({
-            month: m[0],
-            events: m[1]
-          }))
-      }));
+            month: Number(m[0]),
+            events: m[1].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+          }));
+
+        // Если нет фильтрации по датам в DatePicker, показываем только текущий и следующий месяц
+        if (!this.eventStore.isDateFiltered) {
+          return {
+            year,
+            months: months.filter(m => {
+              const monthNum = Number(m.month);
+              const yearNum = Number(year);
+              
+              // Для текущего года
+              if (yearNum === currentYear) {
+                // Показываем только текущий и следующий месяц
+                return monthNum >= currentMonth && monthNum <= currentMonth + 1;
+              }
+              
+              // Для следующего года (только если текущий месяц декабрь)
+              if (yearNum === currentYear + 1 && currentMonth === 11) {
+                return monthNum === 0;
+              }
+              
+              return false;
+            })
+          };
+        }
+        
+        // Если есть фильтрация по датам, показываем все отфильтрованные месяцы
+        return {
+          year,
+          months
+        };
+      });
+
+      return result;
     },
   },
   methods: {
-    // Проверка на устаревшие мероприятия, чтобы сделать карточку outdated, но я где-то обосрался и это не работает
     isOutdated(event) {
-      return false
+      const eventDate = new Date(event.date);
+      const currentDate = new Date();
+      return eventDate < currentDate;
     },
     renderYear(year) {
       console.log(year)

@@ -1,5 +1,5 @@
 <template>
-  <div @click="goTo(cardData.id)" class="card-wrapper" :class="{ 'outdated': isOutdated }">
+  <div @click="goTo(cardData.id)" class="card-wrapper">
     <div class="overlay">
       <h3 class="heading">{{ cardData.name }}</h3>
       <span class="subheading">{{ cardData.platformName + "\n" + cardData.platformAddress }}</span>
@@ -66,10 +66,10 @@ export default {
       type: Object,
       required: true,
     },
-    isOutdated: {
-      type: Boolean,
-      default: false,
-    },
+    // isOutdated: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   data() {
     return {
@@ -109,10 +109,10 @@ export default {
   transition: filter 0.3s;
 }
 
-.card-wrapper.outdated {
+/* .card-wrapper.outdated {
   filter: grayscale(100%);
   pointer-events: none;
-}
+} */
 
 .overlay {
   padding: 1rem 1rem 2rem 1rem;

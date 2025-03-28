@@ -63,7 +63,8 @@ export default {
       }
 
       const grouped: { [key: string]: any } = {};
-      const currentDate = new Date('2025-02-26'); // Используем текущую дату из метаданных
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0); // Сбрасываем время до начала дня
       const currentYear = currentDate.getFullYear();
       const currentMonth = currentDate.getMonth();
       const currentDay = currentDate.getDate();
@@ -74,16 +75,15 @@ export default {
       // Group events by year and month, but only include current and future events
       this.events.forEach((event) => {
         const eventDate = new Date(event.date);
+        
+        // Skip past events
+        if (eventDate < currentDate) {
+          return;
+        }
+
         const year = eventDate.getFullYear();
         const month = eventDate.getMonth();
         const day = eventDate.getDate();
-
-        // Skip past events (including past events from current month)
-        if (year < currentYear || 
-            (year === currentYear && month < currentMonth) ||
-            (year === currentYear && month === currentMonth && day < currentDay)) {
-          return;
-        }
 
         // Skip if we've already added this event
         if (addedEventIds.has(event.id)) {
@@ -164,11 +164,11 @@ export default {
     isOutdated(event) {
       const eventDate = new Date(event.date);
       const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0); // Сбрасываем время до начала дня
       return eventDate < currentDate;
     },
     renderYear(year) {
-      console.log(year)
-      if ((new Date()).getFullYear() != year) return year 
+      if (new Date().getFullYear() != year) return year 
       else return null
     },
     goTo(eId: number) {

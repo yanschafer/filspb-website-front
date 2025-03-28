@@ -49,7 +49,7 @@
           <a class="nav-link" href="https://zakupki.gov.ru/epz/main/public/home.html">ГОСЗАКАЗ</a>
           <a class="nav-link" @click="$router.push({path: '/contacts'})">КОНТАКТЫ</a>
         </div>
-        <span>Разработала студия Волкова, 2024</span>
+        <a class="copy-link" href="https://volkcom.ru" target="_blank">Разработала студия Volkcom, 2024</a>
       </div>
     </div>
 
@@ -159,6 +159,13 @@ export default {
     justify-content: center;
     align-items: center;
     gap: 2rem;
+}
+.copy-link {
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
+}
+.copy-link:hover {
+  color: rgb(81, 81, 81);
 }
 .link-wrapper {
     display: flex;

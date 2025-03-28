@@ -89,9 +89,8 @@
 
   <!-- <ChildEventsComponent :children="children" :getImage="getImage" /> -->
 
-  <section class="text-section kaef">
+  <section class="text-section kaef" id="temp-margin-fix">
     <p class="text">
-      <br /><br />
       На сегодняшний момент Площадка Филармонии это – формирование навыков
       общения со сверстниками расширение кругозора и формирование мировоззрения
       личности молодого человека; сохранение и преумножение культурного наследия
@@ -252,6 +251,9 @@ export default {
   font-size: 2rem;
   font-weight: 600;
 }
+.temp-margin-fix {
+  margin-top: 0!important;
+}
 .card-text {
   font-size: 1.2rem;
 }
@@ -304,6 +306,7 @@ export default {
 .cards-section {
   background-image: url("/CircleImages/about_bg.jpg");
   background-size: cover;
+  background-position: center;
   height: 100vh;
   position: relative;
 }

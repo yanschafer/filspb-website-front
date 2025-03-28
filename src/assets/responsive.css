@@ -224,6 +224,8 @@
   }
   .repertoire-section .cards-grid .card-wrapper  {
     min-height: max-content!important;
+    max-height: max-content !important;
+    height: 100%!important;
   }
 }
 /* Для экранов меньше 1366px */

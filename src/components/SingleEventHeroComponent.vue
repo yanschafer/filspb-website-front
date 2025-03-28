@@ -87,6 +87,12 @@ export default {
   object-fit: cover;
 }
 
+@media (max-width: 1378px){
+  .event-hero-content {
+    padding: 5rem 3rem!important;
+  }
+}
+
 .event-hero-content {
   display: flex;
   flex-direction: column;

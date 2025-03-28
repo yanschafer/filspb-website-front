@@ -42,6 +42,7 @@ import SystemModel from '@/api/modules/system/system.model';
 import useEventsStore from '@/stores/events';
 import { Select, DatePicker } from 'primevue';
 import { storeToRefs } from 'pinia';
+import { isSameDay } from 'date-fns';
 
 export default {
   name: "PageHeaderComponent",
@@ -73,7 +74,9 @@ export default {
       dates: null,
       selectedLocation: null,
       locations: [],
-      systemData: {}
+      systemData: {},
+      allEventDates: [], // Добавляем массив для хранения всех дат событий
+      prevLocation: null
     }
   },
   computed: {
@@ -86,7 +89,7 @@ export default {
       }
     },
     eventDates() {
-      return this.events.map(event => new Date(event.date).toISOString().split('T')[0]);
+      return this.allEventDates; // Используем все даты событий вместо фильтрованных
     }
   },
   async created() {
@@ -95,6 +98,28 @@ export default {
     //@ts-ignore
     this.systemData = (await systemModel.getSystemData()).getData()
     this.locations = (await platformModel.getAll()).getData()
+
+    // Подписываемся на обновление событий
+    this.$watch(
+      () => this.events,
+      (newEvents) => {
+        // Обновляем allEventDates только когда загружаются новые события (не при фильтрации)
+        if (!this.dates) {
+          // Преобразуем timestamp в объект Date и затем в строку в формате YYYY-MM-DD
+          this.allEventDates = newEvents.map(event => {
+            const date = new Date(event.date);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateString = `${year}-${month}-${day}`;
+            console.log('Event:', event.name, 'Date:', dateString); // Отладочный вывод
+            return dateString;
+          });
+          console.log('All event dates:', this.allEventDates); // Отладочный вывод
+        }
+      },
+      { immediate: true }
+    )
   },
   methods: {
     platformSelection() {
@@ -107,16 +132,46 @@ export default {
       this.prevLocation = this.selectedLocation
     },
     datesSelection(data) {
-      if (data[0] == null && data[1] == null) return this.eventStore.updatePeriod()
-      if (data[0] == null || data[1] == null) return
+      if (data[0] == null && data[1] == null) {
+        this.dates = null;
+        return this.eventStore.updatePeriod();
+      }
 
-      const start = data[0].getTime()
-      const end = data[1].getTime()
-      this.eventStore.updatePeriod(start, end)
+      this.dates = data;
+      
+      // Если выбрана только первая дата
+      if (data[0] && !data[1]) {
+        const start = data[0].getTime();
+        const end = new Date(data[0].getTime()).setHours(23, 59, 59, 999); // Конец того же дня
+        return this.eventStore.updatePeriod(start, end);
+      }
+      
+      // Если выбраны обе даты
+      if (data[0] && data[1]) {
+        const start = data[0].getTime();
+        // Если даты одинаковые, берем конец выбранного дня
+        const end = isSameDay(data[0], data[1]) 
+          ? new Date(data[1].getTime()).setHours(23, 59, 59, 999)
+          : data[1].getTime();
+        return this.eventStore.updatePeriod(start, end);
+      }
     },
     hasEventOnDay(date) {
       const dateString = `${date.year}-${String(date.month + 1).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
-      return this.eventDates.includes(dateString);
+      const currentDate = new Date('2025-02-14'); // Используем текущую дату из метаданных
+      const checkDate = new Date(dateString);
+      
+      // Не показываем точки для прошедших дат
+      if (checkDate < currentDate) {
+        return false;
+      }
+      
+      // Отладочный вывод
+      if (date.month === 1) { // Февраль (0-based)
+        console.log('Checking date:', dateString, 'Has event:', this.allEventDates.includes(dateString));
+      }
+      
+      return this.allEventDates.includes(dateString);
     }
   }
 };

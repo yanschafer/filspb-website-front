@@ -7,6 +7,8 @@ const useEventsStore = defineStore('events', {
         selectedTags: {},
         selectedPlatform: "",
         useFilters: false,
+        isDateFiltered: false,
+        isLoading: false,
     }),
     getters: {
         getEvents: (state) => {
@@ -34,13 +36,38 @@ const useEventsStore = defineStore('events', {
             const eventModel = new EventModel()
             this.useFilters = false
             this.events = []
-            this.events = (await eventModel.getLastFour()).getData()
+            this.isLoading = true
+            try {
+                // Загружаем все события за ближайшие 90 дней
+                const allEvents = (await eventModel.getByPeriod(
+                    Date.now(),
+                    Date.now() + 90 * 24 * 60 * 60 * 1000
+                )).getData()
+
+                // Сортируем по дате (ближайшие первыми)
+                const sortedEvents = allEvents.sort((a, b) => {
+                    const dateA = new Date(a.date).getTime()
+                    const dateB = new Date(b.date).getTime()
+                    return dateA - dateB
+                })
+
+                // Берем только первые 4 события
+                this.events = sortedEvents.slice(0, 4)
+            } finally {
+                this.isLoading = false
+            }
         },
-        async updatePeriod(start: number = Date.now() - 30 * 24 * 60 * 60 * 1000, end: number = Date.now() + 30 * 24 * 60 * 60 * 1000) {
+        async updatePeriod(start: number = Date.now() - 30 * 24 * 60 * 60 * 1000, end: number = Date.now() + 90 * 24 * 60 * 60 * 1000) {
             const eventModel = new EventModel()
             this.useFilters = true
-            const newEvents = (await eventModel.getByPeriod(start, end)).getData()
-            this.events = newEvents
+            this.isDateFiltered = true
+            this.isLoading = true
+            try {
+                const newEvents = (await eventModel.getByPeriod(start, end)).getData()
+                this.events = newEvents
+            } finally {
+                this.isLoading = false
+            }
         }
     }
 })

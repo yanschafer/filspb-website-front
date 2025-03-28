@@ -336,12 +336,19 @@ export default {
     height: 500px!important;
     overflow: hidden;
   }
+  .search-icon-wrapper {
+    min-width: 16px!important;
+  }
+  .search-icon {
+    width: 16px!important;
+  }
   .hero-title {
     font-size: 1.8rem !important;
         line-height: 1.8rem !important;
         padding: 0!important;
         min-width: 100% !important;
         text-align: center !important;
+        margin-bottom: 1rem!important;
   }
 
   .slide-button {
@@ -369,7 +376,10 @@ export default {
     line-height: 2.2rem;
   }
 }
+:deep(.swiper) {
+  width: 100%;
 
+}
 .search-box {
   position: absolute;
   top: 1rem;
